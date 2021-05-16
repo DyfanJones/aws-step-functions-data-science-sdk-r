@@ -1,0 +1,45 @@
+Package: stepfunctions
+Type: Package
+Title: R SDK for `AWS Stepfunctions`
+Version: 0.1.0
+Authors@R: c(person("Dyfan", "Jones", email="dyfan.r.jones@gmail.com", role= c("aut", "cre")),
+             person("Amazon.com, Inc.", role = "cph"))
+Description: Step Functions Data Science `SDK` for building machine learning (`ML`) workflows and pipelines on `AWS`
+             using the R `SDK` `paws`.
+Imports:
+    lgr,
+    jsonlite,
+    paws,
+    R6,
+    tools,
+    yaml,
+    glue,
+    uuid
+Suggests:
+    testthat,
+    crayon,
+    R6sagemaker,
+    IRdisplay
+License: Apache License (>= 2.0)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Collate: 
+    'inputs_utils.R'
+    'inputs_placeholders.R'
+    'stepfunctions.R'
+    'utils.R'
+    'steps_choice_rule.R'
+    'steps_fields.R'
+    'steps_states.R'
+    'steps_compute.R'
+    'steps_utils.R'
+    'steps_sagemaker.R'
+    'steps_service.R'
+    'workflow_cloudformation.R'
+    'workflow_widgets_utils.R'
+    'workflow_widgets_workflows_table.R'
+    'workflow_widgets_event_table.R'
+    'workflow_widgets_graph.R'
+    'workflow_stepfunctions.R'
+    'workflow_widgets_executions_table.R'
