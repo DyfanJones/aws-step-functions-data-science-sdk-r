@@ -141,6 +141,6 @@ workflow$definition$to_json(pretty=True)
 ```
 
 # TODO list:
-* Able to render graphs in Rstudio
+* Enable to render graphs in Rstudio
 * Save rendered graphs
 * Push to cran
