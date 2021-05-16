@@ -60,7 +60,8 @@ lambda_state$add_catch(Catch$new(
 After you define these steps, chain them together into a logical sequence.
 
 ```
-workflow_definition=Chain([start_pass_state, wait_state, lambda_state])
+workflow_definition=Chain$new(list(start_pass_state, wait_state, lambda_state))
+
 ```
 
 Once the steps are chained together, you can define the workflow definition.
@@ -68,10 +69,10 @@ Once the steps are chained together, you can define the workflow definition.
 ```
 # change execution role to your execution role
 stepfunctions_execution_role="dummy-role"
-workflow = Workflow(
-    name="MyWorkflow_v1234",
-    definition=workflow_definition,
-    role=stepfunctions_execution_role
+workflow = Workflow$new(
+  name="MyWorkflow_v1234",
+  definition=workflow_definition,
+  role=stepfunctions_execution_role
 )
 ```
 
