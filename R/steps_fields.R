@@ -3,6 +3,8 @@
 
 #' @include utils.R
 
+#' @title AWS Stepfunction state fields
+#' @description List of Fields to pass to Stepfunction Steps
 Field <- Enum(
   # Common fields
   Comment          = 'comment',

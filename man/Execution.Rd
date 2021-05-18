@@ -135,7 +135,18 @@ Describes a workflow execution.
 }
 
 \subsection{Returns}{
-
+list: Details of the workflow execution.
+**Response structure**:
+\itemize{
+    \item{executionArn (string): The Amazon Resource Name (ARN) that identifies the workflow execution.}
+    \item{stateMachineArn (string): The Amazon Resource Name (ARN) of the workflow that was executed.}
+    \item{name (string): The name of the workflow execution.}
+    \item{status (string): The current status of the workflow execution.}
+    \item{startDate (datetime): The date the workflow execution is started.}
+    \item{stopDate (datetime): If the workflow execution has already ended, the date the execution stopped.}
+    \item{input (string): The string that contains the JSON input data of the workflow execution.}
+    \item{output (string): The JSON output data of the workflow execution.}
+}
 }
 }
 \if{html}{\out{<hr>}}
