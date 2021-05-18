@@ -8,7 +8,7 @@
 
 #' @title DynamoDBGetItemStep class
 #' @description Creates a Task state to get an item from DynamoDB. See `Call DynamoDB`
-#'              `APIs with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html>`_
+#'              APIs with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html}
 #'              for more details.
 #' @export
 DynamoDBGetItemStep = R6Class("DynamoDBGetItemStep",
@@ -66,7 +66,7 @@ DynamoDBGetItemStep = R6Class("DynamoDBGetItemStep",
 
 #' @title DynamoDBPutItemStep class
 #' @description Creates a Task state to put an item to DynamoDB. See `Call DynamoDB`
-#'              `APIs with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html>`_
+#'              APIs with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html}
 #'              for more details.
 #' @export
 DynamoDBPutItemStep = R6Class("DynamoDBPutItemStep",
@@ -123,8 +123,8 @@ DynamoDBPutItemStep = R6Class("DynamoDBPutItemStep",
 )
 
 #' @title DynamoDBDeleteItemStep class
-#' @description Creates a Task state to delete an item from DynamoDB. See `Call DynamoDB`
-#'              `APIs with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html>`_
+#' @description Creates a Task state to delete an item from DynamoDB. See Call DynamoDB
+#'              APIs with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html}
 #'              for more details.
 #' @export
 DynamoDBDeleteItemStep = R6Class("DynamoDBDeleteItemStep",
@@ -180,8 +180,8 @@ DynamoDBDeleteItemStep = R6Class("DynamoDBDeleteItemStep",
 )
 
 #' @title DynamoDBUpdateItemStep class
-#' @description Creates a Task state to update an item from DynamoDB. See `Call DynamoDB`
-#'              `APIs with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html>`_
+#' @description Creates a Task state to update an item from DynamoDB. See Call DynamoDB
+#'              APIs with Step Functions \url{ttps://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html}
 #'              for more details.
 #' @export
 DynamoDBUpdateItemStep = R6Class("DynamoDBUpdateItemStep",
@@ -238,8 +238,8 @@ DynamoDBUpdateItemStep = R6Class("DynamoDBUpdateItemStep",
 )
 
 #' @title SnsPublishStep class
-#' @description Creates a Task state to publish a message to SNS topic. See `Call Amazon SNS`
-#'              `with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-sns.html>`_
+#' @description Creates a Task state to publish a message to SNS topic. See Call Amazon SNS
+#'              with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-sns.html}
 #'              for more details.
 #' @export
 SnsPublishStep = R6Class("SnsPublishStep",
@@ -315,8 +315,8 @@ SnsPublishStep = R6Class("SnsPublishStep",
 )
 
 #' @title SqsSendMessageStep class
-#' @description Creates a Task state to send a message to SQS queue. See `Call Amazon SQS`
-#'              `with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-sqs.html>`_
+#' @description Creates a Task state to send a message to SQS queue. See Call Amazon SQS
+#'              with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-sqs.html}
 #'              for more details.
 #' @export
 SqsSendMessageStep = R6Class("SqsSendMessageStep",
@@ -393,8 +393,8 @@ SqsSendMessageStep = R6Class("SqsSendMessageStep",
 
 #' @title EmrCreateClusterStep class
 #' @description Creates a Task state to create and start running a cluster (job flow). See
-#'              `Call Amazon EMR with Step Functions`
-#'              `<https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_
+#'              Call Amazon EMR with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html}
 #'              for more details.
 #' @export
 EmrCreateClusterStep = R6Class("EmrCreateClusterStep",
@@ -471,8 +471,8 @@ EmrCreateClusterStep = R6Class("EmrCreateClusterStep",
 )
 
 #' @title EmrTerminateClusterStep class
-#' @description Creates a Task state to shut down a cluster (job flow). See `Call Amazon EMR`
-#'              `with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_
+#' @description Creates a Task state to shut down a cluster (job flow). See Call Amazon EMR
+#'              with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html}
 #'              for more details.
 #' @export
 EmrTerminateClusterStep = R6Class("EmrTerminateClusterStep",
@@ -549,8 +549,8 @@ EmrTerminateClusterStep = R6Class("EmrTerminateClusterStep",
 )
 
 #' @title EmrAddStepStep class
-#' @description Creates a Task state to shut down a cluster (job flow). See `Call Amazon EMR`
-#'              `with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_
+#' @description Creates a Task state to shut down a cluster (job flow). See Call Amazon EMR
+#'              with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html}
 #'              for more details.
 #' @export
 EmrAddStepStep = R6Class("EmrAddStepStep",
@@ -628,7 +628,8 @@ EmrAddStepStep = R6Class("EmrAddStepStep",
 
 #' @title EmrCancelStepStep class
 #' @description Creates a Task state to cancel a pending step in a running cluster. See
-#'             `Call Amazon EMR with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_
+#'             Call Amazon EMR with Step Functions
+#'             \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html}
 #'             for more details.
 #' @export
 EmrCancelStepStep = R6Class("EmrCancelStepStep",
@@ -687,8 +688,8 @@ EmrCancelStepStep = R6Class("EmrCancelStepStep",
 #' @title EmrSetClusterTerminationProtectionStep class
 #' @description Creates a Task state to lock a cluster (job flow) so the EC2 instances
 #'              in the cluster cannot be terminated by user intervention, an API call, or
-#'              a job-flow error. See `Call Amazon EMR with Step Functions`
-#'              `<https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_ for more details.
+#'              a job-flow error. See Call Amazon EMR with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html} for more details.
 #' @export
 EmrSetClusterTerminationProtectionStep = R6Class("EmrSetClusterTerminationProtectionStep",
   inherit = Task,
@@ -745,8 +746,8 @@ EmrSetClusterTerminationProtectionStep = R6Class("EmrSetClusterTerminationProtec
 
 #' @title EmrModifyInstanceFleetByNameStep class
 #' @description Creates a Task state to modify the target On-Demand and target Spot capacities
-#'              for an instance fleet.  See `Call Amazon EMR with Step Functions`
-#'              `<https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_ for more details.
+#'              for an instance fleet.  See Call Amazon EMR with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html} for more details.
 #' @export
 EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
   inherit = Task,
@@ -803,8 +804,8 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
 
 #' @title EmrModifyInstanceFleetByNameStep class
 #' @description Creates a Task state to modify the number of nodes and configuration
-#'              settings of an instance group. See `Call Amazon EMR with Step Functions`
-#'              `<https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_ for more details.
+#'              settings of an instance group. See Call Amazon EMR with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html} for more details.
 #' @export
 EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
   inherit = Task,

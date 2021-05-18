@@ -4,8 +4,8 @@
 \alias{SqsSendMessageStep}
 \title{SqsSendMessageStep class}
 \description{
-Creates a Task state to send a message to SQS queue. See `Call Amazon SQS`
-             `with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-sqs.html>`_
+Creates a Task state to send a message to SQS queue. See Call Amazon SQS
+             with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-sqs.html}
              for more details.
 }
 \section{Super classes}{

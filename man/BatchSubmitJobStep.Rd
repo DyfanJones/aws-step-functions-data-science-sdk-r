@@ -5,7 +5,7 @@
 \title{BatchSubmitJobStep Class}
 \description{
 Creates a Task State to start an AWS Batch job. See `Manage AWS Batch`
-             `with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-batch.html>`_
+             with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-batch.html}
              for more details.
 }
 \section{Super classes}{

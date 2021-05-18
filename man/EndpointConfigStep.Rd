@@ -5,7 +5,7 @@
 \title{Sagemaker EndpointConfigStep task class}
 \description{
 Creates a Task State to `create an endpoint configuration in SageMaker`
-             `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateEndpointConfig.html>`_.
+             \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateEndpointConfig.html}.
 }
 \section{Super classes}{
 \code{\link[stepfunctions:Block]{stepfunctions::Block}} -> \code{\link[stepfunctions:State]{stepfunctions::State}} -> \code{\link[stepfunctions:Task]{stepfunctions::Task}} -> \code{EndpointConfigStep}
@@ -83,7 +83,7 @@ configuration related to Endpoint data capture for use with
 Amazon SageMaker Model Monitoring. Default: None.}
 
 \item{\code{tags}}{(list[dict], optional): `List to tags`
-`<https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+\url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 
 \item{\code{...}}{: Extra Fields passed to Task class}

@@ -49,9 +49,9 @@ Initialize Execution class
 
 \item{\code{status}}{(RunStatus): Status of the workflow execution.}
 
-\item{\code{client}}{(SFN.Client, optional): boto3 client to use for running and
+\item{\code{client}}{(SFN.Client, optional): \code{\link[paws]{sfn}} client to use for running and
 managing the workflow executions on Step Functions. If no client
-is provided, the boto3 client from the parent workflow will be used. (default: None)}
+is provided, the \code{\link[paws]{sfn}} client from the parent workflow will be used. (default: None)}
 
 \item{\code{name}}{(str, optional): Name for the workflow execution. (default: None)}
 
@@ -196,7 +196,11 @@ Get the output for the workflow execution.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{wait}}{(bool, optional): Boolean flag set to `True` if the call should wait for a running workflow execution to end before returning the output. Set to `False`, otherwise. Note that if the status is running, and `wait` is set to `True`, this will be a blocking call. (default: False)}
+\item{\code{wait}}{(bool, optional): Boolean flag set to `True` if the call should
+wait for a running workflow execution to end before returning
+the output. Set to `False`, otherwise. Note that if the status
+is running, and `wait` is set to `True`, this will be a blocking
+call. (default: False)}
 }
 \if{html}{\out{</div>}}
 }

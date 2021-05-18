@@ -5,12 +5,12 @@
 \title{EmrModifyInstanceFleetByNameStep class}
 \description{
 Creates a Task state to modify the target On-Demand and target Spot capacities
-             for an instance fleet.  See `Call Amazon EMR with Step Functions`
-             `<https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_ for more details.
+             for an instance fleet.  See Call Amazon EMR with Step Functions
+             \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html} for more details.
 
 Creates a Task state to modify the number of nodes and configuration
-             settings of an instance group. See `Call Amazon EMR with Step Functions`
-             `<https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_ for more details.
+             settings of an instance group. See Call Amazon EMR with Step Functions
+             \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html} for more details.
 }
 \section{Super classes}{
 \code{\link[stepfunctions:Block]{stepfunctions::Block}} -> \code{\link[stepfunctions:State]{stepfunctions::State}} -> \code{\link[stepfunctions:Task]{stepfunctions::Task}} -> \code{EmrModifyInstanceFleetByNameStep}

@@ -4,8 +4,8 @@
 \alias{SnsPublishStep}
 \title{SnsPublishStep class}
 \description{
-Creates a Task state to publish a message to SNS topic. See `Call Amazon SNS`
-             `with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-sns.html>`_
+Creates a Task state to publish a message to SNS topic. See Call Amazon SNS
+             with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-sns.html}
              for more details.
 }
 \section{Super classes}{

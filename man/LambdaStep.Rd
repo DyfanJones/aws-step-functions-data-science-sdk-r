@@ -5,7 +5,9 @@
 \title{LambdaStep class}
 \description{
 Creates a Task state to invoke an AWS Lambda function.
-             See `Invoke Lambda with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-lambda.html>`_ for more details.
+             See Invoke Lambda with Step Functions
+             \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-lambda.html}
+             for more details.
 }
 \section{Super classes}{
 \code{\link[stepfunctions:Block]{stepfunctions::Block}} -> \code{\link[stepfunctions:State]{stepfunctions::State}} -> \code{\link[stepfunctions:Task]{stepfunctions::Task}} -> \code{LambdaStep}

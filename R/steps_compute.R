@@ -8,7 +8,9 @@
 
 #' @title LambdaStep class
 #' @description Creates a Task state to invoke an AWS Lambda function.
-#'              See `Invoke Lambda with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-lambda.html>`_ for more details.
+#'              See Invoke Lambda with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-lambda.html}
+#'              for more details.
 #' @export
 LambdaStep = R6Class("LambdaStep",
   inherit = Task,
@@ -160,7 +162,7 @@ GlueStartJobRunStep = R6Class("GlueStartJobRunStep",
 
 #' @title BatchSubmitJobStep Class
 #' @description Creates a Task State to start an AWS Batch job. See `Manage AWS Batch`
-#'              `with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-batch.html>`_
+#'              with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-batch.html}
 #'              for more details.
 #' @export
 BatchSubmitJobStep = R6Class("BatchSubmitJobStep",
@@ -237,7 +239,8 @@ BatchSubmitJobStep = R6Class("BatchSubmitJobStep",
 
 #' @title EcsRunTaskStep class
 #' @description Creates a Task State to run Amazon ECS or Fargate Tasks. See `Manage Amazon ECS`
-#'              `or Fargate Tasks with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-ecs.html>`_
+#'              or Fargate Tasks with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-ecs.html}
 #'              for more details.
 #' @export
 EcsRunTaskStep = R6Class("EcsRunTaskStep",

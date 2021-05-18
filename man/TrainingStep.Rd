@@ -5,7 +5,7 @@
 \title{Sagemaker TrainingStep task class}
 \description{
 Creates a Task State to execute a `SageMaker Training Job`
-             `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateTrainingJob.html>`_.
+             \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateTrainingJob.html}
              The TrainingStep will also create a model by default, and the model shares
              the same name as the training job.
 }
@@ -66,9 +66,9 @@ within the scope of the whole state machine.}
 
 \item{\code{estimator}}{(sagemaker.estimator.EstimatorBase): The estimator for the training
 step. Can be a `BYO estimator, Framework estimator`
-`<https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms.html>`_
+\url{https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms.html}
 or `Amazon built-in algorithm estimator`
-`<https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html>`_.}
+\url{https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html}.}
 
 \item{\code{job_name}}{(str or Placeholder): Specify a training job name, this is required for
 the training job to run. We recommend to use :py:class:`~stepfunctions.inputs.ExecutionInput`
@@ -105,7 +105,7 @@ should wait for the training job to complete before proceeding to the next
 step in the workflow. Set to `False` if the Task state should submit the
 training job and proceed to the next step. (default: True)}
 
-\item{\code{tags}}{(list[dict], optional): `List to tags <https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+\item{\code{tags}}{(list[dict], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 
 \item{\code{...}}{: Extra Fields passed to Task class}

@@ -10,7 +10,7 @@
 
 #' @title Sagemaker TrainingStep task class
 #' @description Creates a Task State to execute a `SageMaker Training Job`
-#'              `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateTrainingJob.html>`_.
+#'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateTrainingJob.html}
 #'              The TrainingStep will also create a model by default, and the model shares
 #'              the same name as the training job.
 #' @export
@@ -24,9 +24,9 @@ TrainingStep = R6Class("TrainingStep",
     #'              within the scope of the whole state machine.
     #' @param estimator (sagemaker.estimator.EstimatorBase): The estimator for the training
     #'              step. Can be a `BYO estimator, Framework estimator`
-    #'              `<https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms.html>`_
+    #'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms.html}
     #'              or `Amazon built-in algorithm estimator`
-    #'              `<https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html>`_.
+    #'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html}.
     #' @param job_name (str or Placeholder): Specify a training job name, this is required for
     #'              the training job to run. We recommend to use :py:class:`~stepfunctions.inputs.ExecutionInput`
     #'              placeholder collection to pass the value dynamically in each execution.
@@ -56,7 +56,7 @@ TrainingStep = R6Class("TrainingStep",
     #'              should wait for the training job to complete before proceeding to the next
     #'              step in the workflow. Set to `False` if the Task state should submit the
     #'              training job and proceed to the next step. (default: True)
-    #' @param tags (list[dict], optional): `List to tags <https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+    #' @param tags (list[dict], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'              to associate with the resource.
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
@@ -131,7 +131,7 @@ TrainingStep = R6Class("TrainingStep",
 
 #' @title Sagemaker TransfromStep task class
 #' @description Creates a Task State to execute a `SageMaker Transform Job`
-#'              `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateTransformJob.html>`_.
+#'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateTransformJob.html}
 #' @export
 TransformStep = R6Class("TransformStep",
   inherit = Task,
@@ -168,7 +168,7 @@ TransformStep = R6Class("TransformStep",
     #'                should wait for the transform job to complete before proceeding to the next
     #'                step in the workflow. Set to `False` if the Task state should submit the transform
     #'                job and proceed to the next step. (default: True)
-    #' @param tags (list[dict], optional): `List to tags <https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+    #' @param tags (list[dict], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'                to associate with the resource.
     #' @param input_filter (str): A JSONPath to select a portion of the input to pass to
     #'                the algorithm container for inference. If you omit the field, it gets the
@@ -257,7 +257,7 @@ TransformStep = R6Class("TransformStep",
 
 #' @title Sagemaker ModelStep task class
 #' @description Creates a Task State to `create a model in SageMaker`
-#'              `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateModel.html>`_.
+#'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateModel.html}.
 #' @export
 ModelStep = R6Class("ModelStep",
   inherit = Task,
@@ -278,7 +278,7 @@ ModelStep = R6Class("ModelStep",
     #' @param instance_type (str, optional): The EC2 instance type to deploy this Model
     #'              to. For example, 'ml.p2.xlarge'.
     #' @param tags (list[dict], optional): `List to tags`
-    #'              `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+    #'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'              to associate with the resource.
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
@@ -331,7 +331,7 @@ ModelStep = R6Class("ModelStep",
 
 #' @title Sagemaker EndpointConfigStep task class
 #' @description Creates a Task State to `create an endpoint configuration in SageMaker`
-#'              `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateEndpointConfig.html>`_.
+#'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateEndpointConfig.html}.
 #' @export
 EndpointConfigStep = R6Class("EndpointConfigStep",
   inherit = Task,
@@ -358,7 +358,7 @@ EndpointConfigStep = R6Class("EndpointConfigStep",
     #'              configuration related to Endpoint data capture for use with
     #'              Amazon SageMaker Model Monitoring. Default: None.
     #' @param tags (list[dict], optional): `List to tags`
-    #'              `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+    #'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'              to associate with the resource.
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
@@ -399,8 +399,8 @@ EndpointConfigStep = R6Class("EndpointConfigStep",
 )
 
 #' @title Sagemaker EndpointStep task class
-#' @description Creates a Task State to `create <https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateEndpoint.html>`_
-#'              or `update <https://docs.aws.amazon.com/sagemaker/latest/dg/API_UpdateEndpoint.html>`_
+#' @description Creates a Task State to create \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateEndpoint.html}
+#'              or update \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_UpdateEndpoint.html}
 #'              an endpoint in SageMaker.
 #' @export
 EndpointStep = R6Class("EndpointStep",
@@ -419,7 +419,7 @@ EndpointStep = R6Class("EndpointStep",
     #'              `~stepfunctions.inputs.ExecutionInput` placeholder collection to pass the
     #'              value dynamically in each execution.
     #' @param tags (list[dict], optional): `List to tags`
-    #'              `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+    #'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'              to associate with the resource.
     #' @param update (bool, optional): Boolean flag set to `True` if endpoint must to
     #'              be updated. Set to `False` if new endpoint must be created. (default: False)
@@ -487,8 +487,13 @@ TuningStep = R6Class("TuningStep",
     #'                        :class:`sagemaker.amazon.amazon_estimator.RecordSet` objects,
     #'                        where each instance is a different channel of training data.}
     #'              }
-    #' @param wait_for_completion (bool, optional): Boolean value set to `True` if the Task state should wait for the tuning job to complete before proceeding to the next step in the workflow. Set to `False` if the Task state should submit the tuning job and proceed to the next step. (default: True)
-    #' @param tags (list[dict], optional): `List to tags <https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_ to associate with the resource.
+    #' @param wait_for_completion (bool, optional): Boolean value set to `True` if
+    #'               the Task state should wait for the tuning job to complete before
+    #'               proceeding to the next step in the workflow. Set to `False` if the
+    #'               Task state should submit the tuning job and proceed to the next step. (default: True)
+    #' @param tags (list[dict], optional): List to tags
+    #'               \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html} to
+    #'               associate with the resource.
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
                           tuner,
@@ -562,7 +567,7 @@ ProcessingStep = R6Class("ProcessingStep",
     #'              proceeding to the next step in the workflow. Set to `False` if the Task
     #'              state should submit the processing job and proceed to the next step. (default: True)
     #' @param tags (list[dict], optional): `List to tags`
-    #'             `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+    #'             \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'             to associate with the resource.
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,

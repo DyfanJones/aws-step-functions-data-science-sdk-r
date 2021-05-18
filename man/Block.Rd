@@ -4,7 +4,8 @@
 \alias{Block}
 \title{Base class}
 \description{
-Base class to abstract blocks used in `Amazon States Language <https://states-language.net/spec.html>`.
+Base class to abstract blocks used in Amazon States Language
+             \url{https://states-language.net/spec.html}.
 }
 \section{Methods}{
 \subsection{Public methods}{

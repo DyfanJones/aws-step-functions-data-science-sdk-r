@@ -96,7 +96,7 @@ when calling the :meth:`TrainingPipeline.run()` method.}
 \item{\code{role}}{(str): An AWS IAM role (either name or full Amazon Resource Name (ARN)).
 This role is used to create, manage, and execute the Step Functions workflows.}
 
-\item{\code{client}}{(SFN.Client, optional): boto3 client to use for creating and
+\item{\code{client}}{(SFN.Client, optional): \code{\link[paws]{sfn}} client to use for creating and
 interacting with the training pipeline in Step Functions. (default: None)}
 
 \item{\code{compression_type}}{(str, optional): Compression type (Gzip/None) of the
@@ -142,14 +142,17 @@ Run the inference pipeline.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{job_name}}{(str, optional): Name for the training job. This is also used as suffix for the preprocessing job as `preprocess-<job_name>`. If one is not provided, a job name will be auto-generated. (default: None)}
+\item{\code{job_name}}{(str, optional): Name for the training job. This is also
+used as suffix for the preprocessing job as `preprocess-<job_name>`.
+If one is not provided, a job name will be auto-generated. (default: None)}
 
-\item{\code{hyperparameters}}{(dict, optional): Hyperparameters for the estimator training. (default: None)}
+\item{\code{hyperparameters}}{(dict, optional): Hyperparameters for the estimator
+training. (default: None)}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-:py:class:`~stepfunctions.workflow.Execution`: Running instance of the inference pipeline.
+:R:class:`~stepfunctions.workflow.Execution`: Running instance of the inference pipeline.
 }
 }
 \if{html}{\out{<hr>}}

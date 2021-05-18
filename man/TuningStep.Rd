@@ -82,9 +82,14 @@ any of the following forms:
           where each instance is a different channel of training data.}
 }}
 
-\item{\code{wait_for_completion}}{(bool, optional): Boolean value set to `True` if the Task state should wait for the tuning job to complete before proceeding to the next step in the workflow. Set to `False` if the Task state should submit the tuning job and proceed to the next step. (default: True)}
+\item{\code{wait_for_completion}}{(bool, optional): Boolean value set to `True` if
+the Task state should wait for the tuning job to complete before
+proceeding to the next step in the workflow. Set to `False` if the
+Task state should submit the tuning job and proceed to the next step. (default: True)}
 
-\item{\code{tags}}{(list[dict], optional): `List to tags <https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_ to associate with the resource.}
+\item{\code{tags}}{(list[dict], optional): List to tags
+\url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html} to
+associate with the resource.}
 
 \item{\code{...}}{: Extra Fields passed to Task class}
 }

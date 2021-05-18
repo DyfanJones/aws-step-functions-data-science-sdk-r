@@ -16,7 +16,7 @@ replace_parameters_with_jsonpath = function(step, params){
     if (inherits(dest_params, "list")){
       for (key in names(dest_params)){
         if (endsWith(key, '$')){
-          original_key = substring(key,1, nhcar(key)-2) # Remove .$ in the end
+          original_key = substring(key,1, nchar(key)-2) # Remove .$ in the end
           src_params[[original_key]] = NULL
           src_params[[key]] = dest_params[[key]]
         } else

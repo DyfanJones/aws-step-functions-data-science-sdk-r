@@ -14,11 +14,19 @@ VALIDATORS = Enum(
   Is="logical"
 )
 
+
+#' @title BaseRule
+#' @description Abstract class
 BaseRule = R6Class("BaseRule",
   public = list(
+
+    #' @description Convert class to list ready to be translated for
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       return(list())
     },
+
+    #' @description Format class
     format = function(){
       return(sprintf("%s()", class(self)[1]))
     }
@@ -61,7 +69,7 @@ Rule = R6Class("Rule",
     },
 
     #' @description Convert class to list ready to be translated for
-    #'              `Amazon States Language <https://states-language.net/spec.html>`.
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       if (isinstance(self$variable, "StepInput")){
         result = list('Variable'=self$variable$to_jsonpath())
@@ -103,7 +111,7 @@ CompoundRule = R6Class("CompoundRule",
     },
 
     #' @description Convert class to list ready to be translated for
-    #'              `Amazon States Language <https://states-language.net/spec.html>`.
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       out = list(lapply(self$rules, function(rule) rule$to_list()))
       names(out) = self$operator
@@ -138,7 +146,7 @@ NotRule = R6Class("NotRule",
     },
 
     #' @description Convert class to list ready to be translated for
-    #'              `Amazon States Language <https://states-language.net/spec.html>`.
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       return (list('Not'=self$rule$to_list()))
     },

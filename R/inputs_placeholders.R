@@ -16,12 +16,13 @@ Placeholder = R6Class("Placeholder",
     #' @description Initialize Placeholder class
     #' @param schema (dict, optional): Schema for the placeholder collection. (default: None)
     #'              Example below::
-    #'                {
-    #'              'ModelName': str,
-    #'              'JobName': str,
-    #'              'Hyperparameters': {
-    #'              'tol': float
-    #'              }
+    #'              \code{
+    #'              list(
+    #'                 'ModelName'=str,
+    #'                 'JobName'=str,
+    #'                 'Hyperparameters'= list(
+    #'                    'tol'=float)
+    #'                 )
     #'              }
     #'              Keyword Args:
     #' @param name (str, optional): Name of the placeholder variable. (default: None)

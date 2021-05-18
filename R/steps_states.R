@@ -15,7 +15,8 @@ to_pascalcase = function(text){
 }
 
 #' @title Base class
-#' @description Base class to abstract blocks used in `Amazon States Language <https://states-language.net/spec.html>`.
+#' @description Base class to abstract blocks used in Amazon States Language
+#'              \url{https://states-language.net/spec.html}.
 #' @export
 Block = R6Class("Block",
   public = list(
@@ -116,7 +117,7 @@ Retry = R6Class("Retry",
 
     #' @description Initialize a Retry block.
     #' @param error_equals (list(str)): Non-empty list of strings, which match
-    #'              `Error Names <https://states-language.net/spec.html#error-names>`_.
+    #'              Error Names \url{https://states-language.net/spec.html#error-names}.
     #'              When a state reports an error, the interpreter scans through
     #'              the retries and, when the Error Name appears in the value of
     #'              a retrier’s `error_equals` field, implements the retry policy
@@ -160,7 +161,7 @@ Catch = R6Class("Catch",
     #' @description Initialize a Catch block.
     #' @param next_step (State or Chain): Next state or chain to transition to.
     #' @param error_equals (list(str)): Non-empty list of strings, which match
-    #'              `Error Names <https://states-language.net/spec.html#error-names>`_.
+    #'              Error Names \url{https://states-language.net/spec.html#error-names}.
     #'              When a state reports an error, the interpreter scans through the catchers
     #'              and, when the Error Name appears in the value of of a catcher's `error_equals`
     #'              field, transitions to the `next_step` described in the catcher.
@@ -182,7 +183,7 @@ Catch = R6Class("Catch",
     },
 
     #' @description Convert class to list ready to be translated for
-    #'              `Amazon States Language <https://states-language.net/spec.html>`.
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       result = super$to_list()
       result[["Next"]] = self$next_step$state_id
@@ -327,7 +328,7 @@ State = R6Class("State",
     },
 
     #' @description Convert class to list ready to be translated for
-    #'              `Amazon States Language <https://states-language.net/spec.html>`.
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       result = super$to_list()
 
@@ -607,7 +608,7 @@ Choice = R6Class("Choice",
     },
 
     #' @description Convert class to list ready to be translated for
-    #'              `Amazon States Language <https://states-language.net/spec.html>`.
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       result = super$to_list()
 
@@ -700,7 +701,7 @@ Parallel = R6Class("Parallel",
     },
 
     #' @description Convert class to list ready to be translated for
-    #'              `Amazon States Language <https://states-language.net/spec.html>`.
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       result = super$to_list()
       result[["Branches"]] = lapply(
@@ -1060,7 +1061,7 @@ Graph = R6Class("Graph",
     },
 
     #' @description Convert class to list ready to be translated for
-    #'              `Amazon States Language <https://states-language.net/spec.html>`.
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       result = super$to_list()
       result[['StartAt']] = self$branch$state_id
@@ -1087,7 +1088,7 @@ FrozenGraph = R6Class("FrozenGraph",
     },
 
     #' @description Convert class to list ready to be translated for
-    #'              `Amazon States Language <https://states-language.net/spec.html>`.
+    #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
       return(self$definition)
     },

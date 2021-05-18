@@ -5,7 +5,8 @@
 \title{EcsRunTaskStep class}
 \description{
 Creates a Task State to run Amazon ECS or Fargate Tasks. See `Manage Amazon ECS`
-             `or Fargate Tasks with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-ecs.html>`_
+             or Fargate Tasks with Step Functions
+             \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-ecs.html}
              for more details.
 }
 \section{Super classes}{

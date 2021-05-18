@@ -38,8 +38,8 @@ Lists all the workflows in the account.
 \describe{
 \item{\code{max_items}}{(int, optional): The maximum number of items to be returned. (default: 100)}
 
-\item{\code{client}}{(SFN.Client, optional): boto3 client to use for the query. If
-not provided, a default boto3 client for Step Functions will be
+\item{\code{client}}{(SFN.Client, optional): \code{\link[paws]{sfn}} client to use for the query. If
+not provided, a default \code{\link[paws]{sfn}} client for Step Functions will be
 automatically created and used. (default: None)}
 
 \item{\code{html}}{(bool, optional): Renders the list as an HTML table (If running in
@@ -86,8 +86,8 @@ Initialize Workflow Class
     \item{control characters (``U+0000-001F``, ``U+007F-009F``)}
     }}
 
-\item{\code{definition}}{(State or Chain): The `Amazon States Language`
-`<https://states-language.net/spec.html>`_ definition of the workflow.}
+\item{\code{definition}}{(State or Chain): The Amazon States Language
+\url{https://states-language.net/spec.html} definition of the workflow.}
 
 \item{\code{role}}{(str): The Amazon Resource Name (ARN) of the IAM role to use for creating,
 managing, and running the workflow.}
@@ -115,9 +115,9 @@ the workflow. (default: None)}
 definition and execution inputs should be prettified for this workflow.
 `False`, otherwise. (default: True)}
 
-\item{\code{client}}{(SFN.Client, optional): boto3 client to use for creating, managing,
+\item{\code{client}}{(SFN.Client, optional): paws client to use for creating, managing,
 and running the workflow on Step Functions. If not provided, a
-default boto3 client for Step Functions will be automatically created
+default \code{\link[paws]{sfn}} client for Step Functions will be automatically created
 and used. (default: None)}
 }
 \if{html}{\out{</div>}}
@@ -138,9 +138,9 @@ Factory method to create an instance attached to an exisiting
 \describe{
 \item{\code{state_machine_arn}}{(str): The Amazon Resource Name (ARN) of the existing workflow.}
 
-\item{\code{client}}{(SFN.Client, optional): boto3 client to use for attaching the existing
+\item{\code{client}}{(SFN.Client, optional): \code{\link[paws]{sfn}} client to use for attaching the existing
 workflow in Step Functions to the Workflow object. If not provided,
-a default boto3 client for Step Functions will be automatically
+a default \code{\link[paws]{sfn}} client for Step Functions will be automatically
 created and used. (default: None)}
 }
 \if{html}{\out{</div>}}
@@ -177,8 +177,8 @@ Updates an existing state machine by modifying its definition
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{definition}}{(State or Chain, optional): The `Amazon States Language`
-`<https://states-language.net/spec.html>`_ definition to update
+\item{\code{definition}}{(State or Chain, optional): The Amazon States Language
+\url{https://states-language.net/spec.html} definition to update
 the workflow with. (default: None)}
 
 \item{\code{role}}{(str, optional): The Amazon Resource Name (ARN) of the IAM role

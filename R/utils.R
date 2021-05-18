@@ -13,10 +13,10 @@ Enum <- function(..., .class=NULL) {
 }
 
 #' @export
-print.Enum <- function(env){
-  l_env = as.list(env)
-  values = paste(names(env), shQuote(unname(l_env)), sep = ": ")
-  cat(sprintf("<Enum environment: %s>\n", data.table::address(env)))
+print.Enum <- function(x, ...){
+  l_env = as.list(x)
+  values = paste(names(x), shQuote(unname(l_env)), sep = ": ")
+  cat("<Enum environment>\n")
   cat("Values:\n")
   cat(paste("  -", values, collapse = "\n"))
 }
@@ -28,4 +28,3 @@ pkg_method <- function(fun, pkg) {
   fun_name <- utils::getFromNamespace(fun, pkg)
   return(fun_name)
 }
-

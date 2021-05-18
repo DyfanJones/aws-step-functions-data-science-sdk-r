@@ -5,7 +5,7 @@
 \title{DynamoDBGetItemStep class}
 \description{
 Creates a Task state to get an item from DynamoDB. See `Call DynamoDB`
-             `APIs with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html>`_
+             APIs with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html}
              for more details.
 }
 \section{Super classes}{

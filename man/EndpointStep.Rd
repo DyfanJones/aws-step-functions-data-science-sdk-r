@@ -4,8 +4,8 @@
 \alias{EndpointStep}
 \title{Sagemaker EndpointStep task class}
 \description{
-Creates a Task State to `create <https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateEndpoint.html>`_
-             or `update <https://docs.aws.amazon.com/sagemaker/latest/dg/API_UpdateEndpoint.html>`_
+Creates a Task State to create \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateEndpoint.html}
+             or update \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_UpdateEndpoint.html}
              an endpoint in SageMaker.
 }
 \section{Super classes}{
@@ -68,7 +68,7 @@ to use for the endpoint. We recommend to use :py:class:
 value dynamically in each execution.}
 
 \item{\code{tags}}{(list[dict], optional): `List to tags`
-`<https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+\url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 
 \item{\code{update}}{(bool, optional): Boolean flag set to `True` if endpoint must to

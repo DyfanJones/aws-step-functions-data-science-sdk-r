@@ -46,7 +46,7 @@ Initialize a Retry block.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{error_equals}}{(list(str)): Non-empty list of strings, which match
-`Error Names <https://states-language.net/spec.html#error-names>`_.
+Error Names \url{https://states-language.net/spec.html#error-names}.
 When a state reports an error, the interpreter scans through
 the retries and, when the Error Name appears in the value of
 a retrier’s `error_equals` field, implements the retry policy

@@ -4,8 +4,8 @@
 \alias{DynamoDBUpdateItemStep}
 \title{DynamoDBUpdateItemStep class}
 \description{
-Creates a Task state to update an item from DynamoDB. See `Call DynamoDB`
-             `APIs with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html>`_
+Creates a Task state to update an item from DynamoDB. See Call DynamoDB
+             APIs with Step Functions \url{ttps://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html}
              for more details.
 }
 \section{Super classes}{

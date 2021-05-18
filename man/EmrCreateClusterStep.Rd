@@ -5,8 +5,8 @@
 \title{EmrCreateClusterStep class}
 \description{
 Creates a Task state to create and start running a cluster (job flow). See
-             `Call Amazon EMR with Step Functions`
-             `<https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_
+             Call Amazon EMR with Step Functions
+             \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html}
              for more details.
 }
 \section{Super classes}{

@@ -46,7 +46,7 @@ Initialize NotRule class
 \if{latex}{\out{\hypertarget{method-to_list}{}}}
 \subsection{Method \code{to_list()}}{
 Convert class to list ready to be translated for
-             `Amazon States Language <https://states-language.net/spec.html>`.
+             Amazon States Language \url{https://states-language.net/spec.html}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NotRule$to_list()}\if{html}{\out{</div>}}
 }

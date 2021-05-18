@@ -62,8 +62,8 @@ Workflow = R6Class("Workflow",
 
     #' @description Lists all the workflows in the account.
     #' @param max_items (int, optional): The maximum number of items to be returned. (default: 100)
-    #' @param client (SFN.Client, optional): boto3 client to use for the query. If
-    #'              not provided, a default boto3 client for Step Functions will be
+    #' @param client (SFN.Client, optional): \code{\link[paws]{sfn}} client to use for the query. If
+    #'              not provided, a default \code{\link[paws]{sfn}} client for Step Functions will be
     #'              automatically created and used. (default: None)
     #' @param html (bool, optional): Renders the list as an HTML table (If running in
     #'              an IPython environment). If the parameter is not provided, or set
@@ -75,7 +75,7 @@ Workflow = R6Class("Workflow",
                               html=FALSE){
       if (is.null(client)){
         LOGGER$debug(paste("The argument 'client' is not provided. Creating a new",
-                           "boto3 client instance with default settings."))
+                           "`paws::sfn()` client instance with default settings."))
         client = sfn()
       }
 
@@ -110,8 +110,8 @@ Workflow = R6Class("Workflow",
     #'     \item{special characters ``\" # \% \ ^ | ~ ` $ & , ; : /``}
     #'     \item{control characters (``U+0000-001F``, ``U+007F-009F``)}
     #'     }
-    #' @param definition (State or Chain): The `Amazon States Language`
-    #'              `<https://states-language.net/spec.html>`_ definition of the workflow.
+    #' @param definition (State or Chain): The Amazon States Language
+    #'              \url{https://states-language.net/spec.html} definition of the workflow.
     #' @param role (str): The Amazon Resource Name (ARN) of the IAM role to use for creating,
     #'              managing, and running the workflow.
     #' @param tags (list): Tags to be added when creating a workflow. Tags are key-value pairs
@@ -130,9 +130,9 @@ Workflow = R6Class("Workflow",
     #' @param format_json (bool, optional): Boolean flag set to `True` if workflow
     #'              definition and execution inputs should be prettified for this workflow.
     #'              `False`, otherwise. (default: True)
-    #' @param client (SFN.Client, optional): boto3 client to use for creating, managing,
+    #' @param client (SFN.Client, optional): paws client to use for creating, managing,
     #'              and running the workflow on Step Functions. If not provided, a
-    #'              default boto3 client for Step Functions will be automatically created
+    #'              default \code{\link[paws]{sfn}} client for Step Functions will be automatically created
     #'              and used. (default: None)
     initialize = function(name,
                           definition,
@@ -174,9 +174,9 @@ Workflow = R6Class("Workflow",
     #' @description Factory method to create an instance attached to an exisiting
     #'              workflow in Step Functions.
     #' @param state_machine_arn (str): The Amazon Resource Name (ARN) of the existing workflow.
-    #' @param client (SFN.Client, optional): boto3 client to use for attaching the existing
+    #' @param client (SFN.Client, optional): \code{\link[paws]{sfn}} client to use for attaching the existing
     #'              workflow in Step Functions to the Workflow object. If not provided,
-    #'              a default boto3 client for Step Functions will be automatically
+    #'              a default \code{\link[paws]{sfn}} client for Step Functions will be automatically
     #'              created and used. (default: None)
     #' @return Workflow: Workflow object attached to the existing workflow in Step Functions.
     attach = function(state_machine_arn,
@@ -184,7 +184,7 @@ Workflow = R6Class("Workflow",
 
       if (!is.null(client)){
         LOGGER$debug(paste("The argument 'client' is not provided. Creating a new",
-                    "boto3 client instance with default settings."))
+                    "`paws::sfn` client instance with default settings."))
         client = sfn()
       }
       response = client$describe_state_machine(stateMachineArn=state_machine_arn)
@@ -220,8 +220,8 @@ Workflow = R6Class("Workflow",
     #' @description Updates an existing state machine by modifying its definition
     #'              and/or role. Executions started immediately after calling this
     #'              method may use the previous definition and role.
-    #' @param definition (State or Chain, optional): The `Amazon States Language`
-    #'              `<https://states-language.net/spec.html>`_ definition to update
+    #' @param definition (State or Chain, optional): The Amazon States Language
+    #'              \url{https://states-language.net/spec.html} definition to update
     #'              the workflow with. (default: None)
     #' @param role (str, optional): The Amazon Resource Name (ARN) of the IAM role
     #'              to use for creating, managing, and running the workflow. (default: None)
@@ -293,7 +293,7 @@ Workflow = R6Class("Workflow",
 
       LOGGER$info("Workflow execution started successfully on AWS Step Functions.")
 
-      # name is None because boto3 client.start_execution only returns startDate and executionArn
+      # name is None because \code{\link[paws]{sfn}} client.start_execution only returns startDate and executionArn
       return(Execution$new(
         workflow=self,
         execution_arn=response[['executionArn']],
@@ -440,9 +440,9 @@ Execution = R6Class("Execution",
     #' @param execution_arn (str): The Amazon Resource Name (ARN) of the workflow execution.
     #' @param start_date (datetime.datetime): The date the workflow execution was started.
     #' @param status (RunStatus): Status of the workflow execution.
-    #' @param client (SFN.Client, optional): boto3 client to use for running and
+    #' @param client (SFN.Client, optional): \code{\link[paws]{sfn}} client to use for running and
     #'              managing the workflow executions on Step Functions. If no client
-    #'              is provided, the boto3 client from the parent workflow will be used. (default: None)
+    #'              is provided, the \code{\link[paws]{sfn}} client from the parent workflow will be used. (default: None)
     #' @param name (str, optional): Name for the workflow execution. (default: None)
     #' @param stop_date (datetime.datetime, optional): The date the workflow execution
     #'              was stopped, if applicable. (default: None)
@@ -568,7 +568,11 @@ Execution = R6Class("Execution",
 
 
     #' @description Get the output for the workflow execution.
-    #' @param wait (bool, optional): Boolean flag set to `True` if the call should wait for a running workflow execution to end before returning the output. Set to `False`, otherwise. Note that if the status is running, and `wait` is set to `True`, this will be a blocking call. (default: False)
+    #' @param wait (bool, optional): Boolean flag set to `True` if the call should
+    #'              wait for a running workflow execution to end before returning
+    #'              the output. Set to `False`, otherwise. Note that if the status
+    #'              is running, and `wait` is set to `True`, this will be a blocking
+    #'              call. (default: False)
     #' @return list or dict: Workflow execution output.
     get_output = function(wait=FALSE){
       while(wait && self$describe()[['status']] == 'RUNNING'){

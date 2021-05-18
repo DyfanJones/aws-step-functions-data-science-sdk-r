@@ -34,12 +34,13 @@ Initialize Placeholder class
 \describe{
 \item{\code{schema}}{(dict, optional): Schema for the placeholder collection. (default: None)
 Example below::
-  {
-'ModelName': str,
-'JobName': str,
-'Hyperparameters': {
-'tol': float
-}
+\code{
+list(
+   'ModelName'=str,
+   'JobName'=str,
+   'Hyperparameters'= list(
+      'tol'=float)
+   )
 }
 Keyword Args:}
 

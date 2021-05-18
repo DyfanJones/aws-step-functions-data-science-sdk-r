@@ -6,8 +6,8 @@
 \description{
 Creates a Task state to lock a cluster (job flow) so the EC2 instances
              in the cluster cannot be terminated by user intervention, an API call, or
-             a job-flow error. See `Call Amazon EMR with Step Functions`
-             `<https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html>`_ for more details.
+             a job-flow error. See Call Amazon EMR with Step Functions
+             \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html} for more details.
 }
 \section{Super classes}{
 \code{\link[stepfunctions:Block]{stepfunctions::Block}} -> \code{\link[stepfunctions:State]{stepfunctions::State}} -> \code{\link[stepfunctions:Task]{stepfunctions::Task}} -> \code{EmrSetClusterTerminationProtectionStep}

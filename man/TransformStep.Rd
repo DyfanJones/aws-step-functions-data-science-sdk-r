@@ -5,7 +5,7 @@
 \title{Sagemaker TransfromStep task class}
 \description{
 Creates a Task State to execute a `SageMaker Transform Job`
-             `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateTransformJob.html>`_.
+             \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateTransformJob.html}
 }
 \section{Super classes}{
 \code{\link[stepfunctions:Block]{stepfunctions::Block}} -> \code{\link[stepfunctions:State]{stepfunctions::State}} -> \code{\link[stepfunctions:Task]{stepfunctions::Task}} -> \code{TransformStep}
@@ -104,7 +104,7 @@ should wait for the transform job to complete before proceeding to the next
 step in the workflow. Set to `False` if the Task state should submit the transform
 job and proceed to the next step. (default: True)}
 
-\item{\code{tags}}{(list[dict], optional): `List to tags <https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+\item{\code{tags}}{(list[dict], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 
 \item{\code{input_filter}}{(str): A JSONPath to select a portion of the input to pass to

@@ -42,7 +42,7 @@ Initialize a Catch block.
 \item{\code{next_step}}{(State or Chain): Next state or chain to transition to.}
 
 \item{\code{error_equals}}{(list(str)): Non-empty list of strings, which match
-`Error Names <https://states-language.net/spec.html#error-names>`_.
+Error Names \url{https://states-language.net/spec.html#error-names}.
 When a state reports an error, the interpreter scans through the catchers
 and, when the Error Name appears in the value of of a catcher's `error_equals`
 field, transitions to the `next_step` described in the catcher.}
@@ -67,7 +67,7 @@ allowed extra fields
 \if{latex}{\out{\hypertarget{method-to_list}{}}}
 \subsection{Method \code{to_list()}}{
 Convert class to list ready to be translated for
-             `Amazon States Language <https://states-language.net/spec.html>`.
+             Amazon States Language \url{https://states-language.net/spec.html}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Catch$to_list()}\if{html}{\out{</div>}}
 }

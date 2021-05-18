@@ -5,7 +5,7 @@
 \title{Sagemaker ModelStep task class}
 \description{
 Creates a Task State to `create a model in SageMaker`
-             `<https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateModel.html>`_.
+             \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateModel.html}.
 }
 \section{Super classes}{
 \code{\link[stepfunctions:Block]{stepfunctions::Block}} -> \code{\link[stepfunctions:State]{stepfunctions::State}} -> \code{\link[stepfunctions:Task]{stepfunctions::Task}} -> \code{ModelStep}
@@ -71,7 +71,7 @@ the value dynamically in each execution.}
 to. For example, 'ml.p2.xlarge'.}
 
 \item{\code{tags}}{(list[dict], optional): `List to tags`
-`<https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html>`_
+\url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 
 \item{\code{...}}{: Extra Fields passed to Task class}
