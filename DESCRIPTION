@@ -13,8 +13,7 @@ Imports:
     R6,
     tools,
     yaml,
-    glue,
-    uuid
+    glue
 Suggests:
     testthat,
     crayon,
@@ -36,10 +35,14 @@ Collate:
     'steps_utils.R'
     'steps_sagemaker.R'
     'steps_service.R'
+    'template_utils.R'
+    'template_pipeline_common.R'
     'workflow_cloudformation.R'
     'workflow_widgets_utils.R'
     'workflow_widgets_workflows_table.R'
     'workflow_widgets_event_table.R'
     'workflow_widgets_graph.R'
     'workflow_stepfunctions.R'
+    'template_pipeline_inference.R'
+    'template_pipeline_train.R'
     'workflow_widgets_executions_table.R'
