@@ -103,7 +103,7 @@ workflow$render_graph()
 The following renders the JSON of the Amazon States Language definition of the workflow you created.
 
 ```
-workflow$definition$to_json(pretty=True)
+workflow$definition$to_json(pretty=TRUE)
 ```
 
 ```
