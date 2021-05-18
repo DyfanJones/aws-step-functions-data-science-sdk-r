@@ -5,7 +5,6 @@
 #' @importFrom jsonlite toJSON prettify
 #' @importFrom yaml as.yaml
 #' @import lgr
-#' @import uuid
 #' @importFrom glue glue
 "_PACKAGE"
 
