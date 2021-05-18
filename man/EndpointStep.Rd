@@ -67,7 +67,7 @@ to use for the endpoint. We recommend to use :py:class:
 `~stepfunctions.inputs.ExecutionInput` placeholder collection to pass the
 value dynamically in each execution.}
 
-\item{\code{tags}}{(list[dict], optional): `List to tags`
+\item{\code{tags}}{(list[list], optional): `List to tags`
 \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 

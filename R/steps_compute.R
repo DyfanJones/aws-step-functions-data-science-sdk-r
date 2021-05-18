@@ -39,7 +39,7 @@ LambdaStep = R6Class("LambdaStep",
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -117,7 +117,7 @@ GlueStartJobRunStep = R6Class("GlueStartJobRunStep",
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -194,7 +194,7 @@ BatchSubmitJobStep = R6Class("BatchSubmitJobStep",
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -272,7 +272,7 @@ EcsRunTaskStep = R6Class("EcsRunTaskStep",
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')

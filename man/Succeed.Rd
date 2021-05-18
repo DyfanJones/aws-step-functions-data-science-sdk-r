@@ -5,7 +5,7 @@
 \title{Succeed State Class}
 \description{
 Succeed State terminates a state machine successfully. The Succeed State is a useful target for
-             :py:class:`Choice`-state branches that don't do anything but terminate the machine.
+             :R:class:`Choice`-state branches that don't do anything but terminate the machine.
 }
 \section{Super classes}{
 \code{\link[stepfunctions:Block]{stepfunctions::Block}} -> \code{\link[stepfunctions:State]{stepfunctions::State}} -> \code{Succeed}

@@ -206,13 +206,13 @@ State = R6Class("State",
     #'              unique within the scope of the whole state machine.
     #' @param state_type (str): Type of the state. (Allowed values: `'Pass'`,
     #'              `'Succeed'`, `'Fail'`, `'Wait'`, `'Task'`, `'Choice'`, `'Parallel'`, `'Map'`).
-    #' @param output_schema (dict): Expected output schema for the State. This is
+    #' @param output_schema (list): Expected output schema for the State. This is
     #'              used to validate placeholder inputs used by the next state in
     #'              the state machine. (default: None)
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -265,7 +265,7 @@ State = R6Class("State",
     },
 
     #' @description Update `parameters` field in the state, if supported.
-    #' @param params (dict or list): The value of this field becomes the effective input for the state.
+    #' @param params (list): The value of this field becomes the effective input for the state.
     update_parameters = function(params){
       if (Field$Parameters %in% self$allowed_fields())
         self$fields[[Field$Parameters]] = params
@@ -370,7 +370,7 @@ Pass = R6Class("Pass",
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -412,7 +412,7 @@ Pass = R6Class("Pass",
 
 #' @title Succeed State Class
 #' @description Succeed State terminates a state machine successfully. The Succeed State is a useful target for
-#'              :py:class:`Choice`-state branches that don't do anything but terminate the machine.
+#'              :R:class:`Choice`-state branches that don't do anything but terminate the machine.
 #' @export
 Succeed = R6Class("Succeed",
   inherit=State,
@@ -594,7 +594,7 @@ Choice = R6Class("Choice",
     },
 
     #' @description Add a *rule*, *next_step* pair to the choice state.
-    #' @param rule (:py:class:`stepfunctions.steps.choice_rule.BaseRule`): Rule to pattern match the input against.
+    #' @param rule (:R:class:`stepfunctions.steps.choice_rule.BaseRule`): Rule to pattern match the input against.
     #' @param next_step (State or Chain): Next state or chain to transition to, if `rule` is matches with the input.
     add_choice = function(rule, next_step){
       self$choices = c(self$choices, list(list(rule, next_step)))
@@ -659,7 +659,7 @@ Parallel = R6Class("Parallel",
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param input_path (str, optional): Path applied to the state’s raw input
     #'              to select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the
+    #' @param parameters (list, optional): The value of this field becomes the
     #'              effective input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -732,7 +732,7 @@ Map = R6Class("Map",
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective input for the state.
+    #' @param parameters (list, optional): The value of this field becomes the effective input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
     #' @param output_path (str, optional): Path applied to the state’s output after
@@ -820,7 +820,7 @@ Task = R6Class("Task",
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param input_path (str, optional): Path applied to the state’s raw input to select
     #'              some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -1083,7 +1083,7 @@ FrozenGraph = R6Class("FrozenGraph",
     initialize = function(definition){
       if(!is.list(definition))
         stop(sprintf(
-          "Expected definition to be a dict, but got `%s`.", class(definition)))
+          "Expected definition to be a list, but got `%s`.", class(definition)))
       self$definition = definition
     },
 

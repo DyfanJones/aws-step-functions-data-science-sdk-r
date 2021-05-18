@@ -65,7 +65,7 @@ Placeholder = R6Class("Placeholder",
       }
     },
 
-    #' @description Generate a schema for the placeholder collection as a Python dictionary.
+    #' @description Generate a schema for the placeholder collection as a R named list.
     #' @return list: Placeholder collection schema.
     get_schema_as_list = function(){
       schema = list()

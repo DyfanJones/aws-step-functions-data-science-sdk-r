@@ -36,8 +36,8 @@ InferencePipeline = R6Class("InferencePipeline",
     #'              method of the associated estimator, as this can take any of the following forms:
     #' \itemize{
     #'     \item{(str) - The S3 location where training data is saved.}
-    #'     \item{(dict[str, str] or dict[str, `sagemaker.inputs.TrainingInput`]) - If
-    #'           using multiple channels for training data, you can specify a dict mapping
+    #'     \item{(list[str, str] or list[str, `sagemaker.inputs.TrainingInput`]) - If
+    #'           using multiple channels for training data, you can specify a list mapping
     #'           channel names to strings or `sagemaker.inputs.TrainingInput` objects.}
     #'     \item{(`sagemaker.inputs.TrainingInput`) - Channel configuration for S3 data
     #'           sources that can provide additional information about the training dataset.
@@ -202,7 +202,7 @@ InferencePipeline = R6Class("InferencePipeline",
     #' @param job_name (str, optional): Name for the training job. This is also
     #'              used as suffix for the preprocessing job as `preprocess-<job_name>`.
     #'              If one is not provided, a job name will be auto-generated. (default: None)
-    #' @param hyperparameters (dict, optional): Hyperparameters for the estimator
+    #' @param hyperparameters (list, optional): Hyperparameters for the estimator
     #'              training. (default: None)
     #' @return :R:class:`~stepfunctions.workflow.Execution`: Running instance of the inference pipeline.
     execute = function(job_name=NULL,

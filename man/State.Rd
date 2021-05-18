@@ -62,7 +62,7 @@ unique within the scope of the whole state machine.}
 \item{\code{state_type}}{(str): Type of the state. (Allowed values: `'Pass'`,
 `'Succeed'`, `'Fail'`, `'Wait'`, `'Task'`, `'Choice'`, `'Parallel'`, `'Map'`).}
 
-\item{\code{output_schema}}{(dict): Expected output schema for the State. This is
+\item{\code{output_schema}}{(list): Expected output schema for the State. This is
 used to validate placeholder inputs used by the next state in
 the state machine. (default: None)}
 
@@ -71,7 +71,7 @@ the state machine. (default: None)}
 \item{\code{input_path}}{(str, optional): Path applied to the state’s raw input to
 select some or all of it; that selection is used by the state. (default: '$')}
 
-\item{\code{parameters}}{(dict, optional): The value of this field becomes the effective
+\item{\code{parameters}}{(list, optional): The value of this field becomes the effective
 input for the state.}
 
 \item{\code{result_path}}{(str, optional): Path specifying the raw input’s combination
@@ -108,7 +108,7 @@ Update `parameters` field in the state, if supported.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{params}}{(dict or list): The value of this field becomes the effective input for the state.}
+\item{\code{params}}{(list): The value of this field becomes the effective input for the state.}
 }
 \if{html}{\out{</div>}}
 }

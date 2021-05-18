@@ -77,7 +77,7 @@ the processing job. These must be provided as
 the processing job. These can be specified as either path strings or
 :class:`~sagemaker.processing.ProcessingOutput` objects (default: None).}
 
-\item{\code{experiment_config}}{(dict, optional): Specify the experiment config for
+\item{\code{experiment_config}}{(list, optional): Specify the experiment config for
 the processing. (Default: None)}
 
 \item{\code{container_arguments}}{([str]): The arguments for a container used to run a processing job.}
@@ -94,7 +94,7 @@ the Task state should wait for the processing job to complete before
 proceeding to the next step in the workflow. Set to `False` if the Task
 state should submit the processing job and proceed to the next step. (default: True)}
 
-\item{\code{tags}}{(list[dict], optional): `List to tags`
+\item{\code{tags}}{(list[list], optional): `List to tags`
 \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 

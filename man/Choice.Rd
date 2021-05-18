@@ -98,7 +98,7 @@ Add a *rule*, *next_step* pair to the choice state.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{rule}}{(:py:class:`stepfunctions.steps.choice_rule.BaseRule`): Rule to pattern match the input against.}
+\item{\code{rule}}{(:R:class:`stepfunctions.steps.choice_rule.BaseRule`): Rule to pattern match the input against.}
 
 \item{\code{next_step}}{(State or Chain): Next state or chain to transition to, if `rule` is matches with the input.}
 }

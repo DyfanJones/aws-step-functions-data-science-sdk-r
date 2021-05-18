@@ -80,7 +80,7 @@ Stops a workflow execution.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-dict: Datetime of when the workflow execution was stopped. Example below::
+list: Datetime of when the workflow execution was stopped. Example below::
 \code{
 list(
  stopDate = as.POSIXct(
@@ -89,8 +89,10 @@ list(
 )
 }
 **Response structure**:
- - (dict)
- - stopDate (datetime): The date the workflow execution is stopped
+\itemize{
+   \item{(list)}
+   \item{stopDate (datetime): The date the workflow execution is stopped}
+}
 }
 }
 \if{html}{\out{<hr>}}
@@ -113,13 +115,13 @@ should be listed in reverse chronological order. Set to `False`,
 if the order should be in chronological order. (default: False)}
 
 \item{\code{html}}{(bool, optional): Renders the list as an HTML table (If running in
-an IPython environment). If the parameter is not provided, or set
-to False, a Python list is returned. (default: False)}
+an IRKernel environment). If the parameter is not provided, or set
+to FALSE, a R list is returned. (default: False)}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-dict: Object containing the list of workflow execution events. Refer
+list: Object containing the list of workflow execution events. Refer
              to :meth:`.SFN.Client.get_execution_history()` for the response structure.
 }
 }
@@ -133,16 +135,7 @@ Describes a workflow execution.
 }
 
 \subsection{Returns}{
-dict: Details of the workflow execution.
-**Response structure**:
-- executionArn (string): The Amazon Resource Name (ARN) that identifies the workflow execution.
-- stateMachineArn (string): The Amazon Resource Name (ARN) of the workflow that was executed.
-- name (string): The name of the workflow execution.
-- status (string): The current status of the workflow execution.
-- startDate (datetime): The date the workflow execution is started.
-- stopDate (datetime): If the workflow execution has already ended, the date the execution stopped.
-- input (string): The string that contains the JSON input data of the workflow execution.
-- output (string): The JSON output data of the workflow execution.
+
 }
 }
 \if{html}{\out{<hr>}}
@@ -176,12 +169,8 @@ Get the input for the workflow execution.
 \if{html}{\out{<div class="r">}}\preformatted{Execution$get_input()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{list}}{or dict: Workflow execution input.}
-}
-\if{html}{\out{</div>}}
+\subsection{Returns}{
+list: Workflow execution input.
 }
 }
 \if{html}{\out{<hr>}}
@@ -205,7 +194,7 @@ call. (default: False)}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-list or dict: Workflow execution output.
+list: Workflow execution output.
 }
 }
 \if{html}{\out{<hr>}}

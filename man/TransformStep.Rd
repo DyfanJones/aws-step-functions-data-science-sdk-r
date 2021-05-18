@@ -97,14 +97,14 @@ Valid values:
 \item{\code{split_type}}{(str): The record delimiter for the input object (default: 'None').
 Valid values: 'None', 'Line', 'RecordIO', and 'TFRecord'.}
 
-\item{\code{experiment_config}}{(dict, optional): Specify the experiment config for the transform. (Default: None)}
+\item{\code{experiment_config}}{(list, optional): Specify the experiment config for the transform. (Default: None)}
 
 \item{\code{wait_for_completion}}{(bool, optional): Boolean value set to `True` if the Task state
 should wait for the transform job to complete before proceeding to the next
 step in the workflow. Set to `False` if the Task state should submit the transform
 job and proceed to the next step. (default: True)}
 
-\item{\code{tags}}{(list[dict], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
+\item{\code{tags}}{(list[list], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 
 \item{\code{input_filter}}{(str): A JSONPath to select a portion of the input to pass to

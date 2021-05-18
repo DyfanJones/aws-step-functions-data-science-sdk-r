@@ -43,8 +43,8 @@ not provided, a default \code{\link[paws]{sfn}} client for Step Functions will b
 automatically created and used. (default: None)}
 
 \item{\code{html}}{(bool, optional): Renders the list as an HTML table (If running in
-an IPython environment). If the parameter is not provided, or set
-to False, a Python list is returned. (default: False)}
+an IRkernel environment). If the parameter is not provided, or set
+to FALSE, a R list is returned. (default: False)}
 }
 \if{html}{\out{</div>}}
 }
@@ -206,7 +206,7 @@ Starts a single execution of the workflow.
 \item{\code{name}}{(str, optional): The name of the workflow execution. If one is
 not provided, a workflow execution name will be auto-generated. (default: None)}
 
-\item{\code{inputs}}{(str, list or dict, optional): Input data for the workflow execution. (default: None)}
+\item{\code{inputs}}{(str, list, optional): Input data for the workflow execution. (default: None)}
 }
 \if{html}{\out{</div>}}
 }
@@ -232,8 +232,8 @@ Lists the executions for the workflow.
 the executions whose current status matches the given filter. (default: None)}
 
 \item{\code{html}}{(bool, optional): Renders the list as an HTML table (If running
-in an IPython environment). If the parameter is not provided, or
-set to False, a Python list is returned. (default: False)}
+in an IRKernel environment). If the parameter is not provided, or
+set to FALSE, a R list is returned. (default: False)}
 }
 \if{html}{\out{</div>}}
 }

@@ -82,7 +82,7 @@ Model to. For example, 'ml.p2.xlarge'.}
 configuration related to Endpoint data capture for use with
 Amazon SageMaker Model Monitoring. Default: None.}
 
-\item{\code{tags}}{(list[dict], optional): `List to tags`
+\item{\code{tags}}{(list[list], optional): `List to tags`
 \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 

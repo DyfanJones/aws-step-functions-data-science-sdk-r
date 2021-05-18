@@ -64,8 +64,8 @@ This role is used to create, manage, and execute the Step Functions workflows.}
              method of the associated estimator, as this can take any of the following forms:
 \itemize{
     \item{(str) - The S3 location where training data is saved.}
-    \item{(dict[str, str] or dict[str, `sagemaker.inputs.TrainingInput`]) - If
-          using multiple channels for training data, you can specify a dict mapping
+    \item{(list[str, str] or list[str, `sagemaker.inputs.TrainingInput`]) - If
+          using multiple channels for training data, you can specify a list mapping
           channel names to strings or `sagemaker.inputs.TrainingInput` objects.}
     \item{(`sagemaker.inputs.TrainingInput`) - Channel configuration for S3 data
           sources that can provide additional information about the training dataset.
@@ -129,13 +129,13 @@ Run the training pipeline.
 \item{\code{job_name}}{(str, optional): Name for the training job. If one is not
 provided, a job name will be auto-generated. (default: None)}
 
-\item{\code{hyperparameters}}{(dict, optional): Hyperparameters for the estimator
+\item{\code{hyperparameters}}{(list, optional): Hyperparameters for the estimator
 training. (default: None)}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-:py:class:`~stepfunctions.workflow.Execution`: Running instance of
+:R:class:`~stepfunctions.workflow.Execution`: Running instance of
              the training pipeline.
 }
 }

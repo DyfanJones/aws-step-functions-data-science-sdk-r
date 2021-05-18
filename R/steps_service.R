@@ -37,7 +37,7 @@ DynamoDBGetItemStep = R6Class("DynamoDBGetItemStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -95,7 +95,7 @@ DynamoDBPutItemStep = R6Class("DynamoDBPutItemStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -152,7 +152,7 @@ DynamoDBDeleteItemStep = R6Class("DynamoDBDeleteItemStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -210,7 +210,7 @@ DynamoDBUpdateItemStep = R6Class("DynamoDBUpdateItemStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -270,7 +270,7 @@ SnsPublishStep = R6Class("SnsPublishStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -347,7 +347,7 @@ SqsSendMessageStep = R6Class("SqsSendMessageStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -426,7 +426,7 @@ EmrCreateClusterStep = R6Class("EmrCreateClusterStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -504,7 +504,7 @@ EmrTerminateClusterStep = R6Class("EmrTerminateClusterStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -582,7 +582,7 @@ EmrAddStepStep = R6Class("EmrAddStepStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -658,7 +658,7 @@ EmrCancelStepStep = R6Class("EmrCancelStepStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -717,7 +717,7 @@ EmrSetClusterTerminationProtectionStep = R6Class("EmrSetClusterTerminationProtec
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -775,7 +775,7 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')
@@ -833,7 +833,7 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
     #'              a field whose value is a positive integer.
     #' @param input_path (str, optional): Path applied to the state’s raw input to
     #'              select some or all of it; that selection is used by the state. (default: '$')
-    #' @param parameters (dict, optional): The value of this field becomes the effective
+    #' @param parameters (list, optional): The value of this field becomes the effective
     #'              input for the state.
     #' @param result_path (str, optional): Path specifying the raw input’s combination
     #'              with or replacement by the state’s result. (default: '$')

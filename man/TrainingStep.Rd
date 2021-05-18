@@ -78,8 +78,8 @@ placeholder collection to pass the value dynamically in each execution.}
 method of the associated estimator, as this can take any of the following forms:
 \itemize{
    \item{(str) - The S3 location where training data is saved.}
-   \item{(dict[str, str] or dict[str, sagemaker.inputs.TrainingInput]) - If using multiple
-         channels for training data, you can specify a dict mapping channel names to
+   \item{(list[str, str] or list[str, sagemaker.inputs.TrainingInput]) - If using multiple
+         channels for training data, you can specify a list mapping channel names to
          strings or :func:`~sagemaker.inputs.TrainingInput` objects.}
    \item{(sagemaker.inputs.TrainingInput) - Channel configuration for S3 data sources that can
          provide additional information about the training dataset. See
@@ -92,20 +92,20 @@ method of the associated estimator, as this can take any of the following forms:
          where each instance is a different channel of training data.}
 }}
 
-\item{\code{hyperparameters}}{(dict, optional): Specify the hyper parameters for the training. (Default: None)}
+\item{\code{hyperparameters}}{(list, optional): Specify the hyper parameters for the training. (Default: None)}
 
 \item{\code{mini_batch_size}}{(int): Specify this argument only when estimator is a built-in
 estimator of an Amazon algorithm. For other estimators, batch size should be
 specified in the estimator.}
 
-\item{\code{experiment_config}}{(dict, optional): Specify the experiment config for the training. (Default: None)}
+\item{\code{experiment_config}}{(list, optional): Specify the experiment config for the training. (Default: None)}
 
 \item{\code{wait_for_completion}}{(bool, optional): Boolean value set to `True` if the Task state
 should wait for the training job to complete before proceeding to the next
 step in the workflow. Set to `False` if the Task state should submit the
 training job and proceed to the next step. (default: True)}
 
-\item{\code{tags}}{(list[dict], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
+\item{\code{tags}}{(list[list], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 
 \item{\code{...}}{: Extra Fields passed to Task class}

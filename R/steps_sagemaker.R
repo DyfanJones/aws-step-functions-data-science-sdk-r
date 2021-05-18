@@ -34,8 +34,8 @@ TrainingStep = R6Class("TrainingStep",
     #'              method of the associated estimator, as this can take any of the following forms:
     #'              \itemize{
     #'                 \item{(str) - The S3 location where training data is saved.}
-    #'                 \item{(dict[str, str] or dict[str, sagemaker.inputs.TrainingInput]) - If using multiple
-    #'                       channels for training data, you can specify a dict mapping channel names to
+    #'                 \item{(list[str, str] or list[str, sagemaker.inputs.TrainingInput]) - If using multiple
+    #'                       channels for training data, you can specify a list mapping channel names to
     #'                       strings or :func:`~sagemaker.inputs.TrainingInput` objects.}
     #'                 \item{(sagemaker.inputs.TrainingInput) - Channel configuration for S3 data sources that can
     #'                       provide additional information about the training dataset. See
@@ -47,16 +47,16 @@ TrainingStep = R6Class("TrainingStep",
     #'                       :class:`sagemaker.amazon.amazon_estimator.RecordSet` objects,
     #'                       where each instance is a different channel of training data.}
     #'              }
-    #' @param hyperparameters (dict, optional): Specify the hyper parameters for the training. (Default: None)
+    #' @param hyperparameters (list, optional): Specify the hyper parameters for the training. (Default: None)
     #' @param mini_batch_size (int): Specify this argument only when estimator is a built-in
     #'              estimator of an Amazon algorithm. For other estimators, batch size should be
     #'              specified in the estimator.
-    #' @param experiment_config (dict, optional): Specify the experiment config for the training. (Default: None)
+    #' @param experiment_config (list, optional): Specify the experiment config for the training. (Default: None)
     #' @param wait_for_completion (bool, optional): Boolean value set to `True` if the Task state
     #'              should wait for the training job to complete before proceeding to the next
     #'              step in the workflow. Set to `False` if the Task state should submit the
     #'              training job and proceed to the next step. (default: True)
-    #' @param tags (list[dict], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
+    #' @param tags (list[list], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'              to associate with the resource.
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
@@ -163,12 +163,12 @@ TransformStep = R6Class("TransformStep",
     #'               (default: None). Valid values: 'Gzip', None.
     #' @param split_type (str): The record delimiter for the input object (default: 'None').
     #'                Valid values: 'None', 'Line', 'RecordIO', and 'TFRecord'.
-    #' @param experiment_config (dict, optional): Specify the experiment config for the transform. (Default: None)
+    #' @param experiment_config (list, optional): Specify the experiment config for the transform. (Default: None)
     #' @param wait_for_completion (bool, optional): Boolean value set to `True` if the Task state
     #'                should wait for the transform job to complete before proceeding to the next
     #'                step in the workflow. Set to `False` if the Task state should submit the transform
     #'                job and proceed to the next step. (default: True)
-    #' @param tags (list[dict], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
+    #' @param tags (list[list], optional): List to tags \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'                to associate with the resource.
     #' @param input_filter (str): A JSONPath to select a portion of the input to pass to
     #'                the algorithm container for inference. If you omit the field, it gets the
@@ -277,7 +277,7 @@ ModelStep = R6Class("ModelStep",
     #'              the value dynamically in each execution.
     #' @param instance_type (str, optional): The EC2 instance type to deploy this Model
     #'              to. For example, 'ml.p2.xlarge'.
-    #' @param tags (list[dict], optional): `List to tags`
+    #' @param tags (list[list], optional): `List to tags`
     #'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'              to associate with the resource.
     #' @param ... : Extra Fields passed to Task class
@@ -357,7 +357,7 @@ EndpointConfigStep = R6Class("EndpointConfigStep",
     #' @param data_capture_config (sagemaker.model_monitor.DataCaptureConfig, optional): Specifies
     #'              configuration related to Endpoint data capture for use with
     #'              Amazon SageMaker Model Monitoring. Default: None.
-    #' @param tags (list[dict], optional): `List to tags`
+    #' @param tags (list[list], optional): `List to tags`
     #'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'              to associate with the resource.
     #' @param ... : Extra Fields passed to Task class
@@ -418,7 +418,7 @@ EndpointStep = R6Class("EndpointStep",
     #'              to use for the endpoint. We recommend to use :py:class:
     #'              `~stepfunctions.inputs.ExecutionInput` placeholder collection to pass the
     #'              value dynamically in each execution.
-    #' @param tags (list[dict], optional): `List to tags`
+    #' @param tags (list[list], optional): `List to tags`
     #'              \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'              to associate with the resource.
     #' @param update (bool, optional): Boolean flag set to `True` if endpoint must to
@@ -474,8 +474,8 @@ TuningStep = R6Class("TuningStep",
     #'              any of the following forms:
     #'              \itemize{
     #'                  \item{(str) - The S3 location where training data is saved.}
-    #'                  \item{(dict[str, str] or dict[str, sagemaker.inputs.TrainingInput]) - If using multiple
-    #'                        channels for training data, you can specify a dict mapping channel names to
+    #'                  \item{(list[str, str] or list[str, sagemaker.inputs.TrainingInput]) - If using multiple
+    #'                        channels for training data, you can specify a list mapping channel names to
     #'                        strings or :func:`~sagemaker.inputs.TrainingInput` objects.}
     #'                  \item{(sagemaker.inputs.TrainingInput) - Channel configuration for S3 data sources that can
     #'                        provide additional information about the training dataset. See
@@ -491,7 +491,7 @@ TuningStep = R6Class("TuningStep",
     #'               the Task state should wait for the tuning job to complete before
     #'               proceeding to the next step in the workflow. Set to `False` if the
     #'               Task state should submit the tuning job and proceed to the next step. (default: True)
-    #' @param tags (list[dict], optional): List to tags
+    #' @param tags (list[list], optional): List to tags
     #'               \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html} to
     #'               associate with the resource.
     #' @param ... : Extra Fields passed to Task class
@@ -554,7 +554,7 @@ ProcessingStep = R6Class("ProcessingStep",
     #' @param outputs (list[:class:`~sagemaker.processing.ProcessingOutput`]): Outputs for
     #'              the processing job. These can be specified as either path strings or
     #'              :class:`~sagemaker.processing.ProcessingOutput` objects (default: None).
-    #' @param experiment_config (dict, optional): Specify the experiment config for
+    #' @param experiment_config (list, optional): Specify the experiment config for
     #'              the processing. (Default: None)
     #' @param container_arguments ([str]): The arguments for a container used to run a processing job.
     #' @param container_entrypoint ([str]): The entrypoint for a container used to run a processing job.
@@ -566,7 +566,7 @@ ProcessingStep = R6Class("ProcessingStep",
     #'              the Task state should wait for the processing job to complete before
     #'              proceeding to the next step in the workflow. Set to `False` if the Task
     #'              state should submit the processing job and proceed to the next step. (default: True)
-    #' @param tags (list[dict], optional): `List to tags`
+    #' @param tags (list[list], optional): `List to tags`
     #'             \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
     #'             to associate with the resource.
     #' @param ... : Extra Fields passed to Task class

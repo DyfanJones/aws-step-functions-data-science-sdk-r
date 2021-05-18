@@ -75,7 +75,7 @@ running at any given point in time. (default: 0)}
 \item{\code{input_path}}{(str, optional): Path applied to the state’s raw input to
 select some or all of it; that selection is used by the state. (default: '$')}
 
-\item{\code{parameters}}{(dict, optional): The value of this field becomes the effective input for the state.}
+\item{\code{parameters}}{(list, optional): The value of this field becomes the effective input for the state.}
 
 \item{\code{result_path}}{(str, optional): Path specifying the raw input’s combination
 with or replacement by the state’s result. (default: '$')}

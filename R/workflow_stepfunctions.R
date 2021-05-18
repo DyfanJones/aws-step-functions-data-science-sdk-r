@@ -66,8 +66,8 @@ Workflow = R6Class("Workflow",
     #'              not provided, a default \code{\link[paws]{sfn}} client for Step Functions will be
     #'              automatically created and used. (default: None)
     #' @param html (bool, optional): Renders the list as an HTML table (If running in
-    #'              an IPython environment). If the parameter is not provided, or set
-    #'              to False, a Python list is returned. (default: False)
+    #'              an IRkernel environment). If the parameter is not provided, or set
+    #'              to FALSE, a R list is returned. (default: False)
     #' @return list: The list of workflows. Refer to :meth:`.SFN.Client.list_state_machines()`
     #'              for the response structure.
     list_workflows = function(max_items=100,
@@ -264,7 +264,7 @@ Workflow = R6Class("Workflow",
     #' @description Starts a single execution of the workflow.
     #' @param name (str, optional): The name of the workflow execution. If one is
     #'              not provided, a workflow execution name will be auto-generated. (default: None)
-    #' @param inputs (str, list or dict, optional): Input data for the workflow execution. (default: None)
+    #' @param inputs (str, list, optional): Input data for the workflow execution. (default: None)
     #' @return stepfunctions.workflow.Execution: An execution instance of the workflow.
     execute = function(name=NULL, inputs=NULL){
       if (!is.null(self$workflow_input))
@@ -308,8 +308,8 @@ Workflow = R6Class("Workflow",
     #' @param status_filter (ExecutionStatus, optional): If specified, only list
     #'              the executions whose current status matches the given filter. (default: None)
     #' @param html (bool, optional): Renders the list as an HTML table (If running
-    #'              in an IPython environment). If the parameter is not provided, or
-    #'              set to False, a Python list is returned. (default: False)
+    #'              in an IRKernel environment). If the parameter is not provided, or
+    #'              set to FALSE, a R list is returned. (default: False)
     #' @return list: List of workflow run instances.
     list_executions = function(max_items=100,
                                status_filter=NULL,
@@ -468,7 +468,7 @@ Execution = R6Class("Execution",
     #' @description Stops a workflow execution.
     #' @param error (str, optional): The error code of the failure. (default: None)
     #' @param cause (str, optional): A more detailed explanation of the cause of the failure. (default: None)
-    #' @return dict: Datetime of when the workflow execution was stopped. Example below::
+    #' @return list: Datetime of when the workflow execution was stopped. Example below::
     #' \code{
     #' list(
     #'  stopDate = as.POSIXct(
@@ -477,8 +477,10 @@ Execution = R6Class("Execution",
     #' )
     #' }
     #' **Response structure**:
-    #'  - (dict)
-    #'  - stopDate (datetime): The date the workflow execution is stopped
+    #' \itemize{
+    #'    \item{(list)}
+    #'    \item{stopDate (datetime): The date the workflow execution is stopped}
+    #' }
     stop = function(cause=NULL,
                     error=NULL){
       response = self$client$stop_execution(
@@ -496,9 +498,9 @@ Execution = R6Class("Execution",
     #'              should be listed in reverse chronological order. Set to `False`,
     #'              if the order should be in chronological order. (default: False)
     #' @param html (bool, optional): Renders the list as an HTML table (If running in
-    #'              an IPython environment). If the parameter is not provided, or set
-    #'              to False, a Python list is returned. (default: False)
-    #' @return dict: Object containing the list of workflow execution events. Refer
+    #'              an IRKernel environment). If the parameter is not provided, or set
+    #'              to FALSE, a R list is returned. (default: False)
+    #' @return list: Object containing the list of workflow execution events. Refer
     #'              to :meth:`.SFN.Client.get_execution_history()` for the response structure.
     list_events = function(max_items=100,
                            reverse_order=FALSE,
@@ -527,16 +529,18 @@ Execution = R6Class("Execution",
     },
 
     #' @description Describes a workflow execution.
-    #' @return dict: Details of the workflow execution.
+    #' @return list: Details of the workflow execution.
     #' **Response structure**:
-    #' - executionArn (string): The Amazon Resource Name (ARN) that identifies the workflow execution.
-    #' - stateMachineArn (string): The Amazon Resource Name (ARN) of the workflow that was executed.
-    #' - name (string): The name of the workflow execution.
-    #' - status (string): The current status of the workflow execution.
-    #' - startDate (datetime): The date the workflow execution is started.
-    #' - stopDate (datetime): If the workflow execution has already ended, the date the execution stopped.
-    #' - input (string): The string that contains the JSON input data of the workflow execution.
-    #' - output (string): The JSON output data of the workflow execution.
+    #' \itemize{
+    #'     \item{executionArn (string): The Amazon Resource Name (ARN) that identifies the workflow execution.}
+    #'     \item{stateMachineArn (string): The Amazon Resource Name (ARN) of the workflow that was executed.
+    #'     \item{name (string): The name of the workflow execution.
+    #'     \item{status (string): The current status of the workflow execution.
+    #'     \item{startDate (datetime): The date the workflow execution is started.}
+    #'     \item{stopDate (datetime): If the workflow execution has already ended, the date the execution stopped.}
+    #'     \item{input (string): The string that contains the JSON input data of the workflow execution.}
+    #'     \item{output (string): The JSON output data of the workflow execution.}
+    #' }
     describe = function(){
       return(self$client$describe_execution(executionArn=self$execution_arn))
     },
@@ -558,7 +562,7 @@ Execution = R6Class("Execution",
     },
 
     #' @description Get the input for the workflow execution.
-    #' @param list or dict: Workflow execution input.
+    #' @return list: Workflow execution input.
     get_input = function(){
       run_input = self$describe()[['input']]
       if(is.null(run_input))
@@ -573,7 +577,7 @@ Execution = R6Class("Execution",
     #'              the output. Set to `False`, otherwise. Note that if the status
     #'              is running, and `wait` is set to `True`, this will be a blocking
     #'              call. (default: False)
-    #' @return list or dict: Workflow execution output.
+    #' @return list: Workflow execution output.
     get_output = function(wait=FALSE){
       while(wait && self$describe()[['status']] == 'RUNNING'){
         Sys.sleep(1)

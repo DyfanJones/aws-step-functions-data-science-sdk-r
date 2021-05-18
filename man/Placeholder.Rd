@@ -79,7 +79,7 @@ Placeholder: Placeholder variable.
 \if{html}{\out{<a id="method-get_schema_as_list"></a>}}
 \if{latex}{\out{\hypertarget{method-get_schema_as_list}{}}}
 \subsection{Method \code{get_schema_as_list()}}{
-Generate a schema for the placeholder collection as a Python dictionary.
+Generate a schema for the placeholder collection as a R named list.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Placeholder$get_schema_as_list()}\if{html}{\out{</div>}}
 }

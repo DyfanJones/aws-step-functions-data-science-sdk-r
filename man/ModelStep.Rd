@@ -70,7 +70,7 @@ the value dynamically in each execution.}
 \item{\code{instance_type}}{(str, optional): The EC2 instance type to deploy this Model
 to. For example, 'ml.p2.xlarge'.}
 
-\item{\code{tags}}{(list[dict], optional): `List to tags`
+\item{\code{tags}}{(list[list], optional): `List to tags`
 \url{https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html}
 to associate with the resource.}
 
