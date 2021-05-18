@@ -2,6 +2,18 @@
 Step Functions Data Science SDK for building machine learning (ML) workflows and pipelines on AWS
 
 
+# Install:
+
+Cran Version
+```
+# TBC
+```
+
+Dev Version
+```
+remotes::install_github("DyfanJones/aws-step-functions-data-science-sdk-r")
+```
+
 ## Building a Workflow
 **Note this example is taken from: https://github.com/aws/aws-step-functions-data-science-sdk-python**
 
