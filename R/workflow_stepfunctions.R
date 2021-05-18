@@ -103,11 +103,13 @@ Workflow = R6Class("Workflow",
 
     #' @description Initialize Workflow Class
     #' @param name (str): The name of the workflow. A name must not contain:
-    #'              - whitespace
-    #'              - brackets `< > { } [ ]`
-    #'              - wildcard characters `? *`
-    #'              - special characters `` \" # % \ ^ | ~ \` $ & , ; : / ``
-    #'              - control characters (`U+0000-001F`, `U+007F-009F`)
+    #' \itemize{
+    #'     \item{whitespace}
+    #'     \item{brackets ``< > { } [ ]``}
+    #'     \item{wildcard characters ``? *``}
+    #'     \item{special characters ``\" # \% \ ^ | ~ ` $ & , ; : /``}
+    #'     \item{control characters (``U+0000-001F``, ``U+007F-009F``)}
+    #'     }
     #' @param definition (State or Chain): The `Amazon States Language`
     #'              `<https://states-language.net/spec.html>`_ definition of the workflow.
     #' @param role (str): The Amazon Resource Name (ARN) of the IAM role to use for creating,
@@ -467,13 +469,13 @@ Execution = R6Class("Execution",
     #' @param error (str, optional): The error code of the failure. (default: None)
     #' @param cause (str, optional): A more detailed explanation of the cause of the failure. (default: None)
     #' @return dict: Datetime of when the workflow execution was stopped. Example below::
-    #' ```
+    #' \code{
     #' list(
     #'  stopDate = as.POSIXct(
     #'    "2015-01-01"
     #'  )
     #' )
-    #' ```
+    #' }
     #' **Response structure**:
     #'  - (dict)
     #'  - stopDate (datetime): The date the workflow execution is stopped

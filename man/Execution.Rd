@@ -81,13 +81,13 @@ Stops a workflow execution.
 }
 \subsection{Returns}{
 dict: Datetime of when the workflow execution was stopped. Example below::
-```
+\code{
 list(
  stopDate = as.POSIXct(
    "2015-01-01"
  )
 )
-```
+}
 **Response structure**:
  - (dict)
  - stopDate (datetime): The date the workflow execution is stopped

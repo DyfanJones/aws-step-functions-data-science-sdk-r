@@ -10,13 +10,15 @@
 
 #' @title InferencePipeline for Sagemaker
 #' @description Creates a standard inference pipeline with the following steps in order:
-#' 1. Train preprocessor
-#' 2. Create preprocessor model
-#' 3. Transform input data using preprocessor model
-#' 4. Train estimator
-#' 5. Create estimator model
-#' 6. Endpoint configuration
-#' 7. Deploy estimator model
+#' \itemize{
+#'   \item{Train preprocessor}
+#'   \item{Create preprocessor model}
+#'   \item{Transform input data using preprocessor model}
+#'   \item{Train estimator}
+#'   \item{Create estimator model}
+#'   \item{Endpoint configuration}
+#'   \item{Deploy estimator model}
+#' }
 #' @export
 InferencePipeline = R6Class("InferencePipeline",
   inherit = WorkflowTemplate,

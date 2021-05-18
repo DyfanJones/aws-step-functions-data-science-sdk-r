@@ -5,10 +5,12 @@
 \title{TrainingPipeline for Sagemaker}
 \description{
 Creates a standard training pipeline with the following steps in order:
-1. Train estimator
-2. Create estimator model
-3. Endpoint configuration
-4. Deploy model
+\itemize{
+  \item{Train estimator}
+  \item{Create estimator model}
+  \item{Endpoint configuration}
+  \item{Deploy model}
+}
 }
 \section{Super class}{
 \code{\link[stepfunctions:WorkflowTemplate]{stepfunctions::WorkflowTemplate}} -> \code{TrainingPipeline}

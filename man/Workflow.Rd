@@ -78,11 +78,13 @@ Initialize Workflow Class
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{name}}{(str): The name of the workflow. A name must not contain:
-- whitespace
-- brackets `< > { } [ ]`
-- wildcard characters `? *`
-- special characters `` \" # % \ ^ | ~ \` $ & , ; : / ``
-- control characters (`U+0000-001F`, `U+007F-009F`)}
+\itemize{
+    \item{whitespace}
+    \item{brackets ``< > { } [ ]``}
+    \item{wildcard characters ``? *``}
+    \item{special characters ``\" # \% \ ^ | ~ ` $ & , ; : /``}
+    \item{control characters (``U+0000-001F``, ``U+007F-009F``)}
+    }}
 
 \item{\code{definition}}{(State or Chain): The `Amazon States Language`
 `<https://states-language.net/spec.html>`_ definition of the workflow.}
