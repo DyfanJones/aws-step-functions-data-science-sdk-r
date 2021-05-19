@@ -13,7 +13,8 @@ Imports:
     R6,
     tools,
     yaml,
-    glue
+    glue,
+    htmlwidgets
 Suggests:
     testthat,
     crayon,
@@ -26,6 +27,7 @@ RoxygenNote: 7.1.1
 Collate: 
     'inputs_utils.R'
     'inputs_placeholders.R'
+    'sfn_flow_graph.R'
     'stepfunctions.R'
     'utils.R'
     'steps_choice_rule.R'
