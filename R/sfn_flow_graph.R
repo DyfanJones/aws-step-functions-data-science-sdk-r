@@ -1,31 +1,35 @@
-#' Render AWS Stepfunction Statemachine Graphs
-#'
-#' Render graphs from definition from \code{Workflow} class.
-#'
-#' @importFrom htmlwidgets createWidget
-#'
+
+#' @importFrom htmlwidgets createWidget shinyWidgetOutput shinyRenderWidget
+
+#' @title Render AWS Stepfunction Statemachine Graphs
+#' @description Render graphs from definition from \code{Workflow} class.
+#' @param definition (json/list): Amazon States Language \url{https://states-language.net/spec.html}.
+#' @param portrait (boolean): Rotation of rendered state machine graph
+#' @param width (numeric): Width for graph to render
+#' @param height (numeric): Height for graph to render
 #' @export
-sfn_flow_graph <- function(definition, element_id, layout,  width = NULL, height = NULL) {
+sfn_flow_graph <- function(definition, portrait = FALSE,  width = NULL, height = 600) {
 
-  # forward options using x
-  x = list(
-    element_id = paste0("#", element_id),
-    layout = layout,
+  if (isFALSE(portrait))
+    layout = 'LR'
+  else
+    layout = 'TB'
+
+  # forward options using params
+  params = list(
     definition = definition,
-    height = height
+    layout = layout
   )
-
   # create widget
   htmlwidgets::createWidget(
     name = 'sfn_flow_graph',
-    x,
+    params,
     width = width,
     height = height,
     package = 'stepfunctions',
-    elementId = element_id
+    elementId = sprintf('graph-%d', as.integer(stats::runif(1, 0, 999)))
   )
 }
-
 
 #' Shiny bindings for sfn_flow_graph
 #'
