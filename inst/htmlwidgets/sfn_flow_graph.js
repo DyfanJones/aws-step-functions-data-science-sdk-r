@@ -9,9 +9,11 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
-          var element = document.getElementById(el.id);
+          // Commmented out code from jupyter notebook rendering: workflow_widgets_graph.R
+          // var element = document.getElementById(el.id);
+          // parseFloat(getComputedStyle(element, null).width.replace("px", ""))
           var options = {
-              width: parseFloat(getComputedStyle(element, null).width.replace("px", "")),
+              width: width,
               height: height,
               layout: x.layout,
               resizeHeight: true
