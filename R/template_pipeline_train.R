@@ -167,7 +167,6 @@ TrainingPipeline = R6Class("TrainingPipeline",
       )
       return(self$workflow$execute(inputs=inputs, name=job_name))
     }
-
   ),
   private = list(
     .allowed_kwargs = 'pipeline_name'
