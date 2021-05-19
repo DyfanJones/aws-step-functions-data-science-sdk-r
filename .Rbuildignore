@@ -4,3 +4,4 @@
 ^examples$
 ^NOTICE.txt
 ^LICENSE.txt
+^[\.]ipynb$$
