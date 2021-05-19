@@ -4,7 +4,16 @@
 \alias{sfn_flow_graph}
 \title{Render AWS Stepfunction Statemachine Graphs}
 \usage{
-sfn_flow_graph(definition, element_id, layout, width = NULL, height = NULL)
+sfn_flow_graph(definition, portrait = FALSE, width = NULL, height = 600)
+}
+\arguments{
+\item{definition}{(json/list): Amazon States Language \url{https://states-language.net/spec.html}.}
+
+\item{portrait}{(boolean): Rotation of rendered state machine graph}
+
+\item{width}{(numeric): Width for graph to render}
+
+\item{height}{(numeric): Height for graph to render}
 }
 \description{
 Render graphs from definition from \code{Workflow} class.
