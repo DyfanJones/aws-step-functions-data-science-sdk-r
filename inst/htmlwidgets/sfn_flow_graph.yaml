@@ -1,0 +1,6 @@
+dependencies:
+ - name: sfn
+   version: 0.1.5
+   src: "htmlwidgets/lib/sfn_graph"
+   script: "sfn.min.js"
+   stylesheet: "sfn.css"
