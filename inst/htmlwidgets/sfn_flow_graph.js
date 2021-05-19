@@ -9,21 +9,18 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
+          var element = document.getElementById(el.id);
+          var options = {
+              width: parseFloat(getComputedStyle(element, null).width.replace("px", "")),
+              height: height,
+              layout: x.layout,
+              resizeHeight: true
+          };
+          var definition = x.definition;
 
-        var element = document.getElementById(el.id);
-        var options = {
-            width: parseFloat(getComputedStyle(element, null).width.replace("px", "")),
-            height: 600,
-            layout: x.layout,
-            resizeHeight: true
-        };
-        var definition = x.definition;
+          var graph = new sfn.StateMachineGraph(definition, '#'+el.id, options);
+          graph.render();
 
-        console.log(options);
-
-        var graph = new sfn.StateMachineGraph(definition, x.element_id, options);
-
-        var new_var graph.render();
       },
 
       resize: function(width, height) {
