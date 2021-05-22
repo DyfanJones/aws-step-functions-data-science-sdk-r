@@ -40,7 +40,7 @@ Creates a Task State to run Amazon ECS or Fargate Tasks. See `Manage Amazon ECS`
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Initialize LambdaStep Task class
+Initialize EcsRunTaskStep Task class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{EcsRunTaskStep$new(
   state_id,
