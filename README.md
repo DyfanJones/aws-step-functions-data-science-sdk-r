@@ -152,8 +152,3 @@ workflow$definition$to_json(pretty=TRUE)
   }
 }
 ```
-
-# TODO list:
-* Enable to render graphs in Rstudio
-* Save rendered graphs
-* Push to cran
