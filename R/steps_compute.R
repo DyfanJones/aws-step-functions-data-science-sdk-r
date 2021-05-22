@@ -3,8 +3,31 @@
 
 #' @include steps_fields.R
 #' @include steps_states.R
+#' @include steps_integrate_resources.R
+#' @include utils.R
 
 #' @import R6
+
+LAMBDA_SERVICE_NAME = "lambda"
+GLUE_SERVICE_NAME = "glue"
+ECS_SERVICE_NAME = "ecs"
+BATCH_SERVICE_NAME = "batch"
+
+LambdaApi = Enum(
+  Invoke = "invoke"
+)
+
+GlueApi = Enum(
+  StartJobRun = "startJobRun"
+)
+
+EcsApi = Enum(
+  RunTask = "runTask"
+)
+
+BatchApi = Enum(
+  SubmitJob = "submitJob"
+)
 
 #' @title LambdaStep class
 #' @description Creates a Task state to invoke an AWS Lambda function.
@@ -73,9 +96,13 @@ LambdaStep = R6Class("LambdaStep",
         ...)
 
       if (wait_for_callback)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::lambda:invoke.waitForTaskToken'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          LAMBDA_SERVICE_NAME,
+          LambdaApi$Invoke,
+          IntegrationPattern$WaitForTaskToken)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::lambda:invoke'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          LAMBDA_SERVICE_NAME, LambdaApi$Invoke)
 
       do.call(super$initialize, kwargs)
     }
@@ -150,9 +177,14 @@ GlueStartJobRunStep = R6Class("GlueStartJobRunStep",
         output_path=output_path,
         ...)
       if (wait_for_completion)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::glue:startJobRun.sync'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          GLUE_SERVICE_NAME,
+          GlueApi$StartJobRun,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::glue:startJobRun'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          GLUE_SERVICE_NAME,
+          GlueApi$StartJobRun)
 
       do.call(super$initialize, kwargs)
     }
@@ -227,9 +259,14 @@ BatchSubmitJobStep = R6Class("BatchSubmitJobStep",
         output_path=output_path,
         ...)
       if (wait_for_completion)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::batch:submitJob.sync'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          BATCH_SERVICE_NAME,
+          BatchApi$SubmitJob,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::batch:submitJob'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          BATCH_SERVICE_NAME,
+          BatchApi$SubmitJob)
 
       do.call(super$initialize, kwargs)
     }
@@ -305,9 +342,14 @@ EcsRunTaskStep = R6Class("EcsRunTaskStep",
         output_path=output_path,
         ...)
       if (wait_for_completion)
-        kwargs[Field$Resource] = 'arn:aws:states:::ecs:runTask.sync'
+        kwargs[Field$Resource] = et_service_integration_arn(
+          ECS_SERVICE_NAME,
+          EcsApi$RunTask,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::ecs:runTask'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          ECS_SERVICE_NAME,
+          EcsApi$RunTask)
 
       do.call(super$initialize, kwargs)
     }

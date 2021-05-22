@@ -3,8 +3,40 @@
 
 #' @include steps_fields.R
 #' @include steps_states.R
+#' @include utils.R
+#' @include steps_integrate_resources.R
 
 #' @import R6
+
+DYNAMODB_SERVICE_NAME = "dynamodb"
+SNS_SERVICE_NAME = "sns"
+SQS_SERVICE_NAME = "sqs"
+ELASTICMAPREDUCE_SERVICE_NAME = "elasticmapreduce"
+
+DynamoDBApi = Enum(
+  GetItem = "getItem",
+  PutItem = "putItem",
+  DeleteItem = "deleteItem",
+  UpdateItem = "updateItem"
+)
+
+SnsApi = Enum(
+  Publish = "publish"
+)
+
+SqsApi = Enum(
+  SendMessage = "sendMessage"
+)
+
+ElasticMapReduceApi = Enum(
+  CreateCluster = "createCluster",
+  TerminateCluster = "terminateCluster",
+  AddStep = "addStep",
+  CancelStep = "cancelStep",
+  SetClusterTerminationProtection = "setClusterTerminationProtection",
+  ModifyInstanceFleetByName = "modifyInstanceFleetByName",
+  ModifyInstanceGroupByName = "modifyInstanceGroupByName"
+)
 
 #' @title DynamoDBGetItemStep class
 #' @description Creates a Task state to get an item from DynamoDB. See `Call DynamoDB`
@@ -57,7 +89,9 @@ DynamoDBGetItemStep = R6Class("DynamoDBGetItemStep",
                           output_path=NULL,
                           ...){
       kwargs = c(as.list(environment()), list(...))
-      kwargs[[Field$Resource]] = 'arn:aws:states:::dynamodb:getItem'
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        DYNAMODB_SERVICE_NAME,
+        DynamoDBApi$GetItem)
       do.call(super$initialize, kwargs)
     }
   ),
@@ -115,7 +149,9 @@ DynamoDBPutItemStep = R6Class("DynamoDBPutItemStep",
                           output_path=NULL,
                           ...){
       kwargs = c(as.list(environment()), list(...))
-      kwargs[[Field$Resource]] = 'arn:aws:states:::dynamodb:putItem'
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        DYNAMODB_SERVICE_NAME,
+        DynamoDBApi$PutItem)
       do.call(super$initialize, kwargs)
     }
   ),
@@ -172,7 +208,9 @@ DynamoDBDeleteItemStep = R6Class("DynamoDBDeleteItemStep",
                           output_path=NULL,
                           ...){
       kwargs = c(as.list(environment()), list(...))
-      kwargs[[Field$Resource]] = 'arn:aws:states:::dynamodb:deleteItem'
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        DYNAMODB_SERVICE_NAME,
+        DynamoDBApi$DeleteItem)
       do.call(super$initialize, kwargs)
     }
   ),
@@ -230,7 +268,9 @@ DynamoDBUpdateItemStep = R6Class("DynamoDBUpdateItemStep",
                           output_path=NULL,
                           ...){
       kwargs = c(as.list(environment()), list(...))
-      kwargs[[Field$Resource]] = 'arn:aws:states:::dynamodb:updateItem'
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        DYNAMODB_SERVICE_NAME,
+        DynamoDBApi$UpdateItem)
       do.call(super$initialize, kwargs)
     }
   ),
@@ -304,9 +344,14 @@ SnsPublishStep = R6Class("SnsPublishStep",
         ...)
 
       if (wait_for_callback)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sns:publish.waitForTaskToken'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SNS_SERVICE_NAME,
+          SnsApi$Publish,
+          IntegrationPattern$WaitForTaskToken)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sns:publish'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SNS_SERVICE_NAME,
+          SnsApi$Publish)
 
       do.call(super$initialize, kwargs)
     }
@@ -381,9 +426,14 @@ SqsSendMessageStep = R6Class("SqsSendMessageStep",
         ...)
 
       if (wait_for_callback)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sqs:sendMessage.waitForTaskToken'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SQS_SERVICE_NAME,
+          SqsApi$SendMessage,
+          IntegrationPattern$WaitForTaskToken)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sqs:sendMessage'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SQS_SERVICE_NAME,
+          SqsApi$SendMessage)
 
       do.call(super$initialize, kwargs)
     }
@@ -460,9 +510,14 @@ EmrCreateClusterStep = R6Class("EmrCreateClusterStep",
        ...)
 
       if (wait_for_completion)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:createCluster.sync'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          ELASTICMAPREDUCE_SERVICE_NAME,
+          ElasticMapReduceApi$CreateCluster,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:createCluster'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          ELASTICMAPREDUCE_SERVICE_NAME,
+          ElasticMapReduceApi$CreateCluster)
 
       do.call(super$initialize, kwargs)
     }
@@ -538,9 +593,14 @@ EmrTerminateClusterStep = R6Class("EmrTerminateClusterStep",
         ...)
 
       if (wait_for_completion)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:terminateCluster.sync'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          ELASTICMAPREDUCE_SERVICE_NAME,
+          ElasticMapReduceApi$TerminateCluster,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:terminateCluster'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          ELASTICMAPREDUCE_SERVICE_NAME,
+          lasticMapReduceApi$TerminateCluster)
 
       do.call(super$initialize, kwargs)
     }
@@ -616,9 +676,14 @@ EmrAddStepStep = R6Class("EmrAddStepStep",
         ...)
 
       if (wait_for_completion)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:addStep.sync'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          ELASTICMAPREDUCE_SERVICE_NAME,
+          ElasticMapReduceApi$AddStep,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:addStep'
+        kwargs[[Field$Resource]] =  get_service_integration_arn(
+          ELASTICMAPREDUCE_SERVICE_NAME,
+          ElasticMapReduceApi$AddStep)
 
       do.call(super$initialize, kwargs)
     }
@@ -678,7 +743,10 @@ EmrCancelStepStep = R6Class("EmrCancelStepStep",
                          output_path=NULL,
                          ...){
       kwargs = c(as.list(environment()), list(...))
-      kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:cancelStep'
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        ELASTICMAPREDUCE_SERVICE_NAME,
+        ElasticMapReduceApi$CancelStep)
+
       do.call(super$initialize, kwargs)
     }
   ),
@@ -737,7 +805,10 @@ EmrSetClusterTerminationProtectionStep = R6Class("EmrSetClusterTerminationProtec
                           output_path=NULL,
                           ...){
       kwargs = c(as.list(environment()), list(...))
-      kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:setClusterTerminationProtection'
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        ELASTICMAPREDUCE_SERVICE_NAME,
+        ElasticMapReduceApi$SetClusterTerminationProtection)
+
       do.call(super$initialize, kwargs)
     }
   ),
@@ -795,7 +866,10 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
                          output_path=NULL,
                          ...){
       kwargs = c(as.list(environment()), list(...))
-      kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:modifyInstanceFleetByName'
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        ELASTICMAPREDUCE_SERVICE_NAME,
+        ElasticMapReduceApi$ModifyInstanceFleetByName)
+
       do.call(super$initialize, kwargs)
     }
   ),
@@ -853,7 +927,10 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
                          output_path=NULL,
                          ...){
       kwargs = c(as.list(environment()), list(...))
-      kwargs[[Field$Resource]] = 'arn:aws:states:::elasticmapreduce:modifyInstanceGroupByName'
+      kwargs[[Field$Resource]] = et_service_integration_arn(
+        ELASTICMAPREDUCE_SERVICE_NAME,
+        ElasticMapReduceApi$ModifyInstanceGroupByName)
+
       do.call(super$initialize, kwargs)
     }
   ),
