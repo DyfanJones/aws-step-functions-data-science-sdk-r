@@ -14,7 +14,6 @@ VALIDATORS = Enum(
   Is="logical"
 )
 
-
 #' @title BaseRule
 #' @description Abstract class
 BaseRule = R6Class("BaseRule",

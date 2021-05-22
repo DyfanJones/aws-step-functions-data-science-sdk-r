@@ -4,9 +4,23 @@
 #' @include inputs_placeholders.R
 #' @include steps_states.R
 #' @include steps_utils.R
+#' @include steps_integrate_resources.R
 #' @include utils.R
 
 #' @import R6
+
+SAGEMAKER_SERVICE_NAME = "sagemaker"
+
+SageMakerApi = Enum(
+  CreateTrainingJob = "createTrainingJob",
+  CreateTransformJob = "createTransformJob",
+  CreateModel = "createModel",
+  CreateEndpointConfig = "createEndpointConfig",
+  UpdateEndpoint = "updateEndpoint",
+  CreateEndpoint = "createEndpoint",
+  CreateHyperParameterTuningJob = "createHyperParameterTuningJob",
+  CreateProcessingJob = "createProcessingJob"
+)
 
 #' @title Sagemaker TrainingStep task class
 #' @description Creates a Task State to execute a `SageMaker Training Job`
@@ -77,9 +91,14 @@ TrainingStep = R6Class("TrainingStep",
       AirFlowWorkFlow = pkg_method("AirFlowWorkFlow", "R6sagemaker")
 
       if (wait_for_completion)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createTrainingJob.sync'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$CreateTrainingJob,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]]= 'arn:aws:states:::sagemaker:createTrainingJob'
+        kwargs[[Field$Resource]]= get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$CreateTrainingJob)
 
       if (is.character(job_name))
         parameters = AirFlowWorkFlow$new()$training_config(
@@ -205,9 +224,14 @@ TransformStep = R6Class("TransformStep",
                           ...){
       kwargs = list(...)
       if (wait_for_completion)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createTransformJob.sync'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$CreateTransformJob,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createTransformJob'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$CreateTransformJob)
 
       # get methods from R6sagemaker
       AirFlowWorkFlow = pkg_method("AirFlowWorkFlow", "R6sagemaker")
@@ -320,7 +344,9 @@ ModelStep = R6Class("ModelStep",
         parameters[['Tags']] = tags_dict_to_kv_list(tags)
 
       kwargs[[Field$Parameters]] = parameters
-      kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createModel'
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        SAGEMAKER_SERVICE_NAME,
+        SageMakerApi$CreateModel)
       kwargs[["state_id"]] = state_id
 
       do.call(super$initialize, kwargs)
@@ -388,7 +414,9 @@ EndpointConfigStep = R6Class("EndpointConfigStep",
       if (!is.null(tags))
         parameters[['Tags']] = tags_dict_to_kv_list(tags)
 
-      kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createEndpointConfig'
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        SAGEMAKER_SERVICE_NAME,
+        SageMakerApi$CreateEndpointConfig)
       kwargs[[Field$Parameters]] = parameters
       kwargs[["state_id"]] = state_id
 
@@ -440,9 +468,13 @@ EndpointStep = R6Class("EndpointStep",
         parameters[['Tags']] = tags_dict_to_kv_list(tags)
 
       if (update){
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:updateEndpoint'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$UpdateEndpoint)
       }else{
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createEndpoint'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$CreateEndpoint)
       }
 
       kwargs[[Field$Parameters]] = parameters
@@ -508,9 +540,14 @@ TuningStep = R6Class("TuningStep",
       AirFlowWorkFlow = pkg_method("AirFlowWorkFlow", "R6sagemaker")
 
       if (wait_for_completion)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createHyperParameterTuningJob.sync'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$CreateHyperParameterTuningJob,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createHyperParameterTuningJob'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$CreateHyperParameterTuningJob)
 
       parameters = AirFlowWorkFlow$new()$tuning_config(tuner=tuner, inputs=data, job_name=job_name)
 
@@ -588,9 +625,14 @@ ProcessingStep = R6Class("ProcessingStep",
       AirFlowWorkFlow = pkg_method("AirFlowWorkFlow", "R6sagemaker")
 
       if (wait_for_completion)
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createProcessingJob.sync'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$CreateProcessingJob,
+          IntegrationPattern$WaitForCompletion)
       else
-        kwargs[[Field$Resource]] = 'arn:aws:states:::sagemaker:createProcessingJob'
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          SAGEMAKER_SERVICE_NAME,
+          SageMakerApi$CreateProcessingJob)
 
       if (is.character(job_name)){
         parameters = AirFlowWorkFlow$new()$processing_config(

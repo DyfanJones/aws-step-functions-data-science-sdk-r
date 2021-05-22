@@ -28,3 +28,5 @@ pkg_method <- function(fun, pkg) {
   fun_name <- utils::getFromNamespace(fun, pkg)
   return(fun_name)
 }
+
+get_region <- pkg_method("get_region", "paws.common")
