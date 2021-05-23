@@ -3,6 +3,7 @@
 ## Feature
 * increase service coverage:
   * Athena
+  * DataBrew
 
 # stepfunctions 0.1.0
 
