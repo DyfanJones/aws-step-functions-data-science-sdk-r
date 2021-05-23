@@ -1,7 +1,7 @@
 Package: stepfunctions
 Type: Package
 Title: R SDK for `AWS Stepfunctions`
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(person("Dyfan", "Jones", email="dyfan.r.jones@gmail.com", role= c("aut", "cre")),
              person("Amazon.com, Inc.", role = "cph"))
 Description: Step Functions Data Science `SDK` for building machine learning (`ML`) workflows and pipelines on `AWS`
