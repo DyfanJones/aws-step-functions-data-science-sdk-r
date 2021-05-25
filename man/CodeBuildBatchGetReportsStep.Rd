@@ -4,7 +4,7 @@
 \alias{CodeBuildBatchGetReportsStep}
 \title{CodeBuildBatchGetReportsStep class}
 \description{
-Creates a Task state to stop code build jobs. See Call Amazon Code Build
+Creates a Task state to get reports. See Call Amazon Code Build
              with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-codebuild.html}
              for more details.
 }
