@@ -30,3 +30,5 @@ pkg_method <- function(fun, pkg) {
 }
 
 get_region <- pkg_method("get_region", "paws.common")
+
+islistempty = function(obj) {(is.null(obj) || length(obj) == 0)}

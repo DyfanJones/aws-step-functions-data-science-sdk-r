@@ -340,9 +340,9 @@ State = R6Class("State",
       }
 
       # Retry and catch
-      if (!is.null(self$retries) && self$is_field_allowed(Field$Retry))
+      if (!islistempty(self$retries) && self$is_field_allowed(Field$Retry))
         result[["Retry"]] = lapply(self$retries, function(retry) retry$to_list())
-      if (!is.null(self$catches) && self$is_field_allowed(Field$Catch))
+      if (!islistempty(self$catches) && self$is_field_allowed(Field$Catch))
         result[["Catch"]] = lapply(self$catches, function(catch) catch$to_list())
       return(result)
     },
@@ -432,7 +432,7 @@ Succeed = R6Class("Succeed",
                           comment=NULL,
                           input_path=NULL,
                           output_path=NULL){
-      kwargs = c(as.list(environment()), state_type = "Succeed", list(...))
+      kwargs = c(as.list(environment()), state_type = "Succeed")
 
       do.call(super$initialize, kwargs)
     },
