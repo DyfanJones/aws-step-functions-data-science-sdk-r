@@ -154,8 +154,8 @@
 <p>Initialize CodeBuildStartBuildStep task class</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>CodeBuildStartBuildStep</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   <span class='va'>state_id</span>,
-  comment <span class='op'>=</span> <span class='cn'>NULL</span>,
   wait_for_completion <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  comment <span class='op'>=</span> <span class='cn'>NULL</span>,
   timeout_seconds <span class='op'>=</span> <span class='cn'>NULL</span>,
   timeout_seconds_path <span class='op'>=</span> <span class='cn'>NULL</span>,
   heartbeat_seconds <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -173,12 +173,12 @@
 to 128 unicode characters. State names **must be** unique within
 the scope of the whole state machine.</p></dd>
 
-<dt><code>comment</code></dt><dd><p>(str, optional): Human-readable comment or description. (default: None)</p></dd>
-
 <dt><code>wait_for_completion</code></dt><dd><p>(bool, optional): Boolean value set to `True` if
 the Task state should wait for the glue job to complete before proceeding
 to the next step in the workflow. Set to `False` if the Task state should
 submit the glue job and proceed to the next step. (default: True)</p></dd>
+
+<dt><code>comment</code></dt><dd><p>(str, optional): Human-readable comment or description. (default: None)</p></dd>
 
 <dt><code>timeout_seconds</code></dt><dd><p>(int, optional): Positive integer specifying timeout
 for the state in seconds. If the state runs longer than the specified

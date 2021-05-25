@@ -46,8 +46,8 @@ Initialize SnsPublishStep task class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StepfunctionsStartExecutionStep$new(
   state_id,
-  comment = NULL,
   wait_for_completion = TRUE,
+  comment = NULL,
   wait_for_callback = FALSE,
   timeout_seconds = NULL,
   timeout_seconds_path = NULL,
@@ -68,12 +68,12 @@ Initialize SnsPublishStep task class
 to 128 unicode characters. State names **must be** unique within
 the scope of the whole state machine.}
 
-\item{\code{comment}}{(str, optional): Human-readable comment or description. (default: None)}
-
 \item{\code{wait_for_completion}}{(bool, optional): Boolean value set to `True` if
 the Task state should wait for the glue job to complete before proceeding
 to the next step in the workflow. Set to `False` if the Task state should
 submit the glue job and proceed to the next step. (default: True)}
+
+\item{\code{comment}}{(str, optional): Human-readable comment or description. (default: None)}
 
 \item{\code{wait_for_callback}}{(bool, optional): Boolean value set to `True` if the
 Task state should wait for callback to resume the operation. (default: False)}
