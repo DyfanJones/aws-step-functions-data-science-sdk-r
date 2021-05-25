@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>StepfunctionsStartExecutionStep class — StepfunctionsStartExecutionStep • stepfunctions</title>
+<title>EksDeleteFargateProfileStep class — EksDeleteFargateProfileStep • stepfunctions</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="StepfunctionsStartExecutionStep class — StepfunctionsStartExecutionStep" />
-<meta property="og:description" content="Creates a Task state to start a new Step Functions
-             execution with Step Functions https://docs.aws.amazon.com/step-functions/latest/dg/connect-stepfunctions.html
+<meta property="og:title" content="EksDeleteFargateProfileStep class — EksDeleteFargateProfileStep" />
+<meta property="og:description" content="Creates a Task State to delete Fargate Profile on `AWS EKS cluster`.
+             See `Manage Amazon EKS` with Step Functions
+             https://docs.aws.amazon.com/step-functions/latest/dg/connect-eks.html
              for more details." />
 
 
@@ -108,33 +109,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>StepfunctionsStartExecutionStep class</h1>
+    <h1>EksDeleteFargateProfileStep class</h1>
     
-    <div class="hidden name"><code>StepfunctionsStartExecutionStep.Rd</code></div>
+    <div class="hidden name"><code>EksDeleteFargateProfileStep.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates a Task state to start a new Step Functions
-             execution with Step Functions <a href='https://docs.aws.amazon.com/step-functions/latest/dg/connect-stepfunctions.html'>https://docs.aws.amazon.com/step-functions/latest/dg/connect-stepfunctions.html</a>
+    <p>Creates a Task State to delete Fargate Profile on `AWS EKS cluster`.
+             See `Manage Amazon EKS` with Step Functions
+             <a href='https://docs.aws.amazon.com/step-functions/latest/dg/connect-eks.html'>https://docs.aws.amazon.com/step-functions/latest/dg/connect-eks.html</a>
              for more details.</p>
     </div>
 
 
 
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>This class only calls another stepfunction state machine from the "parent" state machine.</p>
     <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
 
-    <p><code><a href='Block.html'>stepfunctions::Block</a></code> -&gt; <code><a href='State.html'>stepfunctions::State</a></code> -&gt; <code><a href='Task.html'>stepfunctions::Task</a></code> -&gt; <code>StepfunctionsStartExecutionStep</code></p>
+    <p><code><a href='Block.html'>stepfunctions::Block</a></code> -&gt; <code><a href='State.html'>stepfunctions::State</a></code> -&gt; <code><a href='Task.html'>stepfunctions::Task</a></code> -&gt; <code>EksDeleteFargateProfileStep</code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>StepfunctionsStartExecutionStep$new()</code></a></p></li>
-<li><p><a href='#method-clone'><code>StepfunctionsStartExecutionStep$clone()</code></a></p></li>
+<li><p><a href='#method-new'><code>EksDeleteFargateProfileStep$new()</code></a></p></li>
+<li><p><a href='#method-clone'><code>EksDeleteFargateProfileStep$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
 <ul>
@@ -154,16 +153,15 @@
 
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Initialize SnsPublishStep task class</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>StepfunctionsStartExecutionStep</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+<p>Initialize EksDeleteFargateProfileStep Task class</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EksDeleteFargateProfileStep</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   <span class='va'>state_id</span>,
   wait_for_completion <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  wait_for_callback <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  comment <span class='op'>=</span> <span class='cn'>NULL</span>,
   timeout_seconds <span class='op'>=</span> <span class='cn'>NULL</span>,
   timeout_seconds_path <span class='op'>=</span> <span class='cn'>NULL</span>,
   heartbeat_seconds <span class='op'>=</span> <span class='cn'>NULL</span>,
   heartbeat_seconds_path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  comment <span class='op'>=</span> <span class='cn'>NULL</span>,
   input_path <span class='op'>=</span> <span class='cn'>NULL</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   result_path <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -173,28 +171,22 @@
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>state_id</code></dt><dd><p>(str): State name whose length **must be** less than or equal
-to 128 unicode characters. State names **must be** unique within
-the scope of the whole state machine.</p></dd>
+<dt><code>state_id</code></dt><dd><p>(str): State name whose length **must be** less than or
+equal to 128 unicode characters. State names **must be** unique
+within the scope of the whole state machine.</p></dd>
 
 <dt><code>wait_for_completion</code></dt><dd><p>(bool, optional): Boolean value set to `True` if
 the Task state should wait for the glue job to complete before proceeding
 to the next step in the workflow. Set to `False` if the Task state should
 submit the glue job and proceed to the next step. (default: True)</p></dd>
 
-<dt><code>wait_for_callback</code></dt><dd><p>(bool, optional): Boolean value set to `True` if the
-Task state should wait for callback to resume the operation. (default: False)</p></dd>
-
-<dt><code>comment</code></dt><dd><p>(str, optional): Human-readable comment or description. (default: None)</p></dd>
-
-<dt><code>timeout_seconds</code></dt><dd><p>(int, optional): Positive integer specifying timeout
-for the state in seconds. If the state runs longer than the specified
-timeout, then the interpreter fails the state with a `States.Timeout`
-Error Name. (default: 60)</p></dd>
+<dt><code>timeout_seconds</code></dt><dd><p>(int, optional): Positive integer specifying timeout for the
+state in seconds. If the state runs longer than the specified timeout,
+then the interpreter fails the state with a `States.Timeout` Error Name. (default: 60)</p></dd>
 
 <dt><code>timeout_seconds_path</code></dt><dd><p>(str, optional): Path specifying the state's timeout
-value in seconds from the state input. When resolved, the path must
-select a field whose value is a positive integer.</p></dd>
+value in seconds from the state input. When resolved, the path must select
+a field whose value is a positive integer.</p></dd>
 
 <dt><code>heartbeat_seconds</code></dt><dd><p>(int, optional): Positive integer specifying heartbeat
 timeout for the state in seconds. This value should be lower than
@@ -202,9 +194,11 @@ the one specified for `timeout_seconds`. If more time than the specified
 heartbeat elapses between heartbeats from the task, then the interpreter
 fails the state with a `States.Timeout` Error Name.</p></dd>
 
-<dt><code>heartbeat_seconds_path</code></dt><dd><p>(str, optional): Path specifying the state's heartbeat
-value in seconds from the state input. When resolved, the path must select
-a field whose value is a positive integer.</p></dd>
+<dt><code>heartbeat_seconds_path</code></dt><dd><p>(str, optional): Path specifying the state's
+heartbeat value in seconds from the state input. When resolved,
+the path must select a field whose value is a positive integer.</p></dd>
+
+<dt><code>comment</code></dt><dd><p>(str, optional): Human-readable comment or description. (default: None)</p></dd>
 
 <dt><code>input_path</code></dt><dd><p>(str, optional): Path applied to the state’s raw input to
 select some or all of it; that selection is used by the state. (default: '$')</p></dd>
@@ -225,7 +219,7 @@ which serves as the raw input for the next state. (default: '$')</p></dd>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>StepfunctionsStartExecutionStep</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>EksDeleteFargateProfileStep</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

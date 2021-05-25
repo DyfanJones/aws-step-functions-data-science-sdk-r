@@ -9,6 +9,7 @@
   * Stepfunctions
   * apigateway
   * Emr on Eks
+  * Eks
   
 # stepfunctions 0.1.0
 
