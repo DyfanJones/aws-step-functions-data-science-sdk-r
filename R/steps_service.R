@@ -17,6 +17,7 @@ EVENTBRIDGE_SERVICE_NAME = "events"
 STEPFUNCTIONS_SERVICE_NAME = "states"
 APIGATEWAY_SERVICE_NAME = "apigateway"
 EMRONEKS_SERVICE_NAME = "emr-containers"
+EKS_SERVICE_NAME = "eks"
 
 DynamoDBApi = Enum(
   GetItem = "getItem",
@@ -66,6 +67,17 @@ EmrOnEksApi = Enum(
   CreateVirtualCluster = "createVirtualCluster",
   DeleteVirtualCluster = "deleteVirtualCluster",
   StartJobRun = "startJobRun"
+)
+
+EksApi = Enum(
+  RunJob = "runJob",
+  Call = "call",
+  CreateCluster = "createCluster",
+  DeleteCluster = "deleteCluster",
+  CreateFargateProfile = "createFargateProfile",
+  DeleteFargateProfile = "deleteFargateProfile",
+  CreateNodegroup = "createNodegroup",
+  DeleteNodegroup = "deleteNodegroup"
 )
 
 #' @title DynamoDBGetItemStep class
@@ -349,8 +361,8 @@ SnsPublishStep = R6Class("SnsPublishStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-                          comment=NULL,
                           wait_for_callback=FALSE,
+                          comment=NULL,
                           timeout_seconds=NULL,
                           timeout_seconds_path=NULL,
                           heartbeat_seconds=NULL,
@@ -431,17 +443,17 @@ SqsSendMessageStep = R6Class("SqsSendMessageStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-                         comment=NULL,
-                         wait_for_callback=FALSE,
-                         timeout_seconds=NULL,
-                         timeout_seconds_path=NULL,
-                         heartbeat_seconds=NULL,
-                         heartbeat_seconds_path=NULL,
-                         input_path=NULL,
-                         parameters=NULL,
-                         result_path=NULL,
-                         output_path=NULL,
-                         ...){
+                          wait_for_callback=FALSE,
+                          comment=NULL,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
       kwargs = list(
         state_id=state_id,
         timeout_seconds=timeout_seconds,
@@ -1347,8 +1359,8 @@ StepfunctionsStartExecutionStep = R6Class("StepfunctionsStartExecutionStep",
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
                           wait_for_completion=TRUE,
-                          comment=NULL,
                           wait_for_callback=FALSE,
+                          comment=NULL,
                           timeout_seconds=NULL,
                           timeout_seconds_path=NULL,
                           heartbeat_seconds=NULL,
@@ -1409,6 +1421,8 @@ ApiGateway = R6Class("ApiGateway",
     #' @param state_id (str): State name whose length **must be** less than or equal
     #'               to 128 unicode characters. State names **must be** unique within
     #'               the scope of the whole state machine.
+    #' @param wait_for_callback (bool, optional): Boolean value set to `True` if the
+    #'               Task state should wait for callback to resume the operation. (default: False)
     #' @param comment (str, optional): Human-readable comment or description. (default: None)
     #' @param timeout_seconds (int, optional): Positive integer specifying timeout
     #'              for the state in seconds. If the state runs longer than the specified
@@ -1436,6 +1450,7 @@ ApiGateway = R6Class("ApiGateway",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
+                          wait_for_callback=FALSE,
                           comment=NULL,
                           timeout_seconds=NULL,
                           timeout_seconds_path=NULL,
@@ -1446,12 +1461,29 @@ ApiGateway = R6Class("ApiGateway",
                           result_path=NULL,
                           output_path=NULL,
                           ...){
-      kwargs = c(as.list(environment()), list(...))
+      kwargs = list(
+        state_id=state_id,
+        timeout_seconds=timeout_seconds,
+        timeout_seconds_path=timeout_seconds_path,
+        heartbeat_seconds=heartbeat_seconds,
+        heartbeat_seconds_path=heartbeat_seconds_path,
+        comment=comment,
+        input_path=input_path,
+        parameters=parameters,
+        result_path=result_path,
+        output_path=output_path,
+        ...)
 
-      kwargs[[Field$Resource]] = get_service_integration_arn(
-        APIGATEWAY_SERVICE_NAME,
-        ApiGatewayApi$Invoke)
-
+      if (wait_for_callback) {
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          APIGATEWAY_SERVICE_NAME,
+          ApiGatewayApi$Invoke,
+          IntegrationPattern$WaitForTaskToken)
+      } else {
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          APIGATEWAY_SERVICE_NAME,
+          ApiGatewayApi$Invoke)
+      }
       do.call(super$initialize, kwargs)
     }
   ),
@@ -1677,3 +1709,483 @@ EmrOnEksStartJobRunStep = R6Class("EmrOnEksStartJobRunStep",
   lock_objects=F
 )
 
+#' @title EksRunJobStep class
+#' @description Creates a Task State to run a job
+#'              on your Amazon EKS cluster. See `Manage Amazon EKS` with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-eks.html}
+#'              for more details.
+#' @export
+EksRunJobStep = R6Class("EksRunJobStep",
+  inherit = Task,
+  public = list(
+
+    #' @description Initialize EksRunJobStep Task class
+    #' @param state_id (str): State name whose length **must be** less than or
+    #'              equal to 128 unicode characters. State names **must be** unique
+    #'              within the scope of the whole state machine.
+    #' @param wait_for_completion (bool, optional): Boolean value set to `True` if
+    #'              the Task state should wait for the glue job to complete before proceeding
+    #'              to the next step in the workflow. Set to `False` if the Task state should
+    #'              submit the glue job and proceed to the next step. (default: True)
+    #' @param timeout_seconds (int, optional): Positive integer specifying timeout for the
+    #'              state in seconds. If the state runs longer than the specified timeout,
+    #'              then the interpreter fails the state with a `States.Timeout` Error Name. (default: 60)
+    #' @param timeout_seconds_path (str, optional): Path specifying the state's timeout
+    #'              value in seconds from the state input. When resolved, the path must select
+    #'              a field whose value is a positive integer.
+    #' @param heartbeat_seconds (int, optional): Positive integer specifying heartbeat
+    #'              timeout for the state in seconds. This value should be lower than
+    #'              the one specified for `timeout_seconds`. If more time than the specified
+    #'              heartbeat elapses between heartbeats from the task, then the interpreter
+    #'              fails the state with a `States.Timeout` Error Name.
+    #' @param heartbeat_seconds_path (str, optional): Path specifying the state's
+    #'              heartbeat value in seconds from the state input. When resolved,
+    #'              the path must select a field whose value is a positive integer.
+    #' @param comment (str, optional): Human-readable comment or description. (default: None)
+    #' @param input_path (str, optional): Path applied to the state’s raw input to
+    #'              select some or all of it; that selection is used by the state. (default: '$')
+    #' @param parameters (list, optional): The value of this field becomes the effective
+    #'              input for the state.
+    #' @param result_path (str, optional): Path specifying the raw input’s combination
+    #'              with or replacement by the state’s result. (default: '$')
+    #' @param output_path (str, optional): Path applied to the state’s output after
+    #'              the application of `result_path`, producing the effective output
+    #'              which serves as the raw input for the next state. (default: '$')
+    #' @param ... : Extra Fields passed to Task class
+    initialize = function(state_id,
+                          wait_for_completion=TRUE,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          comment=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
+      kwargs = list(
+        state_id=state_id,
+        timeout_seconds=timeout_seconds,
+        timeout_seconds_path=timeout_seconds_path,
+        heartbeat_seconds=heartbeat_seconds,
+        heartbeat_seconds_path=heartbeat_seconds_path,
+        comment=comment,
+        input_path=input_path,
+        parameters=parameters,
+        result_path=result_path,
+        output_path=output_path,
+      ...)
+      if (wait_for_completion)
+      kwargs[Field$Resource] = get_service_integration_arn(
+        EKS_SERVICE_NAME,
+        EksApi$RunJob,
+        IntegrationPattern$WaitForCompletion)
+      else
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        EKS_SERVICE_NAME,
+        EksApi$RunJob)
+
+      do.call(super$initialize, kwargs)
+    }
+  ),
+  lock_objects=F
+)
+
+#' @title EksCallStep class
+#' @description Creates a Task State to use the Kubernetes API to read and write
+#'              Kubernetes resource objects via a Kubernetes API endpoint. See `Manage Amazon EKS` with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-eks.html}
+#'              for more details.
+#' @export
+EksCallStep = R6Class("EksCallStep",
+  inherit = Task,
+  public = list(
+
+    #' @description Initialize EksCallStep Task class
+    #' @param state_id (str): State name whose length **must be** less than or
+    #'              equal to 128 unicode characters. State names **must be** unique
+    #'              within the scope of the whole state machine.
+    #' @param timeout_seconds (int, optional): Positive integer specifying timeout for the
+    #'              state in seconds. If the state runs longer than the specified timeout,
+    #'              then the interpreter fails the state with a `States.Timeout` Error Name. (default: 60)
+    #' @param timeout_seconds_path (str, optional): Path specifying the state's timeout
+    #'              value in seconds from the state input. When resolved, the path must select
+    #'              a field whose value is a positive integer.
+    #' @param heartbeat_seconds (int, optional): Positive integer specifying heartbeat
+    #'              timeout for the state in seconds. This value should be lower than
+    #'              the one specified for `timeout_seconds`. If more time than the specified
+    #'              heartbeat elapses between heartbeats from the task, then the interpreter
+    #'              fails the state with a `States.Timeout` Error Name.
+    #' @param heartbeat_seconds_path (str, optional): Path specifying the state's
+    #'              heartbeat value in seconds from the state input. When resolved,
+    #'              the path must select a field whose value is a positive integer.
+    #' @param comment (str, optional): Human-readable comment or description. (default: None)
+    #' @param input_path (str, optional): Path applied to the state’s raw input to
+    #'              select some or all of it; that selection is used by the state. (default: '$')
+    #' @param parameters (list, optional): The value of this field becomes the effective
+    #'              input for the state.
+    #' @param result_path (str, optional): Path specifying the raw input’s combination
+    #'              with or replacement by the state’s result. (default: '$')
+    #' @param output_path (str, optional): Path applied to the state’s output after
+    #'              the application of `result_path`, producing the effective output
+    #'              which serves as the raw input for the next state. (default: '$')
+    #' @param ... : Extra Fields passed to Task class
+    initialize = function(state_id,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          comment=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
+      kwargs = c(as.list(environment()), list(...))
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        EKS_SERVICE_NAME,
+        EksApi$Call)
+
+      do.call(super$initialize, kwargs)
+    }
+  ),
+  lock_objects=F
+)
+
+#' @title EksCreateClusterStep class
+#' @description Creates a Task State to created `AWS EKS cluster`.
+#'              When `AWS EKS` is created the IAM role is added to the `Kubernetes RBAC`
+#'              authorization table as the administrator. See `Manage Amazon EKS` with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-eks.html}
+#'              for more details.
+#' @export
+EksCreateClusterStep = R6Class("EksCreateClusterStep",
+  inherit = Task,
+  public = list(
+
+    #' @description Initialize EksCreateClusterStep Task class
+    #' @param state_id (str): State name whose length **must be** less than or
+    #'              equal to 128 unicode characters. State names **must be** unique
+    #'              within the scope of the whole state machine.
+    #' @param wait_for_completion (bool, optional): Boolean value set to `True` if
+    #'              the Task state should wait for the glue job to complete before proceeding
+    #'              to the next step in the workflow. Set to `False` if the Task state should
+    #'              submit the glue job and proceed to the next step. (default: True)
+    #' @param timeout_seconds (int, optional): Positive integer specifying timeout for the
+    #'              state in seconds. If the state runs longer than the specified timeout,
+    #'              then the interpreter fails the state with a `States.Timeout` Error Name. (default: 60)
+    #' @param timeout_seconds_path (str, optional): Path specifying the state's timeout
+    #'              value in seconds from the state input. When resolved, the path must select
+    #'              a field whose value is a positive integer.
+    #' @param heartbeat_seconds (int, optional): Positive integer specifying heartbeat
+    #'              timeout for the state in seconds. This value should be lower than
+    #'              the one specified for `timeout_seconds`. If more time than the specified
+    #'              heartbeat elapses between heartbeats from the task, then the interpreter
+    #'              fails the state with a `States.Timeout` Error Name.
+    #' @param heartbeat_seconds_path (str, optional): Path specifying the state's
+    #'              heartbeat value in seconds from the state input. When resolved,
+    #'              the path must select a field whose value is a positive integer.
+    #' @param comment (str, optional): Human-readable comment or description. (default: None)
+    #' @param input_path (str, optional): Path applied to the state’s raw input to
+    #'              select some or all of it; that selection is used by the state. (default: '$')
+    #' @param parameters (list, optional): The value of this field becomes the effective
+    #'              input for the state.
+    #' @param result_path (str, optional): Path specifying the raw input’s combination
+    #'              with or replacement by the state’s result. (default: '$')
+    #' @param output_path (str, optional): Path applied to the state’s output after
+    #'              the application of `result_path`, producing the effective output
+    #'              which serves as the raw input for the next state. (default: '$')
+    #' @param ... : Extra Fields passed to Task class
+    initialize = function(state_id,
+                          wait_for_completion=TRUE,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          comment=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
+      kwargs = list(
+        state_id=state_id,
+        timeout_seconds=timeout_seconds,
+        timeout_seconds_path=timeout_seconds_path,
+        heartbeat_seconds=heartbeat_seconds,
+        heartbeat_seconds_path=heartbeat_seconds_path,
+        comment=comment,
+        input_path=input_path,
+        parameters=parameters,
+        result_path=result_path,
+        output_path=output_path,
+        ...)
+      if (wait_for_completion)
+        kwargs[Field$Resource] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$CreateCluster,
+          IntegrationPattern$WaitForCompletion)
+      else
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$CreateCluster)
+
+      do.call(super$initialize, kwargs)
+    }
+  ),
+  lock_objects=F
+)
+
+#' @title EksDeleteClusterStep class
+#' @description Creates a Task State to delete `AWS EKS cluster`. See `Manage Amazon EKS` with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-eks.html}
+#'              for more details.
+#' @note You must delete any Fargate profiles or node groups before deleting a cluster.
+#' @export
+EksDeleteClusterStep = R6Class("EksDeleteClusterStep",
+  inherit = Task,
+  public = list(
+
+    #' @description Initialize EksDeleteClusterStep Task class
+    #' @param state_id (str): State name whose length **must be** less than or
+    #'              equal to 128 unicode characters. State names **must be** unique
+    #'              within the scope of the whole state machine.
+    #' @param wait_for_completion (bool, optional): Boolean value set to `True` if
+    #'              the Task state should wait for the glue job to complete before proceeding
+    #'              to the next step in the workflow. Set to `False` if the Task state should
+    #'              submit the glue job and proceed to the next step. (default: True)
+    #' @param timeout_seconds (int, optional): Positive integer specifying timeout for the
+    #'              state in seconds. If the state runs longer than the specified timeout,
+    #'              then the interpreter fails the state with a `States.Timeout` Error Name. (default: 60)
+    #' @param timeout_seconds_path (str, optional): Path specifying the state's timeout
+    #'              value in seconds from the state input. When resolved, the path must select
+    #'              a field whose value is a positive integer.
+    #' @param heartbeat_seconds (int, optional): Positive integer specifying heartbeat
+    #'              timeout for the state in seconds. This value should be lower than
+    #'              the one specified for `timeout_seconds`. If more time than the specified
+    #'              heartbeat elapses between heartbeats from the task, then the interpreter
+    #'              fails the state with a `States.Timeout` Error Name.
+    #' @param heartbeat_seconds_path (str, optional): Path specifying the state's
+    #'              heartbeat value in seconds from the state input. When resolved,
+    #'              the path must select a field whose value is a positive integer.
+    #' @param comment (str, optional): Human-readable comment or description. (default: None)
+    #' @param input_path (str, optional): Path applied to the state’s raw input to
+    #'              select some or all of it; that selection is used by the state. (default: '$')
+    #' @param parameters (list, optional): The value of this field becomes the effective
+    #'              input for the state.
+    #' @param result_path (str, optional): Path specifying the raw input’s combination
+    #'              with or replacement by the state’s result. (default: '$')
+    #' @param output_path (str, optional): Path applied to the state’s output after
+    #'              the application of `result_path`, producing the effective output
+    #'              which serves as the raw input for the next state. (default: '$')
+    #' @param ... : Extra Fields passed to Task class
+    initialize = function(state_id,
+             wait_for_completion=TRUE,
+             timeout_seconds=NULL,
+             timeout_seconds_path=NULL,
+             heartbeat_seconds=NULL,
+             heartbeat_seconds_path=NULL,
+             comment=NULL,
+             input_path=NULL,
+             parameters=NULL,
+             result_path=NULL,
+             output_path=NULL,
+             ...){
+      kwargs = list(
+        state_id=state_id,
+        timeout_seconds=timeout_seconds,
+        timeout_seconds_path=timeout_seconds_path,
+        heartbeat_seconds=heartbeat_seconds,
+        heartbeat_seconds_path=heartbeat_seconds_path,
+        comment=comment,
+        input_path=input_path,
+        parameters=parameters,
+        result_path=result_path,
+        output_path=output_path,
+        ...)
+      if (wait_for_completion)
+        kwargs[Field$Resource] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$DeleteCluster,
+          IntegrationPattern$WaitForCompletion)
+      else
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$DeleteCluster)
+
+      do.call(super$initialize, kwargs)
+    }
+  ),
+  lock_objects=F
+)
+
+#' @title EksCreateFargateProfileStep class
+#' @description Creates a Task State to create Fargate Profile on `AWS EKS cluster`.
+#'              `Amazon EKS` uses service-linked roles which contain the permissions
+#'              `Amazon EKS` requires to call other services on your behalf
+#'              See `Manage Amazon EKS` with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-eks.html}
+#'              for more details.
+#' @export
+EksCreateFargateProfileStep = R6Class("EksCreateFargateProfileStep",
+  inherit = Task,
+  public = list(
+
+    #' @description Initialize EksCreateFargateProfileStep Task class
+    #' @param state_id (str): State name whose length **must be** less than or
+    #'              equal to 128 unicode characters. State names **must be** unique
+    #'              within the scope of the whole state machine.
+    #' @param wait_for_completion (bool, optional): Boolean value set to `True` if
+    #'              the Task state should wait for the glue job to complete before proceeding
+    #'              to the next step in the workflow. Set to `False` if the Task state should
+    #'              submit the glue job and proceed to the next step. (default: True)
+    #' @param timeout_seconds (int, optional): Positive integer specifying timeout for the
+    #'              state in seconds. If the state runs longer than the specified timeout,
+    #'              then the interpreter fails the state with a `States.Timeout` Error Name. (default: 60)
+    #' @param timeout_seconds_path (str, optional): Path specifying the state's timeout
+    #'              value in seconds from the state input. When resolved, the path must select
+    #'              a field whose value is a positive integer.
+    #' @param heartbeat_seconds (int, optional): Positive integer specifying heartbeat
+    #'              timeout for the state in seconds. This value should be lower than
+    #'              the one specified for `timeout_seconds`. If more time than the specified
+    #'              heartbeat elapses between heartbeats from the task, then the interpreter
+    #'              fails the state with a `States.Timeout` Error Name.
+    #' @param heartbeat_seconds_path (str, optional): Path specifying the state's
+    #'              heartbeat value in seconds from the state input. When resolved,
+    #'              the path must select a field whose value is a positive integer.
+    #' @param comment (str, optional): Human-readable comment or description. (default: None)
+    #' @param input_path (str, optional): Path applied to the state’s raw input to
+    #'              select some or all of it; that selection is used by the state. (default: '$')
+    #' @param parameters (list, optional): The value of this field becomes the effective
+    #'              input for the state.
+    #' @param result_path (str, optional): Path specifying the raw input’s combination
+    #'              with or replacement by the state’s result. (default: '$')
+    #' @param output_path (str, optional): Path applied to the state’s output after
+    #'              the application of `result_path`, producing the effective output
+    #'              which serves as the raw input for the next state. (default: '$')
+    #' @param ... : Extra Fields passed to Task class
+    initialize = function(state_id,
+                          wait_for_completion=TRUE,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          comment=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
+      kwargs = list(
+        state_id=state_id,
+        timeout_seconds=timeout_seconds,
+        timeout_seconds_path=timeout_seconds_path,
+        heartbeat_seconds=heartbeat_seconds,
+        heartbeat_seconds_path=heartbeat_seconds_path,
+        comment=comment,
+        input_path=input_path,
+        parameters=parameters,
+        result_path=result_path,
+        output_path=output_path,
+        ...)
+      if (wait_for_completion)
+        kwargs[Field$Resource] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$CreateFargateProfile,
+          IntegrationPattern$WaitForCompletion)
+      else
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$CreateFargateProfile)
+
+      do.call(super$initialize, kwargs)
+    }
+  ),
+  lock_objects=F
+)
+
+#' @title EksDeleteFargateProfileStep class
+#' @description Creates a Task State to create Fargate Profile on `AWS EKS cluster`.
+#'              `Amazon EKS` uses service-linked roles which contain the permissions
+#'              `Amazon EKS` requires to call other services on your behalf
+#'              See `Manage Amazon EKS` with Step Functions
+#'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-eks.html}
+#'              for more details.
+#' @export
+EksDeleteFargateProfileStep = R6Class("EksDeleteFargateProfileStep",
+  inherit = Task,
+  public = list(
+
+    #' @description Initialize EksDeleteFargateProfileStep Task class
+    #' @param state_id (str): State name whose length **must be** less than or
+    #'              equal to 128 unicode characters. State names **must be** unique
+    #'              within the scope of the whole state machine.
+    #' @param wait_for_completion (bool, optional): Boolean value set to `True` if
+    #'              the Task state should wait for the glue job to complete before proceeding
+    #'              to the next step in the workflow. Set to `False` if the Task state should
+    #'              submit the glue job and proceed to the next step. (default: True)
+    #' @param timeout_seconds (int, optional): Positive integer specifying timeout for the
+    #'              state in seconds. If the state runs longer than the specified timeout,
+    #'              then the interpreter fails the state with a `States.Timeout` Error Name. (default: 60)
+    #' @param timeout_seconds_path (str, optional): Path specifying the state's timeout
+    #'              value in seconds from the state input. When resolved, the path must select
+    #'              a field whose value is a positive integer.
+    #' @param heartbeat_seconds (int, optional): Positive integer specifying heartbeat
+    #'              timeout for the state in seconds. This value should be lower than
+    #'              the one specified for `timeout_seconds`. If more time than the specified
+    #'              heartbeat elapses between heartbeats from the task, then the interpreter
+    #'              fails the state with a `States.Timeout` Error Name.
+    #' @param heartbeat_seconds_path (str, optional): Path specifying the state's
+    #'              heartbeat value in seconds from the state input. When resolved,
+    #'              the path must select a field whose value is a positive integer.
+    #' @param comment (str, optional): Human-readable comment or description. (default: None)
+    #' @param input_path (str, optional): Path applied to the state’s raw input to
+    #'              select some or all of it; that selection is used by the state. (default: '$')
+    #' @param parameters (list, optional): The value of this field becomes the effective
+    #'              input for the state.
+    #' @param result_path (str, optional): Path specifying the raw input’s combination
+    #'              with or replacement by the state’s result. (default: '$')
+    #' @param output_path (str, optional): Path applied to the state’s output after
+    #'              the application of `result_path`, producing the effective output
+    #'              which serves as the raw input for the next state. (default: '$')
+    #' @param ... : Extra Fields passed to Task class
+    initialize = function(state_id,
+                          wait_for_completion=TRUE,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          comment=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
+      kwargs = list(
+        state_id=state_id,
+        timeout_seconds=timeout_seconds,
+        timeout_seconds_path=timeout_seconds_path,
+        heartbeat_seconds=heartbeat_seconds,
+        heartbeat_seconds_path=heartbeat_seconds_path,
+        comment=comment,
+        input_path=input_path,
+        parameters=parameters,
+        result_path=result_path,
+        output_path=output_path,
+        ...)
+      if (wait_for_completion)
+        kwargs[Field$Resource] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$DeleteFargateProfile,
+          IntegrationPattern$WaitForCompletion)
+      else
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$DeleteFargateProfile)
+
+      do.call(super$initialize, kwargs)
+    }
+  ),
+  lock_objects=F
+)
