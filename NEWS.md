@@ -6,6 +6,7 @@
   * DataBrew
   * CodeBuild
   * EventBridge
+  * Stepfunctions
   
 # stepfunctions 0.1.0
 
