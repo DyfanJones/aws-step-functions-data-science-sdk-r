@@ -44,8 +44,8 @@ Initialize EmrCreateClusterStep task class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{EmrCreateClusterStep$new(
   state_id,
-  comment = NULL,
   wait_for_completion = TRUE,
+  comment = NULL,
   timeout_seconds = NULL,
   timeout_seconds_path = NULL,
   heartbeat_seconds = NULL,
@@ -65,11 +65,11 @@ Initialize EmrCreateClusterStep task class
 to 128 unicode characters. State names **must be** unique within
 the scope of the whole state machine.}
 
-\item{\code{comment}}{(str, optional): Human-readable comment or description. (default: None)}
-
 \item{\code{wait_for_completion}}{(bool, optional): Boolean value set to `True` if
 the Task state should wait to complete before proceeding to the
 next step in the workflow. (default: True)}
+
+\item{\code{comment}}{(str, optional): Human-readable comment or description. (default: None)}
 
 \item{\code{timeout_seconds}}{(int, optional): Positive integer specifying timeout
 for the state in seconds. If the state runs longer than the specified

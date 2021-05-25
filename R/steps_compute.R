@@ -419,19 +419,7 @@ AthenaStopQueryExecutionStep = R6Class("AthenaStopQueryExecutionStep",
                           result_path=NULL,
                           output_path=NULL,
                           ...){
-      kwargs = list(
-        state_id=state_id,
-        timeout_seconds=timeout_seconds,
-        timeout_seconds_path=timeout_seconds_path,
-        heartbeat_seconds=heartbeat_seconds,
-        heartbeat_seconds_path=heartbeat_seconds_path,
-        comment=comment,
-        input_path=input_path,
-        parameters=parameters,
-        result_path=result_path,
-        output_path=output_path,
-        ...)
-
+      kwargs = c(as.list(environment()), list(...))
       kwargs[[Field$Resource]] = get_service_integration_arn(
         ATHENA_SERVICE_NAME,
         AthenaApi$StopQueryExecution)
@@ -491,19 +479,7 @@ AthenaGetQueryExecutionStep = R6Class("AthenaGetQueryExecutionStep",
                           result_path=NULL,
                           output_path=NULL,
                           ...){
-      kwargs = list(
-        state_id=state_id,
-        timeout_seconds=timeout_seconds,
-        timeout_seconds_path=timeout_seconds_path,
-        heartbeat_seconds=heartbeat_seconds,
-        heartbeat_seconds_path=heartbeat_seconds_path,
-        comment=comment,
-        input_path=input_path,
-        parameters=parameters,
-        result_path=result_path,
-        output_path=output_path,
-        ...)
-
+      kwargs = c(as.list(environment()), list(...))
       kwargs[[Field$Resource]] = get_service_integration_arn(
         ATHENA_SERVICE_NAME,
         AthenaApi$GetQueryExecution)
@@ -563,19 +539,7 @@ AthenaGetQueryResultsStep = R6Class("AthenaGetQueryResultsStep",
                           result_path=NULL,
                           output_path=NULL,
                           ...){
-      kwargs = list(
-        state_id=state_id,
-        timeout_seconds=timeout_seconds,
-        timeout_seconds_path=timeout_seconds_path,
-        heartbeat_seconds=heartbeat_seconds,
-        heartbeat_seconds_path=heartbeat_seconds_path,
-        comment=comment,
-        input_path=input_path,
-        parameters=parameters,
-        result_path=result_path,
-        output_path=output_path,
-        ...)
-
+      kwargs = c(as.list(environment()), list(...))
       kwargs[[Field$Resource]] = get_service_integration_arn(
         ATHENA_SERVICE_NAME,
         AthenaApi$GetQueryResults)

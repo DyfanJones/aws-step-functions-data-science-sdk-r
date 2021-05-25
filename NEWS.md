@@ -8,6 +8,7 @@
   * EventBridge
   * Stepfunctions
   * apigateway
+  * Emr on Eks
   
 # stepfunctions 0.1.0
 
