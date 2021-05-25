@@ -43,8 +43,8 @@ Initialize SnsPublishStep task class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SnsPublishStep$new(
   state_id,
-  comment = NULL,
   wait_for_callback = FALSE,
+  comment = NULL,
   timeout_seconds = NULL,
   timeout_seconds_path = NULL,
   heartbeat_seconds = NULL,
@@ -64,10 +64,10 @@ Initialize SnsPublishStep task class
 to 128 unicode characters. State names **must be** unique within
 the scope of the whole state machine.}
 
-\item{\code{comment}}{(str, optional): Human-readable comment or description. (default: None)}
-
 \item{\code{wait_for_callback}}{(bool, optional): Boolean value set to `True` if the
 Task state should wait for callback to resume the operation. (default: False)}
+
+\item{\code{comment}}{(str, optional): Human-readable comment or description. (default: None)}
 
 \item{\code{timeout_seconds}}{(int, optional): Positive integer specifying timeout
 for the state in seconds. If the state runs longer than the specified

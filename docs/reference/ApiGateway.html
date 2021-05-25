@@ -157,6 +157,7 @@
 <p>Initialize ApiGateway task class</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ApiGateway</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   <span class='va'>state_id</span>,
+  wait_for_callback <span class='op'>=</span> <span class='cn'>FALSE</span>,
   comment <span class='op'>=</span> <span class='cn'>NULL</span>,
   timeout_seconds <span class='op'>=</span> <span class='cn'>NULL</span>,
   timeout_seconds_path <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -174,6 +175,9 @@
 <dt><code>state_id</code></dt><dd><p>(str): State name whose length **must be** less than or equal
 to 128 unicode characters. State names **must be** unique within
 the scope of the whole state machine.</p></dd>
+
+<dt><code>wait_for_callback</code></dt><dd><p>(bool, optional): Boolean value set to `True` if the
+Task state should wait for callback to resume the operation. (default: False)</p></dd>
 
 <dt><code>comment</code></dt><dd><p>(str, optional): Human-readable comment or description. (default: None)</p></dd>
 

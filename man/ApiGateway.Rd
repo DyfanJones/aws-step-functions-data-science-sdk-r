@@ -46,6 +46,7 @@ Initialize ApiGateway task class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ApiGateway$new(
   state_id,
+  wait_for_callback = FALSE,
   comment = NULL,
   timeout_seconds = NULL,
   timeout_seconds_path = NULL,
@@ -65,6 +66,9 @@ Initialize ApiGateway task class
 \item{\code{state_id}}{(str): State name whose length **must be** less than or equal
 to 128 unicode characters. State names **must be** unique within
 the scope of the whole state machine.}
+
+\item{\code{wait_for_callback}}{(bool, optional): Boolean value set to `True` if the
+Task state should wait for callback to resume the operation. (default: False)}
 
 \item{\code{comment}}{(str, optional): Human-readable comment or description. (default: None)}
 
