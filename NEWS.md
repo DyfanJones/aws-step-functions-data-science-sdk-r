@@ -7,6 +7,7 @@
   * CodeBuild
   * EventBridge
   * Stepfunctions
+  * apigateway
   
 # stepfunctions 0.1.0
 
