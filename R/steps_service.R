@@ -1407,17 +1407,17 @@ StepfunctionsStartExecutionStep = R6Class("StepfunctionsStartExecutionStep",
   lock_objects=F
 )
 
-#' @title ApiGateway class
+#' @title ApiGatewayStep class
 #' @description Creates a Task state to invoke api gateway with Step Functions
 #'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-api-gateway.html}
 #'              for more details.
 #' @note This class only calls another stepfunction state machine from the "parent" state machine.
 #' @export
-ApiGateway = R6Class("ApiGateway",
+ApiGatewayStep = R6Class("ApiGateway",
   inherit = Task,
   public = list(
 
-    #' @description Initialize ApiGateway task class
+    #' @description Initialize ApiGatewayStep task class
     #' @param state_id (str): State name whose length **must be** less than or equal
     #'               to 128 unicode characters. State names **must be** unique within
     #'               the scope of the whole state machine.
