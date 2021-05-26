@@ -275,11 +275,22 @@ State = R6Class("State",
     #' @param next_step (State or Chain): Next state or chain to transition to.
     #' @return State or Chain: Next state or chain that will be transitioned to.
     .next = function(next_step){
-      if (self$type %in% c('Choice', 'Succeed', 'Fail'))
+      if (self$type %in% c('Succeed', 'Fail'))
         stop(sprintf(
           'Unexpected State instance `%s`, State type `%s` does not support method `next`.',
           next_step, self$type))
 
+      # By design, Choice states do not have the Next field. When used in a chain, the subsequent step becomes the
+      # default choice that executes if none of the specified rules match.
+      # See language spec for more info: https://states-language.net/spec.html#choice-state
+      if (self$type == 'Choice'){
+        if (is.null(self$default))
+          LOGGER$warning(
+          "Chaining Choice state: Overwriting %s's current default_choice (%s) with %s",
+          self$state_id, self$default$state_id, next_step$state_id)
+        self$default_choice(next_step)
+        return(self$default)
+      }
       self$next_step = next_step
       return(self$next_step)
     },
@@ -555,7 +566,8 @@ Wait = R6Class("Wait",
 #'              pattern-matches against the rules in list order and transitions to the
 #'              state or chain specified in the *next_step* field on the first *rule* where
 #'              there is an exact match between the input value and a member of the
-#'              comparison-operator array.
+#'              comparison-operator array. When used in a chain, the subsequent step
+#'              becomes the default choice that executes if none of the specified rules match.
 #' @export
 Choice = R6Class("Choice",
   inherit = State,
