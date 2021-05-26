@@ -16,6 +16,7 @@ Imports:
     glue
 Suggests:
     testthat,
+    mockery,
     crayon,
     R6sagemaker,
     IRdisplay
