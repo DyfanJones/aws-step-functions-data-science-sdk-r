@@ -266,10 +266,10 @@ TransformStep = R6Class("TransformStep",
         parameters[['TransformJobName']] = job_name
 
       parameters[['ModelName']] = model_name
-      parameters['ExperimentConfig'] = experiment_config
+      parameters[['ExperimentConfig']] = experiment_config
 
       if (!is.null(tags))
-        parameters['Tags'] = tags_dict_to_kv_list(tags)
+        parameters[['Tags']] = tags_dict_to_kv_list(tags)
 
       kwargs[[Field$Parameters]] = parameters
       kwargs[["state_id"]] = state_id
