@@ -4,8 +4,8 @@
 \alias{GlueStartJobRunStep}
 \title{GlueStartJobRunStep Class}
 \description{
-Creates a Task state to run an AWS Glue job. See `Manage AWS Glue Jobs`
-             `with Step Functions <https://docs.aws.amazon.com/step-functions/latest/dg/connect-glue.html>`_
+Creates a Task state to run an AWS Glue job. See Manage AWS Glue Jobs
+             with Step Functions \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-glue.html}
              for more details.
 }
 \section{Super classes}{
@@ -39,7 +39,7 @@ Creates a Task state to run an AWS Glue job. See `Manage AWS Glue Jobs`
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Initialize LambdaStep Task class
+Initialize GlueStartJobRunStep Task class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GlueStartJobRunStep$new(
   state_id,

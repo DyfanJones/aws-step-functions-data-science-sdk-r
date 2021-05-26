@@ -39,7 +39,7 @@ Creates a Task State to start an AWS Batch job. See `Manage AWS Batch`
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Initialize LambdaStep Task class
+Initialize BatchSubmitJobStep Task class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{BatchSubmitJobStep$new(
   state_id,
