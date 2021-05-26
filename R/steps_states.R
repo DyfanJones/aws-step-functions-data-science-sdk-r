@@ -10,7 +10,7 @@
 #' @importFrom tools toTitleCase
 
 to_pascalcase = function(text){
-  test = split_str(text, "-")
+  test = split_str(text, "_")
   return(paste0(tools::toTitleCase(test), collapse = ""))
 }
 
@@ -628,7 +628,7 @@ Choice = R6Class("Choice",
       for (ll in self$choices){
         serialized_choice = ll[[1]]$to_list()
         serialized_choice[["Next"]] = ll[[2]]$state_id
-        serialized_choices = c(serialized_choices, serialized_choice)
+        serialized_choices = c(serialized_choices, list(serialized_choice))
         }
       result[["Choices"]] = serialized_choices
 
