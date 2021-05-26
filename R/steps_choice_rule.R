@@ -8,7 +8,7 @@
 
 VALIDATORS = Enum(
   String="character",
-  Numeric=c("integer", "double"),
+  Numeric=c("integer", "double", "numeric"),
   Boolean="logical",
   Timestamp="character",
   Is="logical"
@@ -70,7 +70,7 @@ Rule = R6Class("Rule",
     #' @description Convert class to list ready to be translated for
     #'              Amazon States Language \url{https://states-language.net/spec.html}.
     to_list = function(){
-      if (isinstance(self$variable, "StepInput")){
+      if (inherits(self$variable, "StepInput")){
         result = list('Variable'=self$variable$to_jsonpath())
       } else {
           result = list('Variable'=self$variable)
@@ -121,7 +121,7 @@ CompoundRule = R6Class("CompoundRule",
     format = function(){
       cls_fmt = '%s(operator=[%s], rules=[%s])'
       op_fmt = if(!is.null(self$operator)) paste(self$operator, sep=", ", collapse = ", ") else ""
-      rule_fmt = if(!is.null(self$rules)) paste(self$rules, sep=", ", collapse = ", ") else ""
+      rule_fmt = if(!is.null(self$rules)) paste(lapply(self$rules, function(x) x$format()), sep=", ", collapse = ", ") else ""
       return(sprintf(cls_fmt, class(self)[1], op_fmt, rule_fmt))
     }
   ),
@@ -153,7 +153,7 @@ NotRule = R6Class("NotRule",
     #' @description class formatting
     format = function(){
       cls_fmt = '%s(rule=%s)'
-      rule_fmt = if(!is.null(self$rule)) paste(self$rules, sep=", ", collapse = ", ") else ""
+      rule_fmt = self$rule$format()
       return(sprintf(cls_fmt, class(self)[1], rule_fmt))
     }
   ),
@@ -331,7 +331,7 @@ ChoiceRule = R6Class("ChoiceRule",
     #' @param value (bool): Constant value to compare `variable` against.
     #' @return Rule: Rule with `BooleanEquals` operator.
     BooleanEquals = function(variable, value){
-      return(Rule(variable, 'BooleanEquals', value))
+      return(Rule$new(variable, 'BooleanEquals', value))
     },
 
     #' @description Creates a rule with the `BooleanEqualsPath` operator.
