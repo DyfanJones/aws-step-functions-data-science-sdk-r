@@ -1117,7 +1117,7 @@ CodeBuildStopBuildStep = R6Class("CodeBuildStopBuildStep",
 
       kwargs[[Field$Resource]] = get_service_integration_arn(
         CODEBUILD_SERVICE_NAME,
-        CodeBuildApi$stopBuild)
+        CodeBuildApi$StopBuild)
 
       do.call(super$initialize, kwargs)
     }
@@ -1623,6 +1623,10 @@ EmrOnEksDeleteVirtualClusterStep = R6Class("EmrOnEksDeleteVirtualClusterStep",
           EMRONEKS_SERVICE_NAME,
           EmrOnEksApi$DeleteVirtualCluster,
           IntegrationPattern$WaitForCompletion)
+      else
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          EMRONEKS_SERVICE_NAME,
+          EmrOnEksApi$DeleteVirtualCluster)
 
       do.call(super$initialize, kwargs)
     }
@@ -1702,6 +1706,10 @@ EmrOnEksStartJobRunStep = R6Class("EmrOnEksStartJobRunStep",
         EMRONEKS_SERVICE_NAME,
         EmrOnEksApi$StartJobRun,
         IntegrationPattern$WaitForCompletion)
+    else
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        EMRONEKS_SERVICE_NAME,
+        EmrOnEksApi$StartJobRun)
 
     do.call(super$initialize, kwargs)
     }
@@ -1777,14 +1785,14 @@ EksRunJobStep = R6Class("EksRunJobStep",
         output_path=output_path,
       ...)
       if (wait_for_completion)
-      kwargs[Field$Resource] = get_service_integration_arn(
-        EKS_SERVICE_NAME,
-        EksApi$RunJob,
-        IntegrationPattern$WaitForCompletion)
+        kwargs[Field$Resource] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$RunJob,
+          IntegrationPattern$WaitForCompletion)
       else
-      kwargs[[Field$Resource]] = get_service_integration_arn(
-        EKS_SERVICE_NAME,
-        EksApi$RunJob)
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$RunJob)
 
       do.call(super$initialize, kwargs)
     }
