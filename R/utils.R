@@ -3,6 +3,10 @@
 
 split_str <- function(str, split = ","){unlist(strsplit(str, split = split))}
 
+is_list_named = function(x){
+  inherits(x, "list") && length(names(x)) > 0
+}
+
 Enum <- function(..., .class=NULL) {
   kwargs = list(...)
   env = list2env(kwargs, parent = emptyenv())

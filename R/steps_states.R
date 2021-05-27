@@ -10,7 +10,7 @@
 #' @importFrom tools toTitleCase
 
 to_pascalcase = function(text){
-  test = split_str(text, "-")
+  test = split_str(text, "_")
   return(paste0(tools::toTitleCase(test), collapse = ""))
 }
 
@@ -86,24 +86,24 @@ Block = R6Class("Block",
   ),
   private = list(
     .replace_placeholders = function(params){
-      if (!inherits(params, "list")){
+      if (!is_list_named(params))
         return(params)
-      }
       modified_parameters = list()
       for(k in names(params)){
         v = params[[k]]
         if (inherits(v, c("ExecutionInput", "StepInput"))){
           modified_key = sprintf("%s.$", k)
           modified_parameters[[modified_key]] = v$to_jsonpath()
+        } else if (is_list_named(v)) {
+            modified_parameters[[k]] = private$.replace_placeholders(v)
         } else if (inherits(v, "list")){
-          modified_parameters[[k]] = private$.replace_placeholders(v)
+          modified_parameters[[k]] = lapply(v, private$.replace_placeholders)
         } else {
           modified_parameters[[k]] = v
         }
       }
       return(modified_parameters)
     }
-
   ),
   lock_objects = F
 )
@@ -238,7 +238,6 @@ State = R6Class("State",
         output_path=output_path,
         ...)
       kwargs = Filter(Negate(is.null), kwargs)
-
       do.call(super$initialize, kwargs)
 
       self$fields[["type"]] = state_type
@@ -628,7 +627,7 @@ Choice = R6Class("Choice",
       for (ll in self$choices){
         serialized_choice = ll[[1]]$to_list()
         serialized_choice[["Next"]] = ll[[2]]$state_id
-        serialized_choices = c(serialized_choices, serialized_choice)
+        serialized_choices = c(serialized_choices, list(serialized_choice))
         }
       result[["Choices"]] = serialized_choices
 
