@@ -42,9 +42,6 @@
 <meta property="og:title" content="EmrModifyInstanceFleetByNameStep class — EmrModifyInstanceFleetByNameStep" />
 <meta property="og:description" content="Creates a Task state to modify the target On-Demand and target Spot capacities
              for an instance fleet.  See Call Amazon EMR with Step Functions
-             https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html for more details.
-Creates a Task state to modify the number of nodes and configuration
-             settings of an instance group. See Call Amazon EMR with Step Functions
              https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html for more details." />
 
 
@@ -120,111 +117,8 @@ Creates a Task state to modify the number of nodes and configuration
     <p>Creates a Task state to modify the target On-Demand and target Spot capacities
              for an instance fleet.  See Call Amazon EMR with Step Functions
              <a href='https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html'>https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html</a> for more details.</p>
-<p>Creates a Task state to modify the number of nodes and configuration
-             settings of an instance group. See Call Amazon EMR with Step Functions
-             <a href='https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html'>https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html</a> for more details.</p>
     </div>
 
-
-
-    <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
-
-    <p><code><a href='Block.html'>stepfunctions::Block</a></code> -&gt; <code><a href='State.html'>stepfunctions::State</a></code> -&gt; <code><a href='Task.html'>stepfunctions::Task</a></code> -&gt; <code>EmrModifyInstanceFleetByNameStep</code></p>
-    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
-
-    
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
-
-<ul>
-<li><p><a href='#method-new'><code>EmrModifyInstanceFleetByNameStep$new()</code></a></p></li>
-<li><p><a href='#method-clone'><code>EmrModifyInstanceFleetByNameStep$clone()</code></a></p></li>
-</ul>
-<p><details ><summary>Inherited methods</summary>
-<ul>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="Block" data-id="is_field_allowed"><a href='../../stepfunctions/html/Block.html#method-is_field_allowed'><code>stepfunctions::Block$is_field_allowed()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="Block" data-id="to_json"><a href='../../stepfunctions/html/Block.html#method-to_json'><code>stepfunctions::Block$to_json()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="State" data-id=".next"><a href='../../stepfunctions/html/State.html#method-.next'><code>stepfunctions::State$.next()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="State" data-id="accept"><a href='../../stepfunctions/html/State.html#method-accept'><code>stepfunctions::State$accept()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="State" data-id="add_catch"><a href='../../stepfunctions/html/State.html#method-add_catch'><code>stepfunctions::State$add_catch()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="State" data-id="add_retry"><a href='../../stepfunctions/html/State.html#method-add_retry'><code>stepfunctions::State$add_retry()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="State" data-id="format"><a href='../../stepfunctions/html/State.html#method-format'><code>stepfunctions::State$format()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="State" data-id="output"><a href='../../stepfunctions/html/State.html#method-output'><code>stepfunctions::State$output()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="State" data-id="to_list"><a href='../../stepfunctions/html/State.html#method-to_list'><code>stepfunctions::State$to_list()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="State" data-id="update_parameters"><a href='../../stepfunctions/html/State.html#method-update_parameters'><code>stepfunctions::State$update_parameters()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="stepfunctions" data-topic="Task" data-id="allowed_fields"><a href='../../stepfunctions/html/Task.html#method-allowed_fields'><code>stepfunctions::Task$allowed_fields()</code></a></span></p></li>
-</ul>
-</details>
-
-<hr>
-<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Initialize EmrModifyInstanceFleetByNameStep task class</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EmrModifyInstanceFleetByNameStep</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
-  <span class='va'>state_id</span>,
-  comment <span class='op'>=</span> <span class='cn'>NULL</span>,
-  timeout_seconds <span class='op'>=</span> <span class='cn'>NULL</span>,
-  timeout_seconds_path <span class='op'>=</span> <span class='cn'>NULL</span>,
-  heartbeat_seconds <span class='op'>=</span> <span class='cn'>NULL</span>,
-  heartbeat_seconds_path <span class='op'>=</span> <span class='cn'>NULL</span>,
-  input_path <span class='op'>=</span> <span class='cn'>NULL</span>,
-  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
-  result_path <span class='op'>=</span> <span class='cn'>NULL</span>,
-  output_path <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>state_id</code></dt><dd><p>(str): State name whose length **must be** less than or equal
-to 128 unicode characters. State names **must be** unique within
-the scope of the whole state machine.</p></dd>
-
-<dt><code>comment</code></dt><dd><p>(str, optional): Human-readable comment or description. (default: None)</p></dd>
-
-<dt><code>timeout_seconds</code></dt><dd><p>(int, optional): Positive integer specifying timeout
-for the state in seconds. If the state runs longer than the specified
-timeout, then the interpreter fails the state with a `States.Timeout`
-Error Name. (default: 60)</p></dd>
-
-<dt><code>timeout_seconds_path</code></dt><dd><p>(str, optional): Path specifying the state's timeout
-value in seconds from the state input. When resolved, the path must
-select a field whose value is a positive integer.</p></dd>
-
-<dt><code>heartbeat_seconds</code></dt><dd><p>(int, optional): Positive integer specifying heartbeat
-timeout for the state in seconds. This value should be lower than
-the one specified for `timeout_seconds`. If more time than the specified
-heartbeat elapses between heartbeats from the task, then the interpreter
-fails the state with a `States.Timeout` Error Name.</p></dd>
-
-<dt><code>heartbeat_seconds_path</code></dt><dd><p>(str, optional): Path specifying the state's heartbeat
-value in seconds from the state input. When resolved, the path must select
-a field whose value is a positive integer.</p></dd>
-
-<dt><code>input_path</code></dt><dd><p>(str, optional): Path applied to the state’s raw input to
-select some or all of it; that selection is used by the state. (default: '$')</p></dd>
-
-<dt><code>parameters</code></dt><dd><p>(list, optional): The value of this field becomes the effective
-input for the state.</p></dd>
-
-<dt><code>result_path</code></dt><dd><p>(str, optional): Path specifying the raw input’s combination
-with or replacement by the state’s result. (default: '$')</p></dd>
-
-<dt><code>output_path</code></dt><dd><p>(str, optional): Path applied to the state’s output after
-the application of `result_path`, producing the effective output
-which serves as the raw input for the next state. (default: '$')</p></dd>
-
-<dt><code>...</code></dt><dd><p>: Extra Fields passed to Task class</p></dd>
-
-</dl><p></div></p>
-<p><hr>
-<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EmrModifyInstanceFleetByNameStep</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
-
-</dl><p></div></p>
 
 
     <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
