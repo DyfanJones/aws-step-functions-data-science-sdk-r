@@ -642,7 +642,7 @@ EmrTerminateClusterStep = R6Class("EmrTerminateClusterStep",
       else
         kwargs[[Field$Resource]] = get_service_integration_arn(
           ELASTICMAPREDUCE_SERVICE_NAME,
-          lasticMapReduceApi$TerminateCluster)
+          ElasticMapReduceApi$TerminateCluster)
 
       do.call(super$initialize, kwargs)
     }
@@ -918,16 +918,16 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
   lock_objects=F
 )
 
-#' @title EmrModifyInstanceFleetByNameStep class
+#' @title EmrModifyInstanceGroupByNameStep class
 #' @description Creates a Task state to modify the number of nodes and configuration
 #'              settings of an instance group. See Call Amazon EMR with Step Functions
 #'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html} for more details.
 #' @export
-EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
+EmrModifyInstanceGroupByNameStep = R6Class("EmrModifyInstanceGroupByNameStep",
   inherit = Task,
   public = list(
 
-    #' @description Initialize EmrModifyInstanceFleetByNameStep task class
+    #' @description Initialize EmrModifyInstanceGroupByNameStep task class
     #' @param state_id (str): State name whose length **must be** less than or equal
     #'              to 128 unicode characters. State names **must be** unique within
     #'              the scope of the whole state machine.
