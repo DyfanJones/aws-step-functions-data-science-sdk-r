@@ -72,7 +72,6 @@ After you define these steps, chain them together into a logical sequence.
 
 ```
 workflow_definition=Chain$new(c(start_pass_state, wait_state, lambda_state))
-
 ```
 
 Once the steps are chained together, you can define the workflow definition.
@@ -89,13 +88,13 @@ workflow = Workflow$new(
 
 ### Visualizing a Workflow
 
-The following generates a graphical representation of your workflow. Please note that visualization currently only works in Jupyter notebooks. Visualization is not available in JupyterLab.
+The following generates a graphical representation of your workflow. Please note that visualization currently only works in Jupyter notebooks. Visualization is not available in JupyterLab or RStudio.
 
 ```
 workflow$render_graph()
 ```
 
-**NOTE:** Currently graphs can only render in jupyter notebook. Rendering graphs in Rstudio is on the todo list :)
+![](docs/example1.png)
 
 ## Review a Workflow Definition
 
