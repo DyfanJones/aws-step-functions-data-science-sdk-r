@@ -253,8 +253,8 @@ State = R6Class("State",
       self$type = state_type
       self$state_type = state_type
       self$state_id = state_id
-      self$output_schema = output_schema
-      self$step_output = StepInput$new(schema=output_schema)
+      self$output_schema = as.list(output_schema)
+      self$step_output = StepInput$new(schema=self$output_schema)
       self$retries = list()
       self$catches = list()
       self$next_step = NULL
@@ -275,6 +275,7 @@ State = R6Class("State",
     #' @description Update `parameters` field in the state, if supported.
     #' @param params (list): The value of this field becomes the effective input for the state.
     update_parameters = function(params){
+      params = as.list(params)
       if (Field$Parameters %in% self$allowed_fields())
         self$fields[[Field$Parameters]] = params
     },
