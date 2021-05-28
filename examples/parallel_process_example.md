@@ -294,5 +294,5 @@ workflow$definition$to_json(T)
 ```
 ## Sum up:
 
-Hopefully from comparing the `AWS State Language` and `R stepfunctions sdk` processes you would agree it is fairly nice to work with in comparison :P
+`R stepfunctions` streamlines the creation of AWS State Language and makes the processes of creating stepfunctiosn from R alot more simpler.
 
