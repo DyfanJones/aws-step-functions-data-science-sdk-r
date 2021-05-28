@@ -153,7 +153,7 @@ WorkflowGraphWidget = R6Class("WorkflowGraphWidget",
       show = function(portrait=TRUE){
         display_html <- pkg_method("display_html","IRdisplay")
         return(display_html(
-          sefl$render_html(portrait)
+          self$render_html(portrait)
           )
         )
       }
