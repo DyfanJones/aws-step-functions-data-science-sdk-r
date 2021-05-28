@@ -774,16 +774,16 @@ EmrCancelStepStep = R6Class("EmrCancelStepStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-                         comment=NULL,
-                         timeout_seconds=NULL,
-                         timeout_seconds_path=NULL,
-                         heartbeat_seconds=NULL,
-                         heartbeat_seconds_path=NULL,
-                         input_path=NULL,
-                         parameters=NULL,
-                         result_path=NULL,
-                         output_path=NULL,
-                         ...){
+                          comment=NULL,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
       kwargs = c(as.list(environment()), list(...))
       kwargs[[Field$Resource]] = get_service_integration_arn(
         ELASTICMAPREDUCE_SERVICE_NAME,
@@ -897,16 +897,16 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-                         comment=NULL,
-                         timeout_seconds=NULL,
-                         timeout_seconds_path=NULL,
-                         heartbeat_seconds=NULL,
-                         heartbeat_seconds_path=NULL,
-                         input_path=NULL,
-                         parameters=NULL,
-                         result_path=NULL,
-                         output_path=NULL,
-                         ...){
+                          comment=NULL,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
       kwargs = c(as.list(environment()), list(...))
       kwargs[[Field$Resource]] = get_service_integration_arn(
         ELASTICMAPREDUCE_SERVICE_NAME,
@@ -958,16 +958,16 @@ EmrModifyInstanceGroupByNameStep = R6Class("EmrModifyInstanceGroupByNameStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-                         comment=NULL,
-                         timeout_seconds=NULL,
-                         timeout_seconds_path=NULL,
-                         heartbeat_seconds=NULL,
-                         heartbeat_seconds_path=NULL,
-                         input_path=NULL,
-                         parameters=NULL,
-                         result_path=NULL,
-                         output_path=NULL,
-                         ...){
+                          comment=NULL,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
       kwargs = c(as.list(environment()), list(...))
       kwargs[[Field$Resource]] = get_service_integration_arn(
         ELASTICMAPREDUCE_SERVICE_NAME,
@@ -1989,17 +1989,17 @@ EksDeleteClusterStep = R6Class("EksDeleteClusterStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-             wait_for_completion=TRUE,
-             timeout_seconds=NULL,
-             timeout_seconds_path=NULL,
-             heartbeat_seconds=NULL,
-             heartbeat_seconds_path=NULL,
-             comment=NULL,
-             input_path=NULL,
-             parameters=NULL,
-             result_path=NULL,
-             output_path=NULL,
-             ...){
+                          wait_for_completion=TRUE,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          comment=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
       kwargs = list(
         state_id=state_id,
         timeout_seconds=timeout_seconds,
