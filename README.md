@@ -150,3 +150,5 @@ workflow$definition$to_json(pretty=TRUE)
   }
 }
 ```
+
+For more examples please check out [examples](https://github.com/DyfanJones/aws-step-functions-data-science-sdk-r/tree/main/examples)
