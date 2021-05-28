@@ -62,21 +62,21 @@ Next we will create the marketing branch.
 market_collect = DataBrewStartJobRunStep$new("Marketing DataBrew ETL Job", parameters=list("Name"="marketing-data-etl"))
 
 # Remove existing table
-market_athena_drop = AthenaStartQueryExecutionStep$new("Drop Old Sales Table", parameters=list(
+market_athena_drop = AthenaStartQueryExecutionStep$new("Drop Old Marketing Table", parameters=list(
     "QueryString"="DROP TABLE IF EXISTS marketing_data_output",
     "WorkGroup"=work_group,
     "ResultConfiguration"=athena_output
 ))
 
 # Rebuild Athena Table
-market_athena_create = AthenaStartQueryExecutionStep$new("Create Sales Table", parameters=list(
+market_athena_create = AthenaStartQueryExecutionStep$new("Create Marketing Table", parameters=list(
     "QueryString"="CREATE EXTERNAL TABLE `marketing_data_output`(`date` string, `new_visitors_seo` int, `new_visitors_cpc` int, `new_visitors_social_media` int, `return_visitors` int, `twitter_mentions` int, `twitter_follower_adds` int, `twitter_followers_cumulative` int, `mailing_list_adds_` int, `mailing_list_cumulative` int, `website_pageviews` int, `website_visits` int, `website_unique_visits` int, `mobile_uniques` int, `tablet_uniques` int, `desktop_uniques` int, `free_sign_up` int, `paid_conversion` int, `events` string) PARTITIONED BY (`year` string, `month` string, `day` string) ROW FORMAT SERDE 'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe' STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat' OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat' LOCATION 's3://<your-bucket-name>/sales-pipeline/transformed/marketing/' TBLPROPERTIES ('classification'='parquet', 'compressionType'='none', 'typeOfData'='file')",
     "WorkGroup"=work_group,
     "ResultConfiguration"=athena_output
 ))
 
 # Add all partitions to marketing table
-market_athena_partition = AthenaStartQueryExecutionStep$new("Load Sales Table Partitions", parameters=list(
+market_athena_partition = AthenaStartQueryExecutionStep$new("Load Marketing Table Partitions", parameters=list(
     "QueryString"="MSCK REPAIR TABLE marketing_data_output",
     "WorkGroup"=work_group,
     "ResultConfiguration"=athena_output
@@ -212,9 +212,9 @@ workflow$definition$to_json(T)
               },
               "Resource": "arn:aws:states:::databrew:startJobRun.sync",
               "Type": "Task",
-              "Next": "Drop Old Sales Table"
+              "Next": "Drop Old Marketing Table"
             },
-            "Drop Old Sales Table": {
+            "Drop Old Marketing Table": {
               "Parameters": {
                 "QueryString": "DROP TABLE IF EXISTS marketing_data_output",
                 "WorkGroup": "primary",
@@ -224,9 +224,9 @@ workflow$definition$to_json(T)
               },
               "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
               "Type": "Task",
-              "Next": "Create Sales Table"
+              "Next": "Create Marketing Table"
             },
-            "Create Sales Table": {
+            "Create Marketing Table": {
               "Parameters": {
                 "QueryString": "CREATE EXTERNAL TABLE `marketing_data_output`(`date` string, `new_visitors_seo` int, `new_visitors_cpc` int, `new_visitors_social_media` int, `return_visitors` int, `twitter_mentions` int, `twitter_follower_adds` int, `twitter_followers_cumulative` int, `mailing_list_adds_` int, `mailing_list_cumulative` int, `website_pageviews` int, `website_visits` int, `website_unique_visits` int, `mobile_uniques` int, `tablet_uniques` int, `desktop_uniques` int, `free_sign_up` int, `paid_conversion` int, `events` string) PARTITIONED BY (`year` string, `month` string, `day` string) ROW FORMAT SERDE 'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe' STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat' OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat' LOCATION 's3://<your-bucket-name>/sales-pipeline/transformed/marketing/' TBLPROPERTIES ('classification'='parquet', 'compressionType'='none', 'typeOfData'='file')",
                 "WorkGroup": "primary",
@@ -236,9 +236,9 @@ workflow$definition$to_json(T)
               },
               "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
               "Type": "Task",
-              "Next": "Load Sales Table Partitions"
+              "Next": "Load Marketing Table Partitions"
             },
-            "Load Sales Table Partitions": {
+            "Load Marketing Table Partitions": {
               "Parameters": {
                 "QueryString": "MSCK REPAIR TABLE marketing_data_output",
                 "WorkGroup": "primary",
@@ -290,7 +290,9 @@ workflow$definition$to_json(T)
       "End": true
     }
   }
-} 
+}
 ```
+## Sum up:
+
 Hopefully from comparing the `AWS State Language` and `R stepfunctions sdk` processes you would agree it is fairly nice to work with in comparison :P
 
