@@ -1,12 +1,9 @@
 # NOTE: This code has been modified from AWS Stepfunctions Python:
 # https://github.com/aws/aws-step-functions-data-science-sdk-python/blob/main/tests/unit/test_service_steps.py
 
-library(mockery)
-
-
+old_env <- Sys.getenv("AWS_REGION")
+Sys.setenv("AWS_REGION" = "us-east-1")
 test_that("test sns publish step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
-
   step = SnsPublishStep$new('Publish to SNS', parameters=list(
     'TopicArn'='arn:aws:sns:us-east-1:123456789012:myTopic',
     'Message'='message')
@@ -48,8 +45,6 @@ test_that("test sns publish step creation", {
 })
 
 test_that("test sqs send message step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
-
   step = SqsSendMessageStep$new('Send to SQS', parameters=list(
     'QueueUrl'='https://sqs.us-east-1.amazonaws.com/123456789012/myQueue',
     'MessageBody'='Hello'
@@ -89,7 +84,7 @@ test_that("test sqs send message step creation", {
 })
 
 test_that("test dynamodb get item step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = DynamoDBGetItemStep$new('Read Message From DynamoDB', parameters=list(
     'TableName'='TransferDataRecords-DDBTable-3I41R5L5EAGT',
@@ -115,7 +110,7 @@ test_that("test dynamodb get item step creation", {
 })
 
 test_that("test dynamodb put item step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = DynamoDBPutItemStep$new('Put item in DynamoDB', parameters=list(
     'TableName'='TransferDataRecords-DDBTable-3I41R5L5EAGT',
@@ -141,7 +136,7 @@ test_that("test dynamodb put item step creation", {
 })
 
 test_that("test dynamodb delete item step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = DynamoDBDeleteItemStep$new('Delete item in DynamoDB', parameters=list(
     'TableName'='TransferDataRecords-DDBTable-3I41R5L5EAGT',
@@ -167,7 +162,7 @@ test_that("test dynamodb delete item step creation", {
 })
 
 test_that("test dynamodb delete item step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = DynamoDBUpdateItemStep$new('Update item in DynamoDB', parameters=list(
     'TableName'='TransferDataRecords-DDBTable-3I41R5L5EAGT',
@@ -201,7 +196,7 @@ test_that("test dynamodb delete item step creation", {
 })
 
 test_that("test emr create cluster step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrCreateClusterStep$new('Create EMR cluster', parameters=list(
     'Name'='MyWorkflowCluster',
@@ -352,7 +347,7 @@ test_that("test emr create cluster step creation", {
 })
 
 test_that("test emr terminate cluster step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrTerminateClusterStep$new('Terminate EMR cluster', parameters=list(
     'ClusterId'='MyWorkflowClusterId'
@@ -386,7 +381,7 @@ test_that("test emr terminate cluster step creation", {
 })
 
 test_that("test emr add step step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrAddStepStep$new('Add step to EMR cluster', parameters=list(
     'ClusterId'='MyWorkflowClusterId',
@@ -492,7 +487,7 @@ test_that("test emr add step step creation", {
 })
 
 test_that("test emr cancel step step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrCancelStepStep$new('Cancel step to EMR cluster', parameters=list(
     'ClusterId'='MyWorkflowClusterId',
@@ -513,7 +508,7 @@ test_that("test emr cancel step step creation", {
 })
 
 test_that("test emr set cluster termination protection step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrSetClusterTerminationProtectionStep$new('Set termination protection for EMR cluster', parameters=list(
     'ClusterId'='MyWorkflowClusterId',
@@ -534,7 +529,7 @@ test_that("test emr set cluster termination protection step creation", {
 })
 
 test_that("test emr modify instance fleet by name step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrModifyInstanceFleetByNameStep$new('Modify Instance Fleet by name for EMR cluster', parameters=list(
     'ClusterId'='MyWorkflowClusterId',
@@ -563,7 +558,7 @@ test_that("test emr modify instance fleet by name step creation", {
 })
 
 test_that("test emr modify instance group by name step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrModifyInstanceGroupByNameStep$new('Modify Instance Group by name for EMR cluster', parameters=list(
     'ClusterId'='MyWorkflowClusterId',
@@ -590,7 +585,7 @@ test_that("test emr modify instance group by name step creation", {
 })
 
 test_that("test code build start build step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = CodeBuildStartBuildStep$new('Start build for CodeBuild', parameters=list(
     "projectName"="dummy"
@@ -624,7 +619,7 @@ test_that("test code build start build step creation", {
 })
 
 test_that("test code build stop build step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = CodeBuildStopBuildStep$new('Start build for CodeBuild', parameters=list(
     "projectName"="dummy"
@@ -643,7 +638,7 @@ test_that("test code build stop build step creation", {
 })
 
 test_that("test code build stop build step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = CodeBuildStopBuildStep$new('Stop build for CodeBuild', parameters=list(
     "id"="dummy"
@@ -662,7 +657,7 @@ test_that("test code build stop build step creation", {
 })
 
 test_that("test code build batch delete builds step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = CodeBuildBatchDeleteBuildsStep$new('Delete builds for CodeBuild', parameters=list(
     "ids"=list("dummy")
@@ -681,7 +676,7 @@ test_that("test code build batch delete builds step creation", {
 })
 
 test_that("test code build batch get reports step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = CodeBuildBatchGetReportsStep$new('Get report for CodeBuild', parameters=list(
     "reportArns"=list("arn::dummy")
@@ -700,7 +695,7 @@ test_that("test code build batch get reports step creation", {
 })
 
 test_that("test event bridge put events step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EventBridgePutEventsStep$new('Put event in Event Bridge', parameters=list(
     "Entries"=list(
@@ -733,7 +728,7 @@ test_that("test event bridge put events step creation", {
 })
 
 test_that("test stepfunction start execution step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = StepfunctionsStartExecutionStep$new('Start step function execution', parameters=list(
     "Input"=list("Comment"="Hello world!"),
@@ -808,7 +803,7 @@ test_that("test stepfunction start execution step creation", {
 })
 
 test_that("test api gateway step step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = ApiGatewayStep$new('Invoke  Api Gateway', parameters=list(
     "ApiEndpoint"="example.execute-api.us-east-1.amazonaws.com",
@@ -876,7 +871,7 @@ test_that("test api gateway step step creation", {
 })
 
 test_that("test emr on eks create virtual cluster step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrOnEksCreateVirtualClusterStep$new('Create Cluster', parameters=list(
     "Name"="MyVirtualCluster",
@@ -909,7 +904,7 @@ test_that("test emr on eks create virtual cluster step creation", {
 })
 
 test_that("test emr on eks delete virtual cluster step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrOnEksDeleteVirtualClusterStep$new('Delete Cluster', parameters=list(
     "Id.$"="$.VirtualClusterId"
@@ -943,7 +938,7 @@ test_that("test emr on eks delete virtual cluster step creation", {
 })
 
 test_that("test emr on eks start job step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EmrOnEksStartJobRunStep$new('Start Job on Eks Cluster', parameters=list(
     "Name"="MyJobName",
@@ -1109,7 +1104,7 @@ test_that("test emr on eks start job step creation", {
 })
 
 test_that("test eks run job step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EksRunJobStep$new('Run Job', parameters=list(
     "ClusterName"="MyCluster",
@@ -1267,7 +1262,7 @@ test_that("test eks run job step creation", {
 })
 
 test_that("test eks call step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EksCallStep$new('Call Eks', parameters=list(
     "ClusterName"="MyCluster",
@@ -1300,7 +1295,7 @@ test_that("test eks call step creation", {
 })
 
 test_that("test eks create cluster step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EksCreateClusterStep$new('CreateCluster', parameters=list(
     "Name"="MyCluster",
@@ -1358,7 +1353,7 @@ test_that("test eks create cluster step creation", {
 })
 
 test_that("test eks delete cluster step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EksDeleteClusterStep$new('DeleteCluster', parameters=list(
     "Name"="MyCluster"
@@ -1392,7 +1387,7 @@ test_that("test eks delete cluster step creation", {
 })
 
 test_that("test eks create fargate profile step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EksCreateFargateProfileStep$new('create fargate profile', parameters=list(
     "ClusterName"="MyCluster",
@@ -1450,7 +1445,7 @@ test_that("test eks create fargate profile step creation", {
 })
 
 test_that("test eks delete fargate profile step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EksDeleteFargateProfileStep$new('delete fargate profile', parameters=list(
     "ClusterName"="MyCluster",
@@ -1488,7 +1483,7 @@ test_that("test eks delete fargate profile step creation", {
 })
 
 test_that("test eks create node group step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EksCreateNodegroupStep$new('create node group', parameters=list(
     "ClusterName"="MyCluster",
@@ -1534,7 +1529,7 @@ test_that("test eks create node group step creation", {
 })
 
 test_that("test eks delete node group step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
 
   step = EksDeleteNodegroupStep$new('delete node group', parameters=list(
     "ClusterName"="MyCluster",
@@ -1570,3 +1565,5 @@ test_that("test eks delete node group step creation", {
     )
   )
 })
+
+Sys.setenv("AWS_REGION"=old_env)

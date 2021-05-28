@@ -1,10 +1,10 @@
 # NOTE: This code has been modified from AWS Stepfunctions Python:
 # https://github.com/aws/aws-step-functions-data-science-sdk-python/blob/main/tests/unit/test_compute_steps.py
 
-library(mockery)
-
+old_env <- Sys.getenv("AWS_REGION")
+Sys.setenv("AWS_REGION" = "us-east-1")
 test_that("test lambda step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
   step = LambdaStep$new('Echo')
 
   expect_equal(step$to_list(), list(
@@ -35,7 +35,7 @@ test_that("test lambda step creation", {
 })
 
 test_that("test glue start job run step creation",{
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
   step = GlueStartJobRunStep$new('Glue Job', wait_for_completion=FALSE)
 
   expect_equal(step$to_list(),list(
@@ -58,7 +58,7 @@ test_that("test glue start job run step creation",{
 })
 
 test_that("test batch submit job step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
   step = BatchSubmitJobStep$new('Batch Job', wait_for_completion=FALSE)
 
   expect_equal(step$to_list(),list(
@@ -83,7 +83,7 @@ test_that("test batch submit job step creation", {
 })
 
 test_that("test ecs run task step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
   step = EcsRunTaskStep$new('Ecs Job', wait_for_completion=FALSE)
 
   expect_equal(step$to_list(),list(
@@ -106,7 +106,7 @@ test_that("test ecs run task step creation", {
 })
 
 test_that("test databrew start job task step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
   step = DataBrewStartJobRunStep$new('DataBrew Job', wait_for_completion=FALSE)
 
   expect_equal(step$to_list(),list(
@@ -129,7 +129,7 @@ test_that("test databrew start job task step creation", {
 })
 
 test_that("test athena start query execution task step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
   step = AthenaStartQueryExecutionStep$new('Athena Job', wait_for_completion=FALSE)
 
   expect_equal(step$to_list(),list(
@@ -160,7 +160,7 @@ test_that("test athena start query execution task step creation", {
 })
 
 test_that("test athena stop query execution task step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
   step = AthenaStopQueryExecutionStep$new('Athena Job')
 
   expect_equal(step$to_list(),list(
@@ -182,7 +182,7 @@ test_that("test athena stop query execution task step creation", {
 })
 
 test_that("test athena get query execution task step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
   step = AthenaGetQueryExecutionStep$new('Athena Job')
 
   expect_equal(step$to_list(),list(
@@ -204,7 +204,7 @@ test_that("test athena get query execution task step creation", {
 })
 
 test_that("test athena get query results task step creation", {
-  stub(get_aws_partition, "get_region", "us-east-1", depth = 2)
+
   step = AthenaGetQueryResultsStep$new('Athena Job')
 
   expect_equal(step$to_list(),list(
@@ -224,3 +224,5 @@ test_that("test athena get query results task step creation", {
     'End'=TRUE)
   )
 })
+
+Sys.setenv("AWS_REGION"=old_env)
