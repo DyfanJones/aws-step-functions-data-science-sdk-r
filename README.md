@@ -53,7 +53,7 @@ lambda_state = LambdaStep$new(
 
 ```
 lambda_state$add_retry(Retry$new(
-  error_equals=list("States.TaskFailed"),
+  error_equals="States.TaskFailed",
   interval_seconds=15,
   max_attempts=2,
   backoff_rate=4.0
@@ -61,7 +61,7 @@ lambda_state$add_retry(Retry$new(
 ```
 ```
 lambda_state$add_catch(Catch$new(
-  error_equals=list("States.TaskFailed"),
+  error_equals="States.TaskFailed",
   next_step=Fail$new("LambdaTaskFailed")
 ))
 ```
@@ -71,8 +71,7 @@ lambda_state$add_catch(Catch$new(
 After you define these steps, chain them together into a logical sequence.
 
 ```
-workflow_definition=Chain$new(list(start_pass_state, wait_state, lambda_state))
-
+workflow_definition=Chain$new(c(start_pass_state, wait_state, lambda_state))
 ```
 
 Once the steps are chained together, you can define the workflow definition.
@@ -89,13 +88,13 @@ workflow = Workflow$new(
 
 ### Visualizing a Workflow
 
-The following generates a graphical representation of your workflow. Please note that visualization currently only works in Jupyter notebooks. Visualization is not available in JupyterLab.
+The following generates a graphical representation of your workflow. Please note that visualization currently only works in Jupyter notebooks. Visualization is not available in JupyterLab or RStudio.
 
 ```
 workflow$render_graph()
 ```
 
-**NOTE:** Currently graphs can only render in jupyter notebook. Rendering graphs in Rstudio is on the todo list :)
+![](docs/example1.png)
 
 ## Review a Workflow Definition
 
@@ -151,3 +150,5 @@ workflow$definition$to_json(pretty=TRUE)
   }
 }
 ```
+
+For more examples please check out [examples](https://github.com/DyfanJones/aws-step-functions-data-science-sdk-r/tree/main/examples)
