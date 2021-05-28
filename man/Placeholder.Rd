@@ -140,7 +140,7 @@ Validate a specified input against the placeholder collection schema.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{input}}{(dict): Input to validate against the placeholder collection schema.}
+\item{\code{input}}{(list): Input to validate against the placeholder collection schema.}
 }
 \if{html}{\out{</div>}}
 }

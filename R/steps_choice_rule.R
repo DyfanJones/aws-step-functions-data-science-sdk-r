@@ -101,6 +101,7 @@ CompoundRule = R6Class("CompoundRule",
     #' @param operator (str): Compounding operator to be applied.
     #' @param rules (list(BaseRule)): List of rules to compound together.
     initialize = function(operator, rules){
+      rules = as.list(rules)
       for (rule in rules){
         if (!inherits(rule, "BaseRule"))
           stop(sprintf("Rule '%s' is invalid",rule))
@@ -486,14 +487,14 @@ ChoiceRule = R6Class("ChoiceRule",
     #' @param rules (list(BaseRule)): List of rules to compound together.
     #' @return CompoundRule: Compound rule with `And` operator.
     And = function(rules){
-      return(CompoundRule$new('And', rules))
+      return(CompoundRule$new('And', as.list(rules)))
     },
 
     #' @description Creates a compound rule with the `Or` operator.
     #' @param rules (list(BaseRule)): List of rules to compound together.
     #' @return CompoundRule: Compound rule with `Or` operator.
     Or = function(rules){
-      return(CompoundRule$new('Or', rules))
+      return(CompoundRule$new('Or', as.list(rules)))
     },
 
     #' @description Creates a negation for a rule.
