@@ -8,6 +8,19 @@ Chain is a logical group of states, that resembles a linked list.
              The start state is the head of the *Chain* and the end state is the
              tail of the *Chain*.
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Chain$new`
+## ------------------------------------------------
+
+library(stepfunctions)
+s1_pass = Pass$new('Step - One')
+s2_pass = Pass$new('Step - two')
+s3_pass = Pass$new('Step - three')
+chain1 = Chain$new(c(s1_pass, s2_pass))
+chain2 = Chain$new(c(s3_pass, chain1))
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -37,10 +50,23 @@ Initialise Chain class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{steps}}{(list(State), optional): List of states to be chained in-order. (default: [])}
+\item{\code{steps}}{(list(State), optional): List of states to be chained in-order. (default: list())}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{library(stepfunctions)
+s1_pass = Pass$new('Step - One')
+s2_pass = Pass$new('Step - two')
+s3_pass = Pass$new('Step - three')
+chain1 = Chain$new(c(s1_pass, s2_pass))
+chain2 = Chain$new(c(s3_pass, chain1))
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-append"></a>}}
