@@ -53,7 +53,7 @@ lambda_state = LambdaStep$new(
 
 ```
 lambda_state$add_retry(Retry$new(
-  error_equals=list("States.TaskFailed"),
+  error_equals="States.TaskFailed",
   interval_seconds=15,
   max_attempts=2,
   backoff_rate=4.0
@@ -61,7 +61,7 @@ lambda_state$add_retry(Retry$new(
 ```
 ```
 lambda_state$add_catch(Catch$new(
-  error_equals=list("States.TaskFailed"),
+  error_equals="States.TaskFailed",
   next_step=Fail$new("LambdaTaskFailed")
 ))
 ```
@@ -71,7 +71,7 @@ lambda_state$add_catch(Catch$new(
 After you define these steps, chain them together into a logical sequence.
 
 ```
-workflow_definition=Chain$new(list(start_pass_state, wait_state, lambda_state))
+workflow_definition=Chain$new(c(start_pass_state, wait_state, lambda_state))
 
 ```
 
