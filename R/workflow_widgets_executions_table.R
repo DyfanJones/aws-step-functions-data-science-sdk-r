@@ -100,7 +100,7 @@ ExecutionsTableWidget = R6Class("ExecutionsTableWidget",
     initialize = function(executions){
       table_rows = lapply(executions, function(execution){
         glue(EXECUTION_TABLE_ROW_TEMPLATE,
-             execution_url=create_sfn_execution_url(execution.execution_arn),
+             execution_url=create_sfn_execution_url(execution$execution_arn),
              name=execution$name,
              status=execution$status,
              start_date=format_time(execution$start_date),
