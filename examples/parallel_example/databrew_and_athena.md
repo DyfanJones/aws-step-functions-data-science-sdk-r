@@ -5,7 +5,7 @@ First off, this example has been taken from [Orchestrating an AWS Glue DataBrew 
 ## The Build:
 
 For this example here is the target architecture we are going replicate using `R stepfunctions sdk`.
-![target](target_architecture_desgin.jpg)
+![target](databrew_and_athena_target.jpg)
 
 ```r
 library(stepfunctions)
@@ -139,7 +139,7 @@ To veiw the workflow graph use the method `render_graph`. **NOTE:** Jupyter note
 ```r
 workflow$render_graph(T)
 ```
-![workf_flow_graph_out](parallel_process_example.png)
+![workf_flow_graph_out](databrew_and_athena_stepfunction.png)
 
 To view the `AWS States Language` you can use the method `to_json()`
 ```r
