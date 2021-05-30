@@ -63,7 +63,7 @@ AWS_TABLE_CSS = ('
 format_time = function(timestamp){
   if (is.null(timestamp))
     return("-")
-  time = strftime(timestamp =, "%b %d, %Y %I:%M:%S.%f")
+  time = strftime(timestamp, "%b %d, %Y %I:%M:%S")
   return(paste(time, strftime(timestamp, "%p")))
 }
 
