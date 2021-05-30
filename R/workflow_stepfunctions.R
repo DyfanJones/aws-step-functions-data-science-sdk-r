@@ -90,7 +90,7 @@ Workflow = R6Class("Workflow",
         )
 
         workflows = c(workflows, batch_response[["stateMachines"]])
-        if(length(events) >= max_items){
+        if(length(workflows) >= max_items){
           workflows = workflows[1:max_items]
           break
         }
@@ -334,7 +334,7 @@ Workflow = R6Class("Workflow",
           nextToken=token)
 
         response = c(response, batch_response["executions"])
-        if(length(events) >= max_items){
+        if(length(response) >= max_items){
           response = response[1:max_items]
           break
         }
