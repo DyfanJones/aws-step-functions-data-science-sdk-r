@@ -85,11 +85,15 @@ Workflow = R6Class("Workflow",
       workflows = list()
       while(!identical(token, character(0))){
         batch_response=client$list_state_machines(
-          maxResults=max_items,
+          maxResults=1000, # maximum allowed page size
           nextToken=token
         )
 
         workflows = c(workflows, batch_response[["stateMachines"]])
+        if(length(events) >= max_items){
+          workflows = workflows[1:max_items]
+          break
+        }
         token=batch_response[["nextToken"]]
       }
 
@@ -323,16 +327,20 @@ Workflow = R6Class("Workflow",
       response = list()
 
       while(!identical(token, character(0))){
-        batch_response=response=svc$list_executions(
+        batch_response=response=self$client$list_executions(
           stateMachineArn=self$state_machine_arn,
           statusFilter=if(is.null(status_filter)) status_filter else toupper(status_filter),
-          maxResults=max_items,
+          maxResults=1000, # maximum allowed page size
           nextToken=token)
 
         response = c(response, batch_response["executions"])
+        if(length(events) >= max_items){
+          response = response[1:max_items]
+          break
+        }
         token = batch_response[["nextToken"]]
       }
-      runs = lapply(response, function(execution){
+      runs = lapply(response$executions, function(execution){
         Execution$new(
           name=execution[['name']],
           workflow=self,
@@ -343,7 +351,6 @@ Workflow = R6Class("Workflow",
           client=self$client
         )
       })
-
       if (html){
         display_html <- pkg_method("display_html","IRdisplay")
         return(display_html(ExecutionsList$new(runs)$to_html()))
@@ -509,17 +516,20 @@ Execution = R6Class("Execution",
 
       events=list()
       token=NULL
-      while(identical){
+      while(!identical(token, character(0))){
         batch_response = self$client$get_execution_history(
           executionArn=self$execution_arn,
-          maxResults=max_items,
-          reverseOrder=executionArn,
+          maxResults=1000, # maximum allowed page size
+          reverseOrder=reverse_order,
           nextToken=token
         )
         events=c(events, batch_response[["events"]])
+        if(length(events) >= max_items){
+          events = events[1:max_items]
+          break
+        }
         token=batch_response[["nextToken"]]
       }
-
       if (html){
         display_html <- pkg_method("display_html","IRdisplay")
         return(display_html(EventsList$new(events)$to_html()))
