@@ -202,7 +202,7 @@ Workflow = R6Class("Workflow",
     #'              already existed, the ARN of the existing workflow is returned.
     create = function(){
       if (!is.null(self$state_machine_arn)){
-        LOGGER$warning("The workflow already exists on AWS Step Functions. No action will be performed.")
+        LOGGER$warn("The workflow already exists on AWS Step Functions. No action will be performed.")
         return(self$state_machine_arn)
       }
 
@@ -267,13 +267,13 @@ Workflow = R6Class("Workflow",
     #' @param inputs (str, list, optional): Input data for the workflow execution. (default: None)
     #' @return stepfunctions.workflow.Execution: An execution instance of the workflow.
     execute = function(name=NULL, inputs=NULL){
-      if (!is.null(self$workflow_input))
+      if (!is.null(self$workflow_input)){
         validation_result = self$workflow_input$validate(inputs)
-      if (isFALSE(validation_result$valid))
-        stop(sprintf(
-          "Expected run input with the schema: %s",
-          self$workflow_input$get_schema_as_json()))
-
+        if (isFALSE(validation_result$valid))
+          stop(sprintf(
+            "Expected run input with the schema: %s",
+            self$workflow_input$get_schema_as_json()))
+      }
       if (is.null(self$state_machine_arn))
         stop("Local workflow instance does not point to an existing workflow on ",
              "AWS StepFunctions. Before executing a workflow, call Workflow.create(...) ",
@@ -422,7 +422,7 @@ Workflow = R6Class("Workflow",
     },
 
     .extract_state_machine_arn = function(exception){
-      message = attributes(e)$error_response$message
+      message = attributes(exception)$error_response$message
       return(unlist(strsplit(message, "'"))[2])
     }
   ),
@@ -446,13 +446,13 @@ Execution = R6Class("Execution",
     #' @param name (str, optional): Name for the workflow execution. (default: None)
     #' @param stop_date (datetime.datetime, optional): The date the workflow execution
     #'              was stopped, if applicable. (default: None)
-    inherit = function(workflow,
-                       execution_arn,
-                       start_date,
-                       status,
-                       client=NULL,
-                       name=NULL,
-                       stop_date=NULL){
+    initialize = function(workflow,
+                          execution_arn,
+                          start_date,
+                          status,
+                          client=NULL,
+                          name=NULL,
+                          stop_date=NULL){
       self$name = name
       self$workflow = workflow
       self$execution_arn = execution_arn
@@ -590,7 +590,7 @@ Execution = R6Class("Execution",
 
     #' @description format class
     format = function(){
-      if(pkg_env$juptyer){
+      if(pkg_env$jupyter){
         return(sprintf('Execution: <a target="_blank" href="%s">%s</a>',
               create_sfn_execution_url(self$execution_arn), self$execution_arn))
       } else {
