@@ -132,27 +132,31 @@ WorkflowGraphWidget = R6Class("WorkflowGraphWidget",
           console_snippet='')
       },
 
-      show = function(portrait=TRUE){
-        display_html <- pkg_method("display_html","IRdisplay")
+      render_html = function(portrait=TRUE){
         if (isFALSE(portrait))
           self$layout = 'LR'
         else
           self$layout = 'TB'
-
-        return(display_html(
+        return(
           glue(self$template,
-          element_id=self$element_id,
-          definition=self$json_definition,
-          layout=self$layout,
-          css=CSS_URL,
-          jslib=JSLIB_URL,
-          graph_legend_template="",
-          .open = "$$",
-          .close = "$$")
+             element_id=self$element_id,
+             definition=self$json_definition,
+             layout=self$layout,
+             css=CSS_URL,
+             jslib=JSLIB_URL,
+             graph_legend_template="",
+             .open = "$$",
+             .close = "$$")
+        )
+      },
+
+      show = function(portrait=TRUE){
+        display_html <- pkg_method("display_html","IRdisplay")
+        return(display_html(
+          self$render_html(portrait)
           )
         )
       }
-
   ),
   lock_objects=F
 )

@@ -103,7 +103,7 @@ Placeholder = R6Class("Placeholder",
     },
 
     #' @description Validate a specified input against the placeholder collection schema.
-    #' @param input (dict): Input to validate against the placeholder collection schema.
+    #' @param input (list): Input to validate against the placeholder collection schema.
     #' @return ValidationResult: Named tuple with the keys:
     #'     \itemize{
     #'         \item{`valid` (Boolean): Representing the result of validation}
@@ -111,6 +111,7 @@ Placeholder = R6Class("Placeholder",
     #'         \item{`keys_type_mismatch` (list(str), type, type): List of tuples with key name, expected type, and provided type.}
     #'      }
     validate = function(input=NULL){
+      input = as.list(input)
       if (is.null(input))
         return(list(valid=FALSE, keys_missing=NULL, keys_type_mismatch=NULL))
       flattened_schema = flatten(self$get_schema_as_list())

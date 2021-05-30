@@ -10,7 +10,7 @@
 #' @importFrom tools toTitleCase
 
 to_pascalcase = function(text){
-  test = split_str(text, "-")
+  test = split_str(text, "_")
   return(paste0(tools::toTitleCase(test), collapse = ""))
 }
 
@@ -26,6 +26,8 @@ Block = R6Class("Block",
     initialize = function(...){
       kwargs = list(...)
       self$fields = kwargs
+      if("comment" %in% names(kwargs))
+        self$comment = kwargs$comment
 
       for(k in names(kwargs)){
         if(!self$is_field_allowed(k))
@@ -86,24 +88,24 @@ Block = R6Class("Block",
   ),
   private = list(
     .replace_placeholders = function(params){
-      if (!inherits(params, "list")){
+      if (!is_list_named(params))
         return(params)
-      }
       modified_parameters = list()
       for(k in names(params)){
         v = params[[k]]
         if (inherits(v, c("ExecutionInput", "StepInput"))){
           modified_key = sprintf("%s.$", k)
           modified_parameters[[modified_key]] = v$to_jsonpath()
+        } else if (is_list_named(v)) {
+            modified_parameters[[k]] = private$.replace_placeholders(v)
         } else if (inherits(v, "list")){
-          modified_parameters[[k]] = private$.replace_placeholders(v)
+          modified_parameters[[k]] = lapply(v, private$.replace_placeholders)
         } else {
           modified_parameters[[k]] = v
         }
       }
       return(modified_parameters)
     }
-
   ),
   lock_objects = F
 )
@@ -134,7 +136,13 @@ Retry = R6Class("Retry",
                           max_attempts=NULL,
                           backoff_rate=NULL,
                           ...){
-      kwargs = c(as.list(environment()), list(...))
+      error_equals = as.list(error_equals)
+      kwargs = c(
+        error_equals=list(error_equals),
+        interval_seconds=interval_seconds,
+        max_attempts=max_attempts,
+        backoff_rate=backoff_rate,
+        list(...))
       do.call(super$initialize, kwargs)
     },
 
@@ -169,7 +177,8 @@ Catch = R6Class("Catch",
     initialize = function(next_step,
                           error_equals,
                           ...){
-      kwargs = c(error_equals=error_equals, list(...))
+      error_equals = as.list(error_equals)
+      kwargs = c(error_equals=list(error_equals), list(...))
       do.call(super$initialize, kwargs)
       self$next_step = next_step
     },
@@ -238,15 +247,14 @@ State = R6Class("State",
         output_path=output_path,
         ...)
       kwargs = Filter(Negate(is.null), kwargs)
-
       do.call(super$initialize, kwargs)
 
       self$fields[["type"]] = state_type
       self$type = state_type
       self$state_type = state_type
       self$state_id = state_id
-      self$output_schema = output_schema
-      self$step_output = StepInput$new(schema=output_schema)
+      self$output_schema = as.list(output_schema)
+      self$step_output = StepInput$new(schema=self$output_schema)
       self$retries = list()
       self$catches = list()
       self$next_step = NULL
@@ -267,6 +275,7 @@ State = R6Class("State",
     #' @description Update `parameters` field in the state, if supported.
     #' @param params (list): The value of this field becomes the effective input for the state.
     update_parameters = function(params){
+      params = as.list(params)
       if (Field$Parameters %in% self$allowed_fields())
         self$fields[[Field$Parameters]] = params
     },
@@ -275,11 +284,22 @@ State = R6Class("State",
     #' @param next_step (State or Chain): Next state or chain to transition to.
     #' @return State or Chain: Next state or chain that will be transitioned to.
     .next = function(next_step){
-      if (self$type %in% c('Choice', 'Succeed', 'Fail'))
+      if (self$type %in% c('Succeed', 'Fail'))
         stop(sprintf(
-          'Unexpected State instance `%s`, State type `%s` does not support method `next`.',
-          next_step, self$type))
+          'Unexpected State instance `%s`, State type `%s` does not support method `.next`.',
+          class(next_step)[1], self$type))
 
+      # By design, Choice states do not have the Next field. When used in a chain, the subsequent step becomes the
+      # default choice that executes if none of the specified rules match.
+      # See language spec for more info: https://states-language.net/spec.html#choice-state
+      if (self$type == 'Choice'){
+        if (!is.null(self$default))
+          LOGGER$warn(
+            "Chaining Choice state: Overwriting (%s)'s current default_choice (%s) with (%s)",
+            self$state_id, self$default$state_id, next_step$state_id)
+        self$default_choice(next_step)
+        return(self$default)
+      }
       self$next_step = next_step
       return(self$next_step)
     },
@@ -473,6 +493,8 @@ Fail = R6Class("Fail",
       kwargs = c(as.list(environment()), state_type = "Fail", list(...))
 
       do.call(super$initialize, kwargs)
+      self$error=error
+      self$cause=cause
     },
 
     #' @description allowed extra fields
@@ -526,11 +548,17 @@ Wait = R6Class("Wait",
                           ...){
       if (length(Filter(Negate(is.null),list(seconds, timestamp, timestamp_path, seconds_path))) != 1)
         stop(
-          "The Wait state MUST contain exactly one of 'seconds', 'seconds_path', 'timestamp' or 'timestamp_path'.",
-          call.=F)
+          "The Wait state MUST contain exactly one of 'seconds', 'seconds_path', 'timestamp' or 'timestamp_path'.")
 
       kwargs = c(as.list(environment()), state_type = "Wait", list(...))
       do.call(super$initialize, kwargs)
+
+      self$seconds=seconds
+      self$seconds_path=seconds_path
+      self$timestamp=timestamp
+      self$timestamp_path=timestamp_path
+      self$input_path=input_path
+      self$output_path=output_path
     },
 
     #' @description allowed extra fields
@@ -555,7 +583,8 @@ Wait = R6Class("Wait",
 #'              pattern-matches against the rules in list order and transitions to the
 #'              state or chain specified in the *next_step* field on the first *rule* where
 #'              there is an exact match between the input value and a member of the
-#'              comparison-operator array.
+#'              comparison-operator array. When used in a chain, the subsequent step
+#'              becomes the default choice that executes if none of the specified rules match.
 #' @export
 Choice = R6Class("Choice",
   inherit = State,
@@ -582,6 +611,8 @@ Choice = R6Class("Choice",
       do.call(super$initialize, kwargs)
       self$choices = list()
       self$default = NULL
+      self$input_path=input_path
+      self$output_path=output_path
     },
 
     #' @description allowed extra fields
@@ -616,7 +647,7 @@ Choice = R6Class("Choice",
       for (ll in self$choices){
         serialized_choice = ll[[1]]$to_list()
         serialized_choice[["Next"]] = ll[[2]]$state_id
-        serialized_choices = c(serialized_choices, serialized_choice)
+        serialized_choices = c(serialized_choices, list(serialized_choice))
         }
       result[["Choices"]] = serialized_choices
 
@@ -676,6 +707,10 @@ Parallel = R6Class("Parallel",
                           ...){
       kwargs = c(as.list(environment()), state_type = "Parallel", list(...))
 
+      self$input_path=input_path
+      self$result_path=result_path
+      self$output_path=output_path
+
       do.call(super$initialize, kwargs)
 
       self$branches = list()
@@ -705,8 +740,10 @@ Parallel = R6Class("Parallel",
     to_list = function(){
       result = super$to_list()
       result[["Branches"]] = lapply(
-        self$branches, function(branch) Graph$new(branch)$to_list()
-      )
+        self$branches, function(branch) {
+          graph_state = Graph$new(branch)
+          graph_state$to_list()
+        })
       return(result)
     }
   ),
@@ -717,6 +754,7 @@ Parallel = R6Class("Parallel",
 #' @description A Map state can accept an input with a list of items,
 #'              execute a state or chain for each item in the list, and return
 #'              a list, with all corresponding results of each execution, as its output.
+#' @export
 Map = R6Class("Map",
   inherit=State,
   public = list(
@@ -751,6 +789,13 @@ Map = R6Class("Map",
                           ...){
       kwargs = c(as.list(environment()), state_type = "Map", list(...))
 
+      self$iterator=iterator
+      self$items_path=items_path
+      self$max_concurrency=max_concurrency
+      self$input_path=input_path
+      self$result_path=result_path
+      self$output_path=output_path
+
       do.call(super$initialize, kwargs)
     },
 
@@ -781,7 +826,8 @@ Map = R6Class("Map",
     #' @description Convert class to named list
     to_list = function(){
       result = super$to_list()
-      result[["Iterator"]] = Graph$new(self$iterator)$to_list()
+      graph_state = Graph$new(self$iterator)
+      result[["Iterator"]] = graph_state$to_list()
       return(result)
     }
   ),
@@ -842,13 +888,17 @@ Task = R6Class("Task",
                           ...){
       kwargs = c(as.list(environment()), state_type = "Task", list(...))
 
-      do.call(super$initialize, kwargs)
-
-      if (!is.null(self$timeout_seconds) && !is.null(self$timeout_seconds_path))
+      if (!is.null(timeout_seconds) && !is.null(timeout_seconds_path))
         stop("Only one of 'timeout_seconds' or 'timeout_seconds_path' can be provided.")
 
-      if (!is.null(self$heartbeat_seconds) && !is.null(self.heartbeat_seconds_path))
+      if (!is.null(heartbeat_seconds) && !is.null(heartbeat_seconds_path))
         stop("Only one of 'heartbeat_seconds' or 'heartbeat_seconds_path' can be provided.")
+
+      do.call(super$initialize, kwargs)
+
+      self$input_path=input_path
+      self$result_path=result_path
+      self$output_path=output_path
     },
 
     #' @description allowed extra fields
@@ -881,20 +931,25 @@ Chain = R6Class("Chain",
   public = list(
 
     #' @description Initialise Chain class
-    #' @param steps (list(State), optional): List of states to be chained in-order. (default: [])
+    #' @param steps (list(State), optional): List of states to be chained in-order. (default: list())
+    #' @examples
+    #' library(stepfunctions)
+    #' s1_pass = Pass$new('Step - One')
+    #' s2_pass = Pass$new('Step - two')
+    #' s3_pass = Pass$new('Step - three')
+    #' chain1 = Chain$new(c(s1_pass, s2_pass))
+    #' chain2 = Chain$new(c(s3_pass, chain1))
     initialize = function(steps=list()){
       if(!is.list(steps))
-        stop("Chain takes a 'list' of steps. You provided an input that is not a list.", call.=F)
+        stop("Chain takes a 'list' of steps. You provided an input that is not a list.")
+
       self$steps = list()
+      steps_expanded = unlist(lapply(steps, function(step) if(inherits(step, "Chain")) step$steps else step))
 
-      # Temp solution for:
-      # [steps_expanded.extend(step) if isinstance(step, Chain) else steps_expanded.append(step) for step in steps]
-      steps_expanded = lapply(steps, function(step) if(inherits(step, "Chain")) list(step) else step)
-
-      if(length(unique(steps)) != length(steps))
+      if(length(unique(steps_expanded)) != length(steps_expanded))
         stop("Duplicate states in the chain.")
 
-      list(base::Map(self$append, steps_expanded))
+      base::Map(self$append, steps_expanded)
     },
 
     #' @description Add a state at the tail end of the chain.
@@ -907,9 +962,9 @@ Chain = R6Class("Chain",
           stop(sprintf(
             "State '%s' is already inside this chain. A chain cannot have duplicate states.",
             step$state_id))
-          last_step = self$steps[[length(self$steps)]]
-          last_step$.next(step)
-          self$steps = c(self$steps, step)
+        last_step = self$steps[[length(self$steps)]]
+        last_step$.next(step)
+        self$steps = c(self$steps, step)
       }
     },
 

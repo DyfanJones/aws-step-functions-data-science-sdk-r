@@ -642,7 +642,7 @@ EmrTerminateClusterStep = R6Class("EmrTerminateClusterStep",
       else
         kwargs[[Field$Resource]] = get_service_integration_arn(
           ELASTICMAPREDUCE_SERVICE_NAME,
-          lasticMapReduceApi$TerminateCluster)
+          ElasticMapReduceApi$TerminateCluster)
 
       do.call(super$initialize, kwargs)
     }
@@ -774,16 +774,16 @@ EmrCancelStepStep = R6Class("EmrCancelStepStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-                         comment=NULL,
-                         timeout_seconds=NULL,
-                         timeout_seconds_path=NULL,
-                         heartbeat_seconds=NULL,
-                         heartbeat_seconds_path=NULL,
-                         input_path=NULL,
-                         parameters=NULL,
-                         result_path=NULL,
-                         output_path=NULL,
-                         ...){
+                          comment=NULL,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
       kwargs = c(as.list(environment()), list(...))
       kwargs[[Field$Resource]] = get_service_integration_arn(
         ELASTICMAPREDUCE_SERVICE_NAME,
@@ -897,16 +897,16 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-                         comment=NULL,
-                         timeout_seconds=NULL,
-                         timeout_seconds_path=NULL,
-                         heartbeat_seconds=NULL,
-                         heartbeat_seconds_path=NULL,
-                         input_path=NULL,
-                         parameters=NULL,
-                         result_path=NULL,
-                         output_path=NULL,
-                         ...){
+                          comment=NULL,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
       kwargs = c(as.list(environment()), list(...))
       kwargs[[Field$Resource]] = get_service_integration_arn(
         ELASTICMAPREDUCE_SERVICE_NAME,
@@ -918,16 +918,16 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
   lock_objects=F
 )
 
-#' @title EmrModifyInstanceFleetByNameStep class
+#' @title EmrModifyInstanceGroupByNameStep class
 #' @description Creates a Task state to modify the number of nodes and configuration
 #'              settings of an instance group. See Call Amazon EMR with Step Functions
 #'              \url{https://docs.aws.amazon.com/step-functions/latest/dg/connect-emr.html} for more details.
 #' @export
-EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
+EmrModifyInstanceGroupByNameStep = R6Class("EmrModifyInstanceGroupByNameStep",
   inherit = Task,
   public = list(
 
-    #' @description Initialize EmrModifyInstanceFleetByNameStep task class
+    #' @description Initialize EmrModifyInstanceGroupByNameStep task class
     #' @param state_id (str): State name whose length **must be** less than or equal
     #'              to 128 unicode characters. State names **must be** unique within
     #'              the scope of the whole state machine.
@@ -958,16 +958,16 @@ EmrModifyInstanceFleetByNameStep = R6Class("EmrModifyInstanceFleetByNameStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-                         comment=NULL,
-                         timeout_seconds=NULL,
-                         timeout_seconds_path=NULL,
-                         heartbeat_seconds=NULL,
-                         heartbeat_seconds_path=NULL,
-                         input_path=NULL,
-                         parameters=NULL,
-                         result_path=NULL,
-                         output_path=NULL,
-                         ...){
+                          comment=NULL,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
       kwargs = c(as.list(environment()), list(...))
       kwargs[[Field$Resource]] = get_service_integration_arn(
         ELASTICMAPREDUCE_SERVICE_NAME,
@@ -1117,7 +1117,7 @@ CodeBuildStopBuildStep = R6Class("CodeBuildStopBuildStep",
 
       kwargs[[Field$Resource]] = get_service_integration_arn(
         CODEBUILD_SERVICE_NAME,
-        CodeBuildApi$stopBuild)
+        CodeBuildApi$StopBuild)
 
       do.call(super$initialize, kwargs)
     }
@@ -1623,6 +1623,10 @@ EmrOnEksDeleteVirtualClusterStep = R6Class("EmrOnEksDeleteVirtualClusterStep",
           EMRONEKS_SERVICE_NAME,
           EmrOnEksApi$DeleteVirtualCluster,
           IntegrationPattern$WaitForCompletion)
+      else
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          EMRONEKS_SERVICE_NAME,
+          EmrOnEksApi$DeleteVirtualCluster)
 
       do.call(super$initialize, kwargs)
     }
@@ -1702,6 +1706,10 @@ EmrOnEksStartJobRunStep = R6Class("EmrOnEksStartJobRunStep",
         EMRONEKS_SERVICE_NAME,
         EmrOnEksApi$StartJobRun,
         IntegrationPattern$WaitForCompletion)
+    else
+      kwargs[[Field$Resource]] = get_service_integration_arn(
+        EMRONEKS_SERVICE_NAME,
+        EmrOnEksApi$StartJobRun)
 
     do.call(super$initialize, kwargs)
     }
@@ -1777,14 +1785,14 @@ EksRunJobStep = R6Class("EksRunJobStep",
         output_path=output_path,
       ...)
       if (wait_for_completion)
-      kwargs[Field$Resource] = get_service_integration_arn(
-        EKS_SERVICE_NAME,
-        EksApi$RunJob,
-        IntegrationPattern$WaitForCompletion)
+        kwargs[Field$Resource] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$RunJob,
+          IntegrationPattern$WaitForCompletion)
       else
-      kwargs[[Field$Resource]] = get_service_integration_arn(
-        EKS_SERVICE_NAME,
-        EksApi$RunJob)
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          EKS_SERVICE_NAME,
+          EksApi$RunJob)
 
       do.call(super$initialize, kwargs)
     }
@@ -1981,17 +1989,17 @@ EksDeleteClusterStep = R6Class("EksDeleteClusterStep",
     #'              which serves as the raw input for the next state. (default: '$')
     #' @param ... : Extra Fields passed to Task class
     initialize = function(state_id,
-             wait_for_completion=TRUE,
-             timeout_seconds=NULL,
-             timeout_seconds_path=NULL,
-             heartbeat_seconds=NULL,
-             heartbeat_seconds_path=NULL,
-             comment=NULL,
-             input_path=NULL,
-             parameters=NULL,
-             result_path=NULL,
-             output_path=NULL,
-             ...){
+                          wait_for_completion=TRUE,
+                          timeout_seconds=NULL,
+                          timeout_seconds_path=NULL,
+                          heartbeat_seconds=NULL,
+                          heartbeat_seconds_path=NULL,
+                          comment=NULL,
+                          input_path=NULL,
+                          parameters=NULL,
+                          result_path=NULL,
+                          output_path=NULL,
+                          ...){
       kwargs = list(
         state_id=state_id,
         timeout_seconds=timeout_seconds,

@@ -273,14 +273,14 @@ DataBrewStartJobRunStep = R6Class("DataBrewStartJobRunStep",
         output_path=output_path,
         ...)
       if (wait_for_completion)
-      kwargs[[Field$Resource]] = get_service_integration_arn(
-        DATABREW_SERVICE_NAME,
-        DataBrewApi$StartJobRun,
-        IntegrationPattern$WaitForCompletion)
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          DATABREW_SERVICE_NAME,
+          DataBrewApi$StartJobRun,
+          IntegrationPattern$WaitForCompletion)
       else
-      kwargs[[Field$Resource]] = get_service_integration_arn(
-        DATABREW_SERVICE_NAME,
-        DataBrewApi$StartJobRun)
+        kwargs[[Field$Resource]] = get_service_integration_arn(
+          DATABREW_SERVICE_NAME,
+          DataBrewApi$StartJobRun)
 
       do.call(super$initialize, kwargs)
     }
@@ -700,7 +700,7 @@ EcsRunTaskStep = R6Class("EcsRunTaskStep",
         output_path=output_path,
         ...)
       if (wait_for_completion)
-        kwargs[Field$Resource] = et_service_integration_arn(
+        kwargs[[Field$Resource]] = get_service_integration_arn(
           ECS_SERVICE_NAME,
           EcsApi$RunTask,
           IntegrationPattern$WaitForCompletion)

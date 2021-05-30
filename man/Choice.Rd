@@ -9,7 +9,8 @@ Choice state adds branching logic to a state machine. The state
              pattern-matches against the rules in list order and transitions to the
              state or chain specified in the *next_step* field on the first *rule* where
              there is an exact match between the input value and a member of the
-             comparison-operator array.
+             comparison-operator array. When used in a chain, the subsequent step
+             becomes the default choice that executes if none of the specified rules match.
 }
 \section{Super classes}{
 \code{\link[stepfunctions:Block]{stepfunctions::Block}} -> \code{\link[stepfunctions:State]{stepfunctions::State}} -> \code{Choice}
